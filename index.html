@@ -1,17 +1,18 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html lang="fa" dir="rtl" class="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="جیب‌بان" />
-  <meta name="theme-color" content="#060914" />
+  <meta name="theme-color" content="#070b14" />
   <title>جیب‌بان | مدیریت هوشمند مالی</title>
 
-  <!-- تولید خودکار آیکون باکیفیت iOS برای Home Screen -->
+  <!-- تولید خودکار آیکون اپلیکیشن برای صفحه اصلی موبایل و دسکتاپ -->
   <script>
-    (function generateIOSAppIcon() {
+    (function generateAppIcon() {
       try {
         const canvas = document.createElement('canvas');
         canvas.width = 512;
@@ -19,15 +20,15 @@
         const ctx = canvas.getContext('2d');
 
         const bgGrad = ctx.createLinearGradient(0, 0, 512, 512);
-        bgGrad.addColorStop(0, '#0f172a');
-        bgGrad.addColorStop(0.5, '#1e1b4b');
-        bgGrad.addColorStop(1, '#3b0764');
+        bgGrad.addColorStop(0, '#070b14');
+        bgGrad.addColorStop(0.5, '#0f172a');
+        bgGrad.addColorStop(1, '#1e293b');
         ctx.fillStyle = bgGrad;
         ctx.fillRect(0, 0, 512, 512);
 
         const radial = ctx.createRadialGradient(256, 256, 20, 256, 256, 240);
-        radial.addColorStop(0, 'rgba(99, 102, 241, 0.45)');
-        radial.addColorStop(1, 'rgba(99, 102, 241, 0)');
+        radial.addColorStop(0, 'rgba(56, 189, 248, 0.35)');
+        radial.addColorStop(1, 'rgba(16, 185, 129, 0)');
         ctx.fillStyle = radial;
         ctx.fillRect(0, 0, 512, 512);
 
@@ -42,9 +43,9 @@
         }
 
         const walletGrad = ctx.createLinearGradient(116, 146, 396, 366);
-        walletGrad.addColorStop(0, '#6366f1');
-        walletGrad.addColorStop(0.55, '#a855f7');
-        walletGrad.addColorStop(1, '#ec4899');
+        walletGrad.addColorStop(0, '#0ea5e9');
+        walletGrad.addColorStop(0.55, '#6366f1');
+        walletGrad.addColorStop(1, '#10b981');
         ctx.fillStyle = walletGrad;
         roundRect(116, 150, 280, 212, 52);
         ctx.fill();
@@ -56,7 +57,7 @@
         roundRect(152, 122, 175, 42, 16);
         ctx.fill();
 
-        ctx.fillStyle = 'rgba(15, 23, 42, 0.55)';
+        ctx.fillStyle = 'rgba(15, 23, 42, 0.6)';
         roundRect(306, 224, 90, 64, 24);
         ctx.fill();
 
@@ -66,11 +67,11 @@
         ctx.fill();
 
         const dataUrl = canvas.toDataURL('image/png');
-        const appleIcon = document.createElement('link');
-        appleIcon.rel = 'apple-touch-icon';
-        appleIcon.sizes = '512x512';
-        appleIcon.href = dataUrl;
-        document.head.appendChild(appleIcon);
+        const touchIcon = document.createElement('link');
+        touchIcon.rel = 'apple-touch-icon';
+        touchIcon.sizes = '512x512';
+        touchIcon.href = dataUrl;
+        document.head.appendChild(touchIcon);
 
         const favIcon = document.createElement('link');
         favIcon.rel = 'icon';
@@ -83,156 +84,194 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
 
   <script>
     tailwind.config = {
+      darkMode: 'class',
       theme: {
         extend: {
-          fontFamily: { sans: ['Vazirmatn', 'system-ui', 'sans-serif'] }
+          fontFamily: {
+            sans: ['Vazirmatn', 'Inter', 'system-ui', 'sans-serif'],
+          }
         }
       }
     }
   </script>
 
   <style>
+    :root {
+      --bg-main: #070b14;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --glass-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.10) 0%, rgba(255, 255, 255, 0.03) 100%);
+      --glass-border: rgba(255, 255, 255, 0.14);
+      --glass-shadow: 0 18px 40px -15px rgba(0, 0, 0, 0.55), inset 0 1px 1px 0 rgba(255, 255, 255, 0.22);
+      --card-bg: linear-gradient(145deg, rgba(255, 255, 255, 0.07) 0%, rgba(255, 255, 255, 0.02) 100%);
+      --card-border: rgba(255, 255, 255, 0.11);
+      --pill-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.04) 100%);
+      --input-bg: rgba(15, 23, 42, 0.65);
+      --dock-bg: linear-gradient(180deg, rgba(15, 23, 42, 0.85) 0%, rgba(9, 13, 26, 0.94) 100%);
+    }
+
+    html.light {
+      --bg-main: #eef2f6;
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --glass-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.82) 0%, rgba(255, 255, 255, 0.58) 100%);
+      --glass-border: rgba(255, 255, 255, 0.85);
+      --glass-shadow: 0 14px 34px -12px rgba(15, 23, 42, 0.10), inset 0 1px 2px 0 rgba(255, 255, 255, 0.9);
+      --card-bg: linear-gradient(145deg, rgba(255, 255, 255, 0.75) 0%, rgba(255, 255, 255, 0.45) 100%);
+      --card-border: rgba(148, 163, 184, 0.28);
+      --pill-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.88) 0%, rgba(241, 245, 249, 0.65) 100%);
+      --input-bg: rgba(255, 255, 255, 0.85);
+      --dock-bg: linear-gradient(180deg, rgba(255, 255, 255, 0.88) 0%, rgba(241, 245, 249, 0.95) 100%);
+    }
+
     * {
-      font-family: 'Vazirmatn', system-ui, -apple-system, sans-serif;
+      font-family: 'Vazirmatn', 'Inter', system-ui, -apple-system, sans-serif;
       -webkit-tap-highlight-color: transparent;
       user-select: none;
     }
-    input, textarea { user-select: text; }
+    input, textarea, select { user-select: text; }
 
     body {
-      background-color: #060914;
-      color: #f8fafc;
+      background-color: var(--bg-main);
+      color: var(--text-main);
       overflow-x: hidden;
       min-height: 100vh;
       padding-top: env(safe-area-inset-top, 0px);
+      transition: background-color 0.3s ease, color 0.3s ease;
     }
 
+    /* پس‌زمینه آرامش‌بخش و استاندارد نسخه اول (بدون بنفش تند) */
     .liquid-bg {
       position: fixed;
       inset: 0;
       z-index: -1;
       background:
-        radial-gradient(circle at 12% 15%, rgba(99, 102, 241, 0.32), transparent 42%),
-        radial-gradient(circle at 88% 12%, rgba(236, 72, 153, 0.24), transparent 40%),
-        radial-gradient(circle at 50% 82%, rgba(16, 185, 129, 0.20), transparent 48%),
-        radial-gradient(circle at 20% 70%, rgba(56, 189, 248, 0.18), transparent 40%),
-        linear-gradient(160deg, #050811 0%, #0b1124 50%, #070b18 100%);
+        radial-gradient(circle at 15% 15%, rgba(56, 189, 248, 0.14), transparent 45%),
+        radial-gradient(circle at 85% 20%, rgba(99, 102, 241, 0.14), transparent 45%),
+        radial-gradient(circle at 50% 85%, rgba(16, 185, 129, 0.12), transparent 50%),
+        linear-gradient(160deg, #060a12 0%, #0b1324 55%, #070b14 100%);
+      transition: opacity 0.3s ease;
+    }
+
+    html.light .liquid-bg {
+      background:
+        radial-gradient(circle at 15% 15%, rgba(56, 189, 248, 0.18), transparent 45%),
+        radial-gradient(circle at 85% 20%, rgba(99, 102, 241, 0.15), transparent 45%),
+        radial-gradient(circle at 50% 85%, rgba(16, 185, 129, 0.15), transparent 50%),
+        linear-gradient(160deg, #f1f5f9 0%, #e2e8f0 55%, #f8fafc 100%);
     }
 
     .orb {
       position: fixed;
       border-radius: 9999px;
-      filter: blur(75px);
+      filter: blur(85px);
       z-index: -1;
-      opacity: 0.5;
+      opacity: 0.28;
       pointer-events: none;
-      animation: floatOrb 18s ease-in-out infinite alternate;
+      animation: floatOrb 22s ease-in-out infinite alternate;
     }
-    .orb-1 { width: 300px; height: 300px; background: #6366f1; top: -60px; right: -50px; }
-    .orb-2 { width: 260px; height: 260px; background: #10b981; bottom: 8%; left: -60px; animation-delay: -6s; }
-    .orb-3 { width: 230px; height: 230px; background: #d946ef; top: 38%; left: 25%; animation-delay: -11s; }
+    .orb-1 { width: 320px; height: 320px; background: #0ea5e9; top: -80px; right: -60px; }
+    .orb-2 { width: 280px; height: 280px; background: #10b981; bottom: 6%; left: -70px; animation-delay: -8s; }
+    .orb-3 { width: 240px; height: 240px; background: #6366f1; top: 42%; left: 30%; animation-delay: -14s; }
 
     @keyframes floatOrb {
       0% { transform: translate(0, 0) scale(1); }
-      100% { transform: translate(25px, -30px) scale(1.12); }
+      100% { transform: translate(20px, -25px) scale(1.08); }
     }
 
     .liquid-glass {
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.13) 0%, rgba(255, 255, 255, 0.04) 100%);
-      backdrop-filter: blur(28px) saturate(190%);
-      -webkit-backdrop-filter: blur(28px) saturate(190%);
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      box-shadow:
-        0 18px 40px -15px rgba(0, 0, 0, 0.55),
-        inset 0 1px 1px 0 rgba(255, 255, 255, 0.28),
-        inset 0 -1px 1px 0 rgba(255, 255, 255, 0.05);
+      background: var(--glass-bg);
+      backdrop-filter: blur(28px) saturate(185%);
+      -webkit-backdrop-filter: blur(28px) saturate(185%);
+      border: 1px solid var(--glass-border);
+      box-shadow: var(--glass-shadow);
     }
 
     .liquid-card {
-      background: linear-gradient(145deg, rgba(255, 255, 255, 0.10) 0%, rgba(255, 255, 255, 0.03) 100%);
-      backdrop-filter: blur(24px) saturate(180%);
-      -webkit-backdrop-filter: blur(24px) saturate(180%);
-      border: 1px solid rgba(255, 255, 255, 0.14);
-      box-shadow:
-        0 10px 30px -10px rgba(0, 0, 0, 0.4),
-        inset 0 1px 0 0 rgba(255, 255, 255, 0.22);
+      background: var(--card-bg);
+      backdrop-filter: blur(22px) saturate(175%);
+      -webkit-backdrop-filter: blur(22px) saturate(175%);
+      border: 1px solid var(--card-border);
+      box-shadow: 0 8px 24px -8px rgba(0, 0, 0, 0.22);
       transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .liquid-pill {
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0.05) 100%);
+      background: var(--pill-bg);
       backdrop-filter: blur(20px) saturate(180%);
       -webkit-backdrop-filter: blur(20px) saturate(180%);
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.25);
+      border: 1px solid var(--card-border);
       transition: all 0.2s ease;
     }
     .liquid-pill:active { transform: scale(0.96); }
 
     .liquid-input {
-      background: rgba(15, 23, 42, 0.55);
+      background: var(--input-bg);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.35);
-      color: #ffffff;
+      border: 1px solid var(--card-border);
+      color: var(--text-main);
       transition: all 0.2s ease;
     }
     .liquid-input:focus {
-      border-color: rgba(129, 140, 248, 0.8);
-      background: rgba(15, 23, 42, 0.78);
-      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25), inset 0 2px 6px rgba(0, 0, 0, 0.35);
+      border-color: rgba(56, 189, 248, 0.8);
+      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2);
       outline: none;
     }
 
     .liquid-dock {
-      background: linear-gradient(180deg, rgba(22, 30, 55, 0.82) 0%, rgba(12, 17, 34, 0.92) 100%);
+      background: var(--dock-bg);
       backdrop-filter: blur(32px) saturate(200%);
       -webkit-backdrop-filter: blur(32px) saturate(200%);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      box-shadow:
-        0 20px 50px rgba(0, 0, 0, 0.75),
-        inset 0 1px 1px rgba(255, 255, 255, 0.3);
+      border: 1px solid var(--glass-border);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55);
     }
 
-    .brand-circle-icon {
-      width: 42px;
-      height: 42px;
+    /* دایره پروفایل کاربر در هدر با هاله نوری فید و بدون کادر سفید */
+    .profile-avatar-btn {
+      width: 44px;
+      height: 44px;
       border-radius: 9999px;
-      background: radial-gradient(circle at 30% 25%, #818cf8 0%, #6366f1 45%, #9333ea 100%);
+      background: radial-gradient(circle at 30% 25%, #38bdf8 0%, #6366f1 55%, #0f172a 100%);
       box-shadow:
-        0 0 24px rgba(99, 102, 241, 0.6),
-        0 4px 12px rgba(0, 0, 0, 0.4),
-        inset 0 2px 5px rgba(255, 255, 255, 0.35);
+        0 0 22px rgba(56, 189, 248, 0.45),
+        0 4px 12px rgba(0, 0, 0, 0.35);
+      position: relative;
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
+      transition: transform 0.2s ease;
     }
+    .profile-avatar-btn:active { transform: scale(0.93); }
 
     .center-plus-btn {
-      background: radial-gradient(circle at 30% 25%, #818cf8 0%, #6366f1 45%, #a855f7 100%);
-      box-shadow:
-        0 10px 28px -4px rgba(99, 102, 241, 0.7),
-        inset 0 2px 5px rgba(255, 255, 255, 0.45);
+      background: linear-gradient(135deg, #0ea5e9 0%, #6366f1 100%);
+      box-shadow: 0 10px 26px -4px rgba(14, 165, 233, 0.65), inset 0 2px 4px rgba(255, 255, 255, 0.4);
       transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
     .center-plus-btn:active { transform: scale(0.92); }
 
-    .nav-btn.active { color: #ffffff; }
+    .nav-btn.active { color: #38bdf8; }
     .nav-btn.active .nav-icon-box {
-      background: rgba(99, 102, 241, 0.28);
-      border: 1px solid rgba(129, 140, 248, 0.45);
-      box-shadow: 0 0 16px rgba(99, 102, 241, 0.35);
-      color: #a5b4fc;
+      background: rgba(56, 189, 248, 0.18);
+      border: 1px solid rgba(56, 189, 248, 0.4);
+      box-shadow: 0 0 16px rgba(56, 189, 248, 0.25);
+      color: #38bdf8;
+    }
+
+    .desktop-nav-btn.active {
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.22) 0%, rgba(99, 102, 241, 0.18) 100%);
+      border-color: rgba(56, 189, 248, 0.45);
+      color: #38bdf8;
+      box-shadow: 0 8px 20px -6px rgba(14, 165, 233, 0.25);
     }
 
     .view-section {
@@ -250,30 +289,65 @@
       display: inline-block;
       font-variant-numeric: tabular-nums;
     }
+
+    /* تطبیق رنگ متن‌ها در حالت روشن */
+    html.light .text-white { color: #0f172a !important; }
+    html.light .text-slate-300 { color: #475569 !important; }
+    html.light .text-slate-400 { color: #64748b !important; }
+    html.light .text-indigo-200, html.light .text-indigo-300 { color: #4f46e5 !important; }
+    html.light .text-emerald-300, html.light .text-emerald-200 { color: #059669 !important; }
+    html.light .text-rose-300, html.light .text-rose-200 { color: #e11d48 !important; }
+    html.light .text-amber-300, html.light .text-amber-200 { color: #d97706 !important; }
+    html.light .bg-slate-950\/60, html.light .bg-slate-950\/50 { background-color: rgba(226, 232, 240, 0.75) !important; }
   </style>
 </head>
-<body class="pb-36 selection:bg-indigo-500 selection:text-white">
+<body class="pb-32 lg:pb-10 selection:bg-sky-500 selection:text-white">
 
   <div class="liquid-bg"></div>
   <div class="orb orb-1"></div>
   <div class="orb orb-2"></div>
   <div class="orb orb-3"></div>
 
+  <!-- بنر هشدار نوتیفیکیشن سررسید اقساط -->
+  <div id="dueNotificationBanner" class="hidden max-w-7xl mx-auto px-3 sm:px-6 pt-3">
+    <div class="liquid-glass rounded-2xl p-3.5 border border-amber-400/50 bg-amber-500/10 flex items-center justify-between gap-3">
+      <div class="flex items-center gap-2.5 min-w-0">
+        <div class="w-9 h-9 rounded-xl bg-amber-500/25 text-amber-300 flex items-center justify-center shrink-0 animate-bounce">
+          <i data-lucide="bell-ring" class="w-5 h-5"></i>
+        </div>
+        <div class="min-w-0">
+          <h4 id="dueBannerTitle" class="text-xs sm:text-sm font-black text-white truncate">یادآور سررسید قسط</h4>
+          <p id="dueBannerDesc" class="text-[11px] text-slate-300 truncate"></p>
+        </div>
+      </div>
+      <button onclick="document.getElementById('dueNotificationBanner').classList.add('hidden')" class="p-1.5 rounded-lg liquid-pill text-slate-300">
+        <i data-lucide="x" class="w-4 h-4"></i>
+      </button>
+    </div>
+  </div>
+
   <!-- ========================================================= -->
-  <!-- هدر فوق‌العاده خلوت و متقارن (فقط نام اپ + کپسول تاریخ)   -->
+  <!-- هدر بالا: دایره پروفایل کاربر (ورود به تنظیمات) + تاریخ زنده -->
   <!-- ========================================================= -->
   <header class="sticky top-0 z-30 px-3 sm:px-6 pt-3 pb-2">
-    <div class="max-w-4xl mx-auto liquid-glass rounded-full px-3.5 py-2.5 flex items-center justify-between gap-2">
+    <div class="max-w-7xl mx-auto liquid-glass rounded-full px-3.5 py-2 flex items-center justify-between gap-2">
       
-      <!-- سمت راست: فقط آیکون دایره‌ای فید شده + عنوان جیب‌بان -->
-      <div class="flex items-center gap-2.5 shrink-0">
-        <div class="brand-circle-icon">
-          <i data-lucide="wallet" class="w-5 h-5 text-white"></i>
+      <!-- دایره عکس پروفایل کاربر (کلیک = باز شدن تنظیمات و پروفایل) -->
+      <button onclick="switchView('settings')" class="flex items-center gap-2.5 shrink-0 text-right group" title="پروفایل و تنظیمات">
+        <div id="headerAvatarCircle" class="profile-avatar-btn">
+          <span id="headerAvatarContent" class="text-lg">😎</span>
+          <span id="headerProCrown" class="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-amber-400 text-slate-950 flex items-center justify-center text-[9px] font-black shadow">★</span>
         </div>
-        <h1 class="text-base sm:text-lg font-black tracking-tight text-white">جیب‌بان</h1>
-      </div>
+        <div>
+          <div class="flex items-center gap-1.5">
+            <h1 id="appBrandTitle" class="text-base sm:text-lg font-black tracking-tight text-white group-hover:text-sky-400 transition">جیب‌بان</h1>
+            <span id="headerPlanBadge" class="text-[9px] font-extrabold px-2 py-0.5 rounded-full bg-sky-500/20 text-sky-300 border border-sky-400/30">BETA</span>
+          </div>
+          <p id="headerUserNameSub" class="text-[10px] text-slate-400 font-bold truncate max-w-[110px] sm:max-w-[180px]">پروفایل و تنظیمات</p>
+        </div>
+      </button>
 
-      <!-- سمت چپ: کپسول یکدست تاریخ زنده امروز / آرشیو ماه‌ها -->
+      <!-- کپسول یکدست تاریخ زنده امروز و ماشین زمان مالی -->
       <div class="flex items-center gap-1.5 shrink-0">
         <button id="returnTodayBtn" onclick="jumpToTodayPeriod()" class="hidden w-8 h-8 rounded-full bg-amber-500/20 border border-amber-400/40 text-amber-300 flex items-center justify-center shadow" title="بازگشت به امروز">
           <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
@@ -281,7 +355,7 @@
 
         <button onclick="openPeriodSheet()" id="headerDateCapsule" class="liquid-pill px-3.5 py-2 rounded-full flex items-center gap-1.5 text-xs font-extrabold text-white hover:bg-white/15">
           <span id="livePulseDot" class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-          <span id="headerDateText">امروز: ۲۱ مهر ۱۴۰۵</span>
+          <span id="headerDateText">...</span>
           <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-slate-300"></i>
         </button>
       </div>
@@ -289,324 +363,569 @@
     </div>
   </header>
 
-  <!-- محتوای اصلی -->
-  <main class="max-w-4xl mx-auto px-3 sm:px-6 pt-2">
+  <!-- ========================================================= -->
+  <!-- چیدمان واکنش‌گرا: سایدبار اختصاصی دسکتاپ + محتوای اصلی     -->
+  <!-- ========================================================= -->
+  <div class="max-w-7xl mx-auto px-3 sm:px-6 pt-3 lg:grid lg:grid-cols-12 lg:gap-6 items-start">
 
-    <!-- ========================================== -->
-    <!-- منوی ۱: داشبورد                            -->
-    <!-- ========================================== -->
-    <section id="view-dashboard" class="view-section active space-y-4">
-      
-      <div class="liquid-glass rounded-[28px] p-5 sm:p-7 relative overflow-hidden">
-        <div class="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-white/10">
-          <div>
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/15 text-xs font-bold text-indigo-200 mb-2.5">
-              <span>موجودی قابل خرج در <span class="active-period-text">مهر ۱۴۰۵</span></span>
-            </div>
-            <div class="flex items-baseline gap-2">
-              <h2 id="heroNetBalance" class="text-3xl sm:text-5xl font-black tracking-tight text-white ltr-num">۰</h2>
-              <span class="text-sm font-medium text-slate-300">تومان</span>
-            </div>
-            <p class="text-xs text-slate-300/80 mt-1.5">مانده خالص پس از کسر هزینه‌های جاری و اقساط پرداخت‌شده در این ماه</p>
+    <!-- سایدبار مخصوص دسکتاپ (فقط در صفحات بزرگ نمایش داده می‌شود) -->
+    <aside class="hidden lg:flex lg:col-span-3 xl:col-span-3 flex-col gap-3 sticky top-24">
+      <div class="liquid-glass rounded-[28px] p-4 space-y-2">
+        <button onclick="openTxModal('expense')" class="w-full py-3.5 px-4 rounded-2xl center-plus-btn text-white font-black text-sm flex items-center justify-center gap-2 mb-3">
+          <i data-lucide="plus-circle" class="w-5 h-5"></i>
+          <span data-i18n="btnQuickAdd">ثبت تراکنش جدید</span>
+        </button>
+
+        <button onclick="switchView('dashboard')" id="dnav-dashboard" class="desktop-nav-btn active w-full p-3.5 rounded-2xl border border-transparent flex items-center gap-3 text-sm font-extrabold text-slate-300 hover:bg-white/5 transition">
+          <i data-lucide="layout-grid" class="w-5 h-5"></i>
+          <span data-i18n="navDashboard">داشبورد</span>
+        </button>
+
+        <button onclick="switchView('transactions')" id="dnav-transactions" class="desktop-nav-btn w-full p-3.5 rounded-2xl border border-transparent flex items-center gap-3 text-sm font-extrabold text-slate-300 hover:bg-white/5 transition">
+          <i data-lucide="arrow-left-right" class="w-5 h-5"></i>
+          <span data-i18n="navTransactions">تراکنش‌ها</span>
+        </button>
+
+        <button onclick="switchView('installments')" id="dnav-installments" class="desktop-nav-btn w-full p-3.5 rounded-2xl border border-transparent flex items-center justify-between text-sm font-extrabold text-slate-300 hover:bg-white/5 transition">
+          <div class="flex items-center gap-3">
+            <i data-lucide="calendar-clock" class="w-5 h-5"></i>
+            <span data-i18n="navInstallments">اقساط و وام‌ها</span>
           </div>
+          <span id="desktopUnpaidBadge" class="hidden text-[11px] px-2 py-0.5 rounded-full bg-rose-500 text-white font-black">0</span>
+        </button>
 
-          <div class="liquid-card rounded-2xl px-4 py-3 text-center min-w-[125px] self-start sm:self-center">
-            <span class="text-[11px] text-slate-300 block mb-0.5">نرخ پس‌انداز</span>
-            <span id="heroSavingsRate" class="text-2xl font-black text-emerald-400 ltr-num">۰٪</span>
-          </div>
-        </div>
+        <button onclick="switchView('reports')" id="dnav-reports" class="desktop-nav-btn w-full p-3.5 rounded-2xl border border-transparent flex items-center gap-3 text-sm font-extrabold text-slate-300 hover:bg-white/5 transition">
+          <i data-lucide="pie-chart" class="w-5 h-5"></i>
+          <span data-i18n="navReports">گزارش‌ها</span>
+        </button>
 
-        <div class="relative z-10 grid grid-cols-1 sm:grid-cols-3 gap-3 pt-5">
-          <div class="liquid-card rounded-2xl p-4 flex items-center justify-between">
-            <div>
-              <span class="text-xs text-slate-300 block mb-1">کل درآمد ماه</span>
-              <div class="flex items-baseline gap-1">
-                <span id="dashIncome" class="text-lg font-extrabold text-emerald-300 ltr-num">۰</span>
-                <span class="text-[11px] text-slate-400">تومان</span>
-              </div>
-              <span id="dashIncomeCount" class="text-[11px] text-slate-400 mt-1 block">۰ واریزی ثبت‌شده</span>
-            </div>
-            <div class="w-10 h-10 rounded-2xl bg-emerald-500/20 border border-emerald-400/30 flex items-center justify-center text-emerald-300">
-              <i data-lucide="arrow-down-left" class="w-5 h-5"></i>
-            </div>
-          </div>
-
-          <div class="liquid-card rounded-2xl p-4 flex items-center justify-between">
-            <div>
-              <span class="text-xs text-slate-300 block mb-1">هزینه‌های جاری</span>
-              <div class="flex items-baseline gap-1">
-                <span id="dashExpense" class="text-lg font-extrabold text-rose-300 ltr-num">۰</span>
-                <span class="text-[11px] text-slate-400">تومان</span>
-              </div>
-              <span id="dashExpenseRatio" class="text-[11px] text-slate-400 mt-1 block">۰٪ از درآمد</span>
-            </div>
-            <div class="w-10 h-10 rounded-2xl bg-rose-500/20 border border-rose-400/30 flex items-center justify-center text-rose-300">
-              <i data-lucide="arrow-up-right" class="w-5 h-5"></i>
-            </div>
-          </div>
-
-          <div class="liquid-card rounded-2xl p-4 flex items-center justify-between">
-            <div>
-              <span class="text-xs text-slate-300 block mb-1">اقساط پرداختی ماه</span>
-              <div class="flex items-baseline gap-1">
-                <span id="dashInstallmentsPaid" class="text-lg font-extrabold text-amber-300 ltr-num">۰</span>
-                <span id="dashInstallmentsTotalSub" class="text-[11px] text-slate-400">از ۰ ت</span>
-              </div>
-              <span id="dashInstallmentStatus" class="text-[11px] text-slate-400 mt-1 block">۰ از ۰ قسط</span>
-            </div>
-            <div class="w-10 h-10 rounded-2xl bg-amber-500/20 border border-amber-400/30 flex items-center justify-center text-amber-300">
-              <i data-lucide="calendar-clock" class="w-5 h-5"></i>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- نوار هوشمند بودجه -->
-      <div class="liquid-glass rounded-[24px] p-5">
-        <div class="flex items-center justify-between gap-2 mb-3">
-          <div class="flex items-center gap-2.5">
-            <div class="w-9 h-9 rounded-xl bg-indigo-500/25 border border-indigo-400/30 flex items-center justify-center text-indigo-300 shrink-0">
-              <i data-lucide="sparkles" class="w-4 h-4"></i>
-            </div>
-            <div>
-              <h3 class="text-sm font-bold text-white">تراز هوشمند بودجه ماه</h3>
-              <p id="healthMessage" class="text-xs text-slate-300 mt-0.5">...</p>
-            </div>
-          </div>
-          <span id="healthBadge" class="text-[11px] font-bold px-3 py-1 rounded-full bg-white/10 text-slate-200 shrink-0">نرمال</span>
-        </div>
-
-        <div class="h-3.5 w-full bg-slate-950/60 rounded-full overflow-hidden flex p-0.5 gap-0.5 border border-white/10">
-          <div id="barExpense" class="bg-gradient-to-l from-rose-500 to-pink-500 h-full rounded-r-full transition-all duration-500" style="width: 0%"></div>
-          <div id="barInstallment" class="bg-gradient-to-l from-amber-500 to-orange-400 h-full transition-all duration-500" style="width: 0%"></div>
-          <div id="barRemain" class="bg-gradient-to-l from-emerald-500 to-teal-400 h-full rounded-l-full transition-all duration-500" style="width: 0%"></div>
-        </div>
-
-        <div class="flex items-center justify-between mt-3 text-xs text-slate-300">
-          <span>هزینه‌ها: <strong id="lblExpensePct" class="text-white">۰٪</strong></span>
-          <span>اقساط: <strong id="lblInstPct" class="text-white">۰٪</strong></span>
-          <span>مانده: <strong id="lblRemainPct" class="text-white">۰٪</strong></span>
-        </div>
-      </div>
-
-      <!-- ۲ کارت خلاصه وضعیت با تشخیص دقیق نزدیک‌ترین قسط بر اساس تاریخ امروز -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div class="liquid-glass rounded-[24px] p-5 flex flex-col justify-between">
-          <div>
-            <div class="flex items-center justify-between mb-3">
-              <span class="text-xs font-bold text-amber-300 bg-amber-500/15 border border-amber-400/25 px-2.5 py-1 rounded-xl">وضعیت ددلاین اقساط</span>
-              <i data-lucide="bell-ring" class="w-5 h-5 text-amber-300"></i>
-            </div>
-            <h4 id="dashSummaryInstTitle" class="text-base font-extrabold text-white">بررسی اقساط ماه</h4>
-            <p id="dashSummaryInstDesc" class="text-xs text-slate-300 mt-1.5 leading-relaxed">...</p>
-          </div>
-          <button onclick="switchView('installments')" class="mt-4 w-full liquid-pill py-2.5 px-4 rounded-xl text-xs font-bold text-amber-200 hover:bg-white/15 flex items-center justify-center gap-1.5">
-            <span>مشاهده و پرداخت اقساط</span>
-            <i data-lucide="arrow-left" class="w-4 h-4"></i>
-          </button>
-        </div>
-
-        <div class="liquid-glass rounded-[24px] p-5 flex flex-col justify-between">
-          <div>
-            <div class="flex items-center justify-between mb-3">
-              <span class="text-xs font-bold text-indigo-300 bg-indigo-500/15 border border-indigo-400/25 px-2.5 py-1 rounded-xl">خلاصه تراکنش‌ها</span>
-              <i data-lucide="receipt" class="w-5 h-5 text-indigo-300"></i>
-            </div>
-            <h4 id="dashSummaryTxTitle" class="text-base font-extrabold text-white">تراکنش‌های ثبت‌شده</h4>
-            <p id="dashSummaryTxDesc" class="text-xs text-slate-300 mt-1.5 leading-relaxed">...</p>
-          </div>
-          <button onclick="switchView('transactions')" class="mt-4 w-full liquid-pill py-2.5 px-4 rounded-xl text-xs font-bold text-indigo-200 hover:bg-white/15 flex items-center justify-center gap-1.5">
-            <span>مدیریت دخل‌وخرج</span>
-            <i data-lucide="arrow-left" class="w-4 h-4"></i>
+        <div class="pt-2 border-t border-white/10">
+          <button onclick="switchView('settings')" id="dnav-settings" class="desktop-nav-btn w-full p-3.5 rounded-2xl border border-transparent flex items-center gap-3 text-sm font-extrabold text-slate-300 hover:bg-white/5 transition">
+            <i data-lucide="settings" class="w-5 h-5"></i>
+            <span data-i18n="navSettings">پروفایل و تنظیمات</span>
           </button>
         </div>
       </div>
 
-    </section>
-
-    <!-- ========================================== -->
-    <!-- منوی ۲: تراکنش‌ها                          -->
-    <!-- ========================================== -->
-    <section id="view-transactions" class="view-section space-y-4">
-      
-      <div class="liquid-glass rounded-[24px] p-4 space-y-3">
-        <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5">
-          <div class="grid grid-cols-3 gap-1.5 bg-slate-950/50 p-1 rounded-2xl border border-white/10">
-            <button onclick="setTxTypeFilter('all')" id="txTab-all" class="py-2 px-3 rounded-xl text-xs font-bold transition bg-indigo-600 text-white shadow">همه</button>
-            <button onclick="setTxTypeFilter('income')" id="txTab-income" class="py-2 px-3 rounded-xl text-xs font-bold transition text-slate-300">درآمدها</button>
-            <button onclick="setTxTypeFilter('expense')" id="txTab-expense" class="py-2 px-3 rounded-xl text-xs font-bold transition text-slate-300">هزینه‌ها</button>
-          </div>
-
-          <div class="relative flex-1">
-            <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute right-3.5 top-1/2 -translate-y-1/2"></i>
-            <input id="txSearchInput" type="text" oninput="renderAll()" placeholder="جستجو در عنوان یا دسته..." class="w-full liquid-input rounded-2xl pr-10 pl-3 py-2 text-xs sm:text-sm" />
-          </div>
-        </div>
-
-        <div id="txCategoryPills" class="flex items-center gap-1.5 overflow-x-auto pb-1 pt-0.5"></div>
-      </div>
-
-      <div class="liquid-glass rounded-[26px] p-4 sm:p-5">
-        <div class="flex items-center justify-between mb-4 pb-3 border-b border-white/10">
-          <div class="flex items-center gap-2">
-            <h3 class="text-sm sm:text-base font-extrabold text-white">تراکنش‌های <span class="active-period-text text-indigo-300"></span></h3>
-            <span id="txTotalBadge" class="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-white/10 text-slate-200">۰ مورد</span>
-          </div>
-          <button onclick="openTxModal('expense')" class="liquid-pill px-3 py-1.5 rounded-xl text-xs font-bold text-indigo-200 flex items-center gap-1">
-            <i data-lucide="plus" class="w-3.5 h-3.5"></i>
-            <span>ثبت جدید</span>
-          </button>
-        </div>
-
-        <div id="txCardsContainer" class="space-y-2.5"></div>
-      </div>
-
-    </section>
-
-    <!-- ========================================== -->
-    <!-- منوی ۳: مدیریت اقساط، وام‌ها و تک‌قسط‌ها   -->
-    <!-- ========================================== -->
-    <section id="view-installments" class="view-section space-y-4">
-      
-      <div class="liquid-glass rounded-[26px] p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div class="space-y-1">
-          <span class="text-xs font-bold text-amber-300 flex items-center gap-1.5">
-            <i data-lucide="landmark" class="w-4 h-4"></i>
-            <span>کل بدهی باقی‌مانده وام‌ها و اعتبارهای تک‌قسطی</span>
+      <!-- کارت کوچک وضعیت اشتراک در دسکتاپ -->
+      <div class="liquid-glass rounded-[24px] p-4 space-y-2">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-bold text-amber-300 flex items-center gap-1">
+            <i data-lucide="crown" class="w-4 h-4"></i>
+            <span id="sidebarSubTitle">نسخه بتا فعال</span>
           </span>
-          <div class="flex items-baseline gap-2">
-            <h3 id="instTotalRemainingDebt" class="text-2xl sm:text-3xl font-black text-white ltr-num">۰</h3>
-            <span class="text-xs text-slate-300">تومان</span>
-          </div>
-          <p id="instOverallProgressSub" class="text-xs text-slate-300/80">...</p>
         </div>
-
-        <div class="flex flex-wrap items-center gap-2 shrink-0">
-          <button onclick="openInstModal('single')" class="liquid-pill px-3.5 py-2.5 rounded-2xl text-xs font-bold text-purple-200 border-purple-400/30 flex items-center gap-1.5 hover:bg-white/15">
-            <i data-lucide="zap" class="w-4 h-4 text-purple-300"></i>
-            <span>ثبت تک‌قسط (دیجی‌پی/اسنپ‌پی)</span>
-          </button>
-          <button onclick="openInstModal('recurring')" class="liquid-pill px-3.5 py-2.5 rounded-2xl text-xs font-bold text-amber-200 border-amber-400/30 flex items-center gap-1.5 hover:bg-white/15">
-            <i data-lucide="plus-circle" class="w-4 h-4 text-amber-300"></i>
-            <span>افزودن وام دوره‌ای</span>
-          </button>
-        </div>
+        <p id="sidebarSubDesc" class="text-[11px] text-slate-300 leading-relaxed">تمامی امکانات پیشرفته در نسخه آزمایشی برای شما باز است.</p>
       </div>
+    </aside>
 
-      <!-- راهنمای رنگ‌بندی ددلاین‌ها -->
-      <div class="flex flex-wrap items-center justify-between gap-2 px-2 text-[11px] text-slate-300">
-        <span class="font-bold">راهنمای وضعیت سررسید:</span>
-        <div class="flex items-center gap-3">
-          <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>بیش از ۱۵ روز</span>
-          <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span>۳ تا ۱۵ روز</span>
-          <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span>کمتر از ۳ روز / معوقه</span>
-        </div>
-      </div>
+    <!-- ستون محتوای اصلی -->
+    <main class="lg:col-span-9 xl:col-span-9 space-y-4">
 
-      <div id="instCardsGrid" class="grid grid-cols-1 md:grid-cols-2 gap-3.5"></div>
+      <!-- ========================================== -->
+      <!-- منوی ۱: داشبورد                            -->
+      <!-- ========================================== -->
+      <section id="view-dashboard" class="view-section active space-y-4">
+        
+        <div class="liquid-glass rounded-[28px] p-5 sm:p-7 relative overflow-hidden">
+          <div class="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-white/10">
+            <div>
+              <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/15 text-xs font-bold text-sky-300 mb-2.5">
+                <span data-i18n="availBalanceIn">موجودی قابل خرج در</span>
+                <span class="active-period-text"></span>
+              </div>
+              <div class="flex items-baseline gap-2">
+                <h2 id="heroNetBalance" class="text-3xl sm:text-5xl font-black tracking-tight text-white ltr-num">0</h2>
+                <span class="currency-label text-sm font-medium text-slate-300">تومان</span>
+              </div>
+              <p data-i18n="heroSubText" class="text-xs text-slate-300/80 mt-1.5">مانده خالص پس از کسر هزینه‌های جاری و اقساط پرداخت‌شده در این ماه</p>
+            </div>
 
-    </section>
-
-    <!-- ========================================== -->
-    <!-- منوی ۴: گزارش‌ها و پشتیبان‌گیری            -->
-    <!-- ========================================== -->
-    <section id="view-reports" class="view-section space-y-4">
-      
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
-        <div class="lg:col-span-5 liquid-glass rounded-[26px] p-5 flex flex-col justify-between">
-          <div>
-            <h3 class="text-sm font-bold text-white flex items-center gap-2">
-              <i data-lucide="pie-chart" class="w-4 h-4 text-indigo-300"></i>
-              <span>سهم مخارج در <span class="active-period-text text-indigo-300"></span></span>
-            </h3>
+            <div class="liquid-card rounded-2xl px-4 py-3 text-center min-w-[125px] self-start sm:self-center">
+              <span data-i18n="savingsRate" class="text-[11px] text-slate-300 block mb-0.5">نرخ پس‌انداز</span>
+              <span id="heroSavingsRate" class="text-2xl font-black text-emerald-400 ltr-num">0%</span>
+            </div>
           </div>
-          <div class="relative h-60 flex items-center justify-center my-2">
-            <canvas id="expenseDoughnutChart"></canvas>
-            <div id="doughnutEmptyState" class="hidden absolute inset-0 flex flex-col items-center justify-center text-slate-400">
-              <i data-lucide="inbox" class="w-8 h-8 mb-1 opacity-50"></i>
-              <span class="text-xs">خرجی در این ماه ثبت نشده است</span>
+
+          <div class="relative z-10 grid grid-cols-1 sm:grid-cols-3 gap-3 pt-5">
+            <div class="liquid-card rounded-2xl p-4 flex items-center justify-between">
+              <div>
+                <span data-i18n="totalIncome" class="text-xs text-slate-300 block mb-1">کل درآمد ماه</span>
+                <div class="flex items-baseline gap-1">
+                  <span id="dashIncome" class="text-lg font-extrabold text-emerald-300 ltr-num">0</span>
+                  <span class="currency-label text-[11px] text-slate-400">تومان</span>
+                </div>
+                <span id="dashIncomeCount" class="text-[11px] text-slate-400 mt-1 block">0</span>
+              </div>
+              <div class="w-10 h-10 rounded-2xl bg-emerald-500/20 border border-emerald-400/30 flex items-center justify-center text-emerald-300">
+                <i data-lucide="arrow-down-left" class="w-5 h-5"></i>
+              </div>
+            </div>
+
+            <div class="liquid-card rounded-2xl p-4 flex items-center justify-between">
+              <div>
+                <span data-i18n="currentExpenses" class="text-xs text-slate-300 block mb-1">هزینه‌های جاری</span>
+                <div class="flex items-baseline gap-1">
+                  <span id="dashExpense" class="text-lg font-extrabold text-rose-300 ltr-num">0</span>
+                  <span class="currency-label text-[11px] text-slate-400">تومان</span>
+                </div>
+                <span id="dashExpenseRatio" class="text-[11px] text-slate-400 mt-1 block">0%</span>
+              </div>
+              <div class="w-10 h-10 rounded-2xl bg-rose-500/20 border border-rose-400/30 flex items-center justify-center text-rose-300">
+                <i data-lucide="arrow-up-right" class="w-5 h-5"></i>
+              </div>
+            </div>
+
+            <div class="liquid-card rounded-2xl p-4 flex items-center justify-between">
+              <div>
+                <span data-i18n="paidInstallments" class="text-xs text-slate-300 block mb-1">اقساط پرداختی ماه</span>
+                <div class="flex items-baseline gap-1">
+                  <span id="dashInstallmentsPaid" class="text-lg font-extrabold text-amber-300 ltr-num">0</span>
+                  <span id="dashInstallmentsTotalSub" class="text-[11px] text-slate-400"></span>
+                </div>
+                <span id="dashInstallmentStatus" class="text-[11px] text-slate-400 mt-1 block"></span>
+              </div>
+              <div class="w-10 h-10 rounded-2xl bg-amber-500/20 border border-amber-400/30 flex items-center justify-center text-amber-300">
+                <i data-lucide="calendar-clock" class="w-5 h-5"></i>
+              </div>
             </div>
           </div>
         </div>
 
-        <div class="lg:col-span-7 liquid-glass rounded-[26px] p-5 flex flex-col justify-between">
-          <div>
-            <h3 class="text-sm font-bold text-white flex items-center gap-2">
-              <i data-lucide="bar-chart-3" class="w-4 h-4 text-emerald-300"></i>
-              <span>مقایسه جریان نقدینگی ماه</span>
-            </h3>
+        <!-- نوار هوشمند بودجه -->
+        <div class="liquid-glass rounded-[24px] p-5">
+          <div class="flex items-center justify-between gap-2 mb-3">
+            <div class="flex items-center gap-2.5">
+              <div class="w-9 h-9 rounded-xl bg-sky-500/20 border border-sky-400/30 flex items-center justify-center text-sky-300 shrink-0">
+                <i data-lucide="sparkles" class="w-4 h-4"></i>
+              </div>
+              <div>
+                <h3 data-i18n="smartBudgetTitle" class="text-sm font-bold text-white">تراز هوشمند بودجه ماه</h3>
+                <p id="healthMessage" class="text-xs text-slate-300 mt-0.5">...</p>
+              </div>
+            </div>
+            <span id="healthBadge" class="text-[11px] font-bold px-3 py-1 rounded-full bg-white/10 text-slate-200 shrink-0">...</span>
           </div>
-          <div class="relative h-60 w-full my-2">
-            <canvas id="cashflowBarChart"></canvas>
+
+          <div class="h-3.5 w-full bg-slate-950/60 rounded-full overflow-hidden flex p-0.5 gap-0.5 border border-white/10">
+            <div id="barExpense" class="bg-gradient-to-l from-rose-500 to-pink-500 h-full rounded-r-full transition-all duration-500" style="width: 0%"></div>
+            <div id="barInstallment" class="bg-gradient-to-l from-amber-500 to-orange-400 h-full transition-all duration-500" style="width: 0%"></div>
+            <div id="barRemain" class="bg-gradient-to-l from-emerald-500 to-teal-400 h-full rounded-l-full transition-all duration-500" style="width: 0%"></div>
+          </div>
+
+          <div class="flex items-center justify-between mt-3 text-xs text-slate-300">
+            <span><span data-i18n="lblExpenses">هزینه‌ها</span>: <strong id="lblExpensePct" class="text-white">0%</strong></span>
+            <span><span data-i18n="lblInstallments">اقساط</span>: <strong id="lblInstPct" class="text-white">0%</strong></span>
+            <span><span data-i18n="lblRemaining">مانده</span>: <strong id="lblRemainPct" class="text-white">0%</strong></span>
           </div>
         </div>
-      </div>
 
-      <div class="liquid-glass rounded-[26px] p-5">
-        <h3 class="text-sm font-bold text-white mb-4 flex items-center gap-2">
-          <i data-lucide="layers" class="w-4 h-4 text-indigo-300"></i>
-          <span>موشکافی مخارج به تفکیک دسته‌بندی</span>
-        </h3>
-        <div id="categoryBreakdownList" class="space-y-3"></div>
-      </div>
+        <!-- ۲ کارت خلاصه وضعیت (سررسید اقساط + خلاصه تراکنش‌ها) -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="liquid-glass rounded-[24px] p-5 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-3">
+                <span data-i18n="installmentsDueBadge" class="text-xs font-bold text-amber-300 bg-amber-500/15 border border-amber-400/25 px-2.5 py-1 rounded-xl">سررسید اقساط</span>
+                <i data-lucide="bell-ring" class="w-5 h-5 text-amber-300"></i>
+              </div>
+              <h4 id="dashSummaryInstTitle" class="text-base font-extrabold text-white">...</h4>
+              <p id="dashSummaryInstDesc" class="text-xs text-slate-300 mt-1.5 leading-relaxed">...</p>
+            </div>
+            <button onclick="switchView('installments')" class="mt-4 w-full liquid-pill py-2.5 px-4 rounded-xl text-xs font-bold text-amber-200 hover:bg-white/15 flex items-center justify-center gap-1.5">
+              <span data-i18n="btnViewInstallments">مشاهده و پرداخت اقساط</span>
+              <i data-lucide="arrow-left" class="w-4 h-4"></i>
+            </button>
+          </div>
 
-      <div class="liquid-glass rounded-[26px] p-5 space-y-4">
-        <div>
-          <h3 class="text-sm font-bold text-white flex items-center gap-2">
-            <i data-lucide="shield-check" class="w-4 h-4 text-emerald-300"></i>
-            <span>پشتیبان‌گیری و مدیریت حافظه</span>
+          <div class="liquid-glass rounded-[24px] p-5 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-3">
+                <span data-i18n="txSummaryBadge" class="text-xs font-bold text-sky-300 bg-sky-500/15 border border-sky-400/25 px-2.5 py-1 rounded-xl">خلاصه تراکنش‌ها</span>
+                <i data-lucide="receipt" class="w-5 h-5 text-sky-300"></i>
+              </div>
+              <h4 id="dashSummaryTxTitle" class="text-base font-extrabold text-white">...</h4>
+              <p id="dashSummaryTxDesc" class="text-xs text-slate-300 mt-1.5 leading-relaxed">...</p>
+            </div>
+            <button onclick="switchView('transactions')" class="mt-4 w-full liquid-pill py-2.5 px-4 rounded-xl text-xs font-bold text-sky-200 hover:bg-white/15 flex items-center justify-center gap-1.5">
+              <span data-i18n="btnManageTx">مدیریت دخل‌وخرج</span>
+              <i data-lucide="arrow-left" class="w-4 h-4"></i>
+            </button>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ========================================== -->
+      <!-- منوی ۲: تراکنش‌ها (با فیلتر و مرتب‌سازی)   -->
+      <!-- ========================================== -->
+      <section id="view-transactions" class="view-section space-y-4">
+        
+        <div class="liquid-glass rounded-[24px] p-4 space-y-3">
+          <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5">
+            <!-- فیلتر نوع -->
+            <div class="grid grid-cols-3 gap-1.5 bg-slate-950/50 p-1 rounded-2xl border border-white/10">
+              <button onclick="setTxTypeFilter('all')" id="txTab-all" data-i18n="filterAll" class="py-2 px-3 rounded-xl text-xs font-bold transition bg-sky-600 text-white shadow">همه</button>
+              <button onclick="setTxTypeFilter('income')" id="txTab-income" data-i18n="filterIncomes" class="py-2 px-3 rounded-xl text-xs font-bold transition text-slate-300">درآمدها</button>
+              <button onclick="setTxTypeFilter('expense')" id="txTab-expense" data-i18n="filterExpenses" class="py-2 px-3 rounded-xl text-xs font-bold transition text-slate-300">هزینه‌ها</button>
+            </div>
+
+            <!-- جستجو -->
+            <div class="relative flex-1">
+              <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute right-3.5 top-1/2 -translate-y-1/2"></i>
+              <input id="txSearchInput" type="text" oninput="renderAll()" placeholder="جستجو در عنوان یا دسته..." class="w-full liquid-input rounded-2xl pr-10 pl-3 py-2 text-xs sm:text-sm" />
+            </div>
+          </div>
+
+          <!-- مرتب‌سازی تراکنش‌ها -->
+          <div class="flex items-center justify-between gap-2 pt-1 border-t border-white/10">
+            <span data-i18n="sortBy" class="text-[11px] font-bold text-slate-400 shrink-0">مرتب‌سازی:</span>
+            <div class="flex items-center gap-1.5 overflow-x-auto pb-0.5">
+              <button onclick="setTxSort('newest')" id="txSort-newest" data-i18n="sortNewest" class="px-2.5 py-1 rounded-lg text-[11px] font-bold bg-sky-500/25 text-sky-300 border border-sky-400/30 shrink-0">جدیدترین</button>
+              <button onclick="setTxSort('oldest')" id="txSort-oldest" data-i18n="sortOldest" class="px-2.5 py-1 rounded-lg text-[11px] font-bold liquid-pill text-slate-300 shrink-0">قدیمی‌ترین</button>
+              <button onclick="setTxSort('highest')" id="txSort-highest" data-i18n="sortHighest" class="px-2.5 py-1 rounded-lg text-[11px] font-bold liquid-pill text-slate-300 shrink-0">بیشترین مبلغ</button>
+              <button onclick="setTxSort('lowest')" id="txSort-lowest" data-i18n="sortLowest" class="px-2.5 py-1 rounded-lg text-[11px] font-bold liquid-pill text-slate-300 shrink-0">کمترین مبلغ</button>
+            </div>
+          </div>
+
+          <!-- چیپ‌های دسته‌بندی -->
+          <div id="txCategoryPills" class="flex items-center gap-1.5 overflow-x-auto pb-1 pt-0.5"></div>
+        </div>
+
+        <div class="liquid-glass rounded-[26px] p-4 sm:p-5">
+          <div class="flex items-center justify-between mb-4 pb-3 border-b border-white/10">
+            <div class="flex items-center gap-2">
+              <h3 class="text-sm sm:text-base font-extrabold text-white"><span data-i18n="txListTitle">تراکنش‌های</span> <span class="active-period-text text-sky-300"></span></h3>
+              <span id="txTotalBadge" class="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-white/10 text-slate-200">0</span>
+            </div>
+            <button onclick="openTxModal('expense')" class="liquid-pill px-3 py-1.5 rounded-xl text-xs font-bold text-sky-200 flex items-center gap-1">
+              <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+              <span data-i18n="btnAddNew">ثبت جدید</span>
+            </button>
+          </div>
+
+          <div id="txCardsContainer" class="space-y-2.5"></div>
+        </div>
+
+      </section>
+
+      <!-- ========================================== -->
+      <!-- منوی ۳: مدیریت اقساط و وام‌ها (بدون راهنما و برند) -->
+      <!-- ========================================== -->
+      <section id="view-installments" class="view-section space-y-4">
+        
+        <div class="liquid-glass rounded-[26px] p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div class="space-y-1">
+            <span class="text-xs font-bold text-amber-300 flex items-center gap-1.5">
+              <i data-lucide="landmark" class="w-4 h-4"></i>
+              <span data-i18n="totalRemainingDebtTitle">کل بدهی باقی‌مانده وام‌ها و تعهدات</span>
+            </span>
+            <div class="flex items-baseline gap-2">
+              <h3 id="instTotalRemainingDebt" class="text-2xl sm:text-3xl font-black text-white ltr-num">0</h3>
+              <span class="currency-label text-xs text-slate-300">تومان</span>
+            </div>
+            <p id="instOverallProgressSub" class="text-xs text-slate-300/80">...</p>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-2 shrink-0">
+            <button onclick="openInstModal('single')" class="liquid-pill px-3.5 py-2.5 rounded-2xl text-xs font-bold text-sky-200 border-sky-400/30 flex items-center gap-1.5 hover:bg-white/15">
+              <i data-lucide="zap" class="w-4 h-4 text-sky-300"></i>
+              <span data-i18n="btnAddSingleInst">ثبت تک‌قسط</span>
+            </button>
+            <button onclick="openInstModal('recurring')" class="liquid-pill px-3.5 py-2.5 rounded-2xl text-xs font-bold text-amber-200 border-amber-400/30 flex items-center gap-1.5 hover:bg-white/15">
+              <i data-lucide="plus-circle" class="w-4 h-4 text-amber-300"></i>
+              <span data-i18n="btnAddRecurringInst">افزودن وام دوره‌ای</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- تب‌بندی نوع قسط (همه / وام‌های دوره‌ای / تک‌قسط‌ها) + فیلتر وضعیت و مرتب‌سازی -->
+        <div class="liquid-glass rounded-[24px] p-4 space-y-3">
+          <!-- ۳ تب اصلی نمایش دسته‌بندی اقساط -->
+          <div class="grid grid-cols-3 gap-1.5 bg-slate-950/50 p-1 rounded-2xl border border-white/10">
+            <button onclick="setInstKindFilter('all')" id="instKind-all" data-i18n="instTabAll" class="py-2 px-3 rounded-xl text-xs font-bold transition bg-amber-500 text-slate-950 shadow">همه</button>
+            <button onclick="setInstKindFilter('recurring')" id="instKind-recurring" data-i18n="instTabRecurring" class="py-2 px-3 rounded-xl text-xs font-bold transition text-slate-300">وام‌های دوره‌ای</button>
+            <button onclick="setInstKindFilter('single')" id="instKind-single" data-i18n="instTabSingle" class="py-2 px-3 rounded-xl text-xs font-bold transition text-slate-300">تک‌قسط‌ها</button>
+          </div>
+
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 pt-1 border-t border-white/10">
+            <!-- فیلتر وضعیت پرداخت -->
+            <div class="flex items-center gap-1.5 overflow-x-auto pb-0.5">
+              <span data-i18n="statusLabel" class="text-[11px] font-bold text-slate-400 shrink-0">وضعیت:</span>
+              <button onclick="setInstStatusFilter('all')" id="instStat-all" data-i18n="filterAll" class="px-2.5 py-1 rounded-lg text-[11px] font-bold bg-sky-500/25 text-sky-300 border border-sky-400/30 shrink-0">همه</button>
+              <button onclick="setInstStatusFilter('unpaid')" id="instStat-unpaid" data-i18n="statusUnpaid" class="px-2.5 py-1 rounded-lg text-[11px] font-bold liquid-pill text-slate-300 shrink-0">پرداخت‌نشده</button>
+              <button onclick="setInstStatusFilter('paid')" id="instStat-paid" data-i18n="statusPaid" class="px-2.5 py-1 rounded-lg text-[11px] font-bold liquid-pill text-slate-300 shrink-0">پرداخت‌شده این ماه</button>
+              <button onclick="setInstStatusFilter('settled')" id="instStat-settled" data-i18n="statusSettled" class="px-2.5 py-1 rounded-lg text-[11px] font-bold liquid-pill text-slate-300 shrink-0">تسویه کامل</button>
+            </div>
+
+            <!-- مرتب‌سازی اقساط -->
+            <div class="flex items-center gap-1.5 overflow-x-auto pb-0.5">
+              <span data-i18n="sortBy" class="text-[11px] font-bold text-slate-400 shrink-0">چیدمان:</span>
+              <button onclick="setInstSort('deadline')" id="instSort-deadline" data-i18n="sortNearestDue" class="px-2.5 py-1 rounded-lg text-[11px] font-bold bg-amber-500/25 text-amber-300 border border-amber-400/30 shrink-0">نزدیک‌ترین سررسید</button>
+              <button onclick="setInstSort('amount')" id="instSort-amount" data-i18n="sortHighestInst" class="px-2.5 py-1 rounded-lg text-[11px] font-bold liquid-pill text-slate-300 shrink-0">بیشترین قسط</button>
+              <button onclick="setInstSort('debt')" id="instSort-debt" data-i18n="sortHighestDebt" class="px-2.5 py-1 rounded-lg text-[11px] font-bold liquid-pill text-slate-300 shrink-0">بیشترین بدهی مانده</button>
+            </div>
+          </div>
+        </div>
+
+        <div id="instCardsGrid" class="grid grid-cols-1 md:grid-cols-2 gap-3.5"></div>
+
+      </section>
+
+      <!-- ========================================== -->
+      <!-- منوی ۴: گزارش‌ها با ویجت‌های شیشه‌ای جدید  -->
+      <!-- ========================================== -->
+      <section id="view-reports" class="view-section space-y-4">
+        
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
+          <!-- ویجت حلقه نئونی شیشه‌ای (جایگزین نمودار دایره‌ای خشک) -->
+          <div class="lg:col-span-5 liquid-glass rounded-[26px] p-5 flex flex-col justify-between">
+            <div>
+              <h3 class="text-sm font-bold text-white flex items-center gap-2">
+                <i data-lucide="donut" class="w-4 h-4 text-sky-300"></i>
+                <span><span data-i18n="expenseShareIn">حلقه توزیع مخارج در</span> <span class="active-period-text text-sky-300"></span></span>
+              </h3>
+            </div>
+
+            <div id="neonRingContainer" class="my-4 flex flex-col items-center justify-center"></div>
+          </div>
+
+          <!-- ویجت ستون‌های مایع شیشه‌ای (جایگزین نمودار ستونی خشک) -->
+          <div class="lg:col-span-7 liquid-glass rounded-[26px] p-5 flex flex-col justify-between">
+            <div>
+              <h3 class="text-sm font-bold text-white flex items-center gap-2">
+                <i data-lucide="bar-chart-horizontal" class="w-4 h-4 text-emerald-300"></i>
+                <span data-i18n="cashflowComparisonTitle">کپسول‌های شیشه‌ای جریان نقدینگی</span>
+              </h3>
+              <p data-i18n="cashflowComparisonSub" class="text-xs text-slate-300 mt-0.5">مقایسه زنده درآمد، هزینه‌های جاری، اقساط و مانده پس‌انداز</p>
+            </div>
+
+            <div id="liquidCashflowBars" class="space-y-4 my-4"></div>
+          </div>
+        </div>
+
+        <!-- موشکافی دسته‌بندی‌ها -->
+        <div class="liquid-glass rounded-[26px] p-5">
+          <h3 class="text-sm font-bold text-white mb-4 flex items-center gap-2">
+            <i data-lucide="layers" class="w-4 h-4 text-sky-300"></i>
+            <span data-i18n="catBreakdownTitle">موشکافی مخارج به تفکیک دسته‌بندی</span>
           </h3>
-          <p class="text-xs text-slate-300 mt-1">تمام اطلاعات روی حافظه آیفون شما ذخیره می‌شود.</p>
+          <div id="categoryBreakdownList" class="space-y-3"></div>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-          <button onclick="exportDataJson()" class="liquid-pill p-3.5 rounded-2xl text-xs font-bold text-emerald-200 flex items-center justify-center gap-2">
-            <i data-lucide="download" class="w-4 h-4 text-emerald-300"></i>
-            <span>دانلود فایل پشتیبان (JSON)</span>
-          </button>
+      </section>
 
-          <label class="liquid-pill p-3.5 rounded-2xl text-xs font-bold text-indigo-200 flex items-center justify-center gap-2 cursor-pointer">
-            <i data-lucide="upload" class="w-4 h-4 text-indigo-300"></i>
-            <span>بازیابی از فایل پشتیبان</span>
-            <input type="file" accept=".json" class="hidden" onchange="importDataJson(event)" />
-          </label>
+      <!-- ========================================== -->
+      <!-- منوی ۵: پروفایل، اشتراک، زبان، تم و حافظه  -->
+      <!-- ========================================== -->
+      <section id="view-settings" class="view-section space-y-4">
+        
+        <!-- ۱. کارت پروفایل و ثبت‌نام کاربر -->
+        <div class="liquid-glass rounded-[28px] p-5 sm:p-6">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-white/10">
+            <div class="flex items-center gap-4">
+              <div class="w-16 h-16 rounded-full profile-avatar-btn text-2xl">
+                <span id="settingsAvatarPreview">😎</span>
+              </div>
+              <div>
+                <div class="flex items-center gap-2">
+                  <h3 id="settingsProfileNameDisplay" class="text-lg font-black text-white">کاربر جیب‌بان</h3>
+                  <span id="settingsActiveSubBadge" class="text-[10px] font-black px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-400/30">اشتراک ۱ ماهه (بتا)</span>
+                </div>
+                <p id="settingsProfileContactDisplay" class="text-xs text-slate-300 mt-1">حساب کاربری محلی فعال است</p>
+              </div>
+            </div>
+          </div>
 
-          <button onclick="clearAllDataToZero()" class="liquid-pill p-3.5 rounded-2xl text-xs font-bold text-rose-300 border-rose-500/30 flex items-center justify-center gap-2">
-            <i data-lucide="trash-2" class="w-4 h-4 text-rose-400"></i>
-            <span>پاکسازی کامل و شروع از صفر</span>
-          </button>
+          <form onsubmit="saveUserProfile(event)" class="pt-4 grid grid-cols-1 sm:grid-cols-12 gap-3 items-end">
+            <div class="sm:col-span-4">
+              <label data-i18n="lblYourName" class="block text-xs font-bold text-slate-300 mb-1.5">نام و نام خانوادگی</label>
+              <input id="profNameInput" type="text" placeholder="مثلاً: عادل عبداللهی" class="w-full liquid-input rounded-2xl px-3.5 py-2.5 text-xs sm:text-sm font-bold" />
+            </div>
+            <div class="sm:col-span-4">
+              <label data-i18n="lblPhoneOrEmail" class="block text-xs font-bold text-slate-300 mb-1.5">شماره موبایل یا ایمیل</label>
+              <input id="profContactInput" type="text" placeholder="0912... / Email" class="w-full liquid-input rounded-2xl px-3.5 py-2.5 text-xs sm:text-sm font-bold ltr-num" />
+            </div>
+            <div class="sm:col-span-2">
+              <label data-i18n="lblAvatar" class="block text-xs font-bold text-slate-300 mb-1.5">آواتار</label>
+              <div id="avatarEmojiPicker" class="flex items-center justify-between bg-slate-950/50 p-1.5 rounded-2xl border border-white/10">
+                <button type="button" onclick="selectAvatarEmoji('😎')" class="w-7 h-7 rounded-lg hover:bg-white/10 text-base">😎</button>
+                <button type="button" onclick="selectAvatarEmoji('🚀')" class="w-7 h-7 rounded-lg hover:bg-white/10 text-base">🚀</button>
+                <button type="button" onclick="selectAvatarEmoji('👑')" class="w-7 h-7 rounded-lg hover:bg-white/10 text-base">👑</button>
+                <button type="button" onclick="selectAvatarEmoji('💎')" class="w-7 h-7 rounded-lg hover:bg-white/10 text-base">💎</button>
+              </div>
+            </div>
+            <div class="sm:col-span-2">
+              <button type="submit" data-i18n="btnSaveProfile" class="w-full py-2.5 px-4 rounded-2xl bg-sky-500 hover:bg-sky-400 text-slate-950 font-black text-xs sm:text-sm transition">
+                ثبت پروفایل
+              </button>
+            </div>
+          </form>
         </div>
-      </div>
 
-    </section>
+        <!-- ۲. بخش اشتراک ویژه (۱ ماهه، ۳ ماهه، ۶ ماهه - نسخه بتا بدون درگاه خارجی) -->
+        <div class="liquid-glass rounded-[28px] p-5 sm:p-6 space-y-4">
+          <div class="flex items-center justify-between flex-wrap gap-2">
+            <div>
+              <h3 class="text-base font-black text-white flex items-center gap-2">
+                <i data-lucide="crown" class="w-5 h-5 text-amber-400"></i>
+                <span data-i18n="subSectionTitle">اشتراک ویژه جیب‌بان پلاس (نسخه آزمایشی بتا)</span>
+              </h3>
+              <p data-i18n="subSectionDesc" class="text-xs text-slate-300 mt-0.5">پلن دلخواه خود را انتخاب کنید؛ در نسخه بتا بدون نیاز به پرداخت، آنی روی پروفایل شما فعال می‌شود.</p>
+            </div>
+          </div>
 
-  </main>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
+            <!-- ۱ ماهه -->
+            <div onclick="selectSubscriptionPlan('1m')" id="planCard-1m" class="liquid-card rounded-[24px] p-4 cursor-pointer border-2 transition flex flex-col justify-between">
+              <div>
+                <span data-i18n="plan1mTitle" class="text-xs font-extrabold text-sky-300 block">اشتراک ۱ ماهه</span>
+                <div class="my-2 flex items-baseline gap-1">
+                  <span id="plan1mPrice" class="text-2xl font-black text-white ltr-num">۴۹,۰۰۰</span>
+                  <span class="currency-label text-[11px] text-slate-400">تومان</span>
+                </div>
+                <p data-i18n="plan1mSub" class="text-[11px] text-slate-300">دسترسی کامل به امکانات پایه و ابری</p>
+              </div>
+              <div id="planBtn-1m" class="mt-4 py-2 rounded-xl text-center text-xs font-black bg-white/10 text-white">انتخاب پلن</div>
+            </div>
+
+            <!-- ۳ ماهه -->
+            <div onclick="selectSubscriptionPlan('3m')" id="planCard-3m" class="liquid-card rounded-[24px] p-4 cursor-pointer border-2 transition flex flex-col justify-between relative overflow-hidden">
+              <div>
+                <div class="flex items-center justify-between">
+                  <span data-i18n="plan3mTitle" class="text-xs font-extrabold text-emerald-300">اشتراک ۳ ماهه</span>
+                  <span class="text-[10px] font-black px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300">15% OFF</span>
+                </div>
+                <div class="my-2 flex items-baseline gap-1">
+                  <span id="plan3mPrice" class="text-2xl font-black text-white ltr-num">۱۲۵,۰۰۰</span>
+                  <span class="currency-label text-[11px] text-slate-400">تومان</span>
+                </div>
+                <p data-i18n="plan3mSub" class="text-[11px] text-slate-300">صرفه‌جویی اقتصادی + یادآور هوشمند</p>
+              </div>
+              <div id="planBtn-3m" class="mt-4 py-2 rounded-xl text-center text-xs font-black bg-white/10 text-white">انتخاب پلن</div>
+            </div>
+
+            <!-- ۶ ماهه -->
+            <div onclick="selectSubscriptionPlan('6m')" id="planCard-6m" class="liquid-card rounded-[24px] p-4 cursor-pointer border-2 transition flex flex-col justify-between relative overflow-hidden">
+              <div>
+                <div class="flex items-center justify-between">
+                  <span data-i18n="plan6mTitle" class="text-xs font-extrabold text-amber-300">اشتراک ۶ ماهه حرفه‌ای</span>
+                  <span class="text-[10px] font-black px-2 py-0.5 rounded-full bg-amber-500/25 text-amber-300">محبوب‌ترین ★</span>
+                </div>
+                <div class="my-2 flex items-baseline gap-1">
+                  <span id="plan6mPrice" class="text-2xl font-black text-white ltr-num">۲۱۰,۰۰۰</span>
+                  <span class="currency-label text-[11px] text-slate-400">تومان</span>
+                </div>
+                <p data-i18n="plan6mSub" class="text-[11px] text-slate-300">۳۰٪ تخفیف ویژه + تمامی قابلیت‌های VIP</p>
+              </div>
+              <div id="planBtn-6m" class="mt-4 py-2 rounded-xl text-center text-xs font-black bg-white/10 text-white">انتخاب پلن</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ۳. تنظیمات زبان (فارسی شمسی / انگلیسی میلادی)، تم (تاریک / روشن) و نوتیفیکیشن -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- زبان و تقویم -->
+          <div class="liquid-glass rounded-[26px] p-5 space-y-3">
+            <h4 class="text-sm font-black text-white flex items-center gap-2">
+              <i data-lucide="globe" class="w-4 h-4 text-sky-300"></i>
+              <span data-i18n="langAndCalTitle">زبان برنامه و سیستم تقویم</span>
+            </h4>
+            <p data-i18n="langAndCalDesc" class="text-xs text-slate-300">با تغییر زبان به انگلیسی، تاریخ‌ها هم به میلادی تبدیل می‌شوند.</p>
+            <div class="grid grid-cols-2 gap-2 pt-1">
+              <button onclick="setLanguage('fa')" id="langBtn-fa" class="py-2.5 px-3 rounded-2xl text-xs font-extrabold transition bg-sky-500 text-slate-950 shadow">
+                🇮🇷 فارسی (تقویم شمسی)
+              </button>
+              <button onclick="setLanguage('en')" id="langBtn-en" class="py-2.5 px-3 rounded-2xl text-xs font-extrabold transition liquid-pill text-slate-300">
+                🇺🇸 English (Gregorian)
+              </button>
+            </div>
+          </div>
+
+          <!-- تم تاریک / روشن -->
+          <div class="liquid-glass rounded-[26px] p-5 space-y-3">
+            <h4 class="text-sm font-black text-white flex items-center gap-2">
+              <i data-lucide="sun-moon" class="w-4 h-4 text-amber-300"></i>
+              <span data-i18n="themeTitle">حالت نمایش (Dark / Light Glass)</span>
+            </h4>
+            <p data-i18n="themeDesc" class="text-xs text-slate-300">انتخاب پوسته شیشه‌ای تاریک یا شیشه‌ای روشن.</p>
+            <div class="grid grid-cols-2 gap-2 pt-1">
+              <button onclick="setTheme('dark')" id="themeBtn-dark" class="py-2.5 px-3 rounded-2xl text-xs font-extrabold flex items-center justify-center gap-1.5 transition bg-sky-500 text-slate-950 shadow">
+                <i data-lucide="moon" class="w-4 h-4"></i>
+                <span data-i18n="themeDark">شیشه‌ای تاریک</span>
+              </button>
+              <button onclick="setTheme('light')" id="themeBtn-light" class="py-2.5 px-3 rounded-2xl text-xs font-extrabold flex items-center justify-center gap-1.5 transition liquid-pill text-slate-300">
+                <i data-lucide="sun" class="w-4 h-4"></i>
+                <span data-i18n="themeLight">شیشه‌ای روشن</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ۴. مدیریت حافظه و پشتیبان‌گیری (منتقل شده به تنظیمات) -->
+        <div class="liquid-glass rounded-[26px] p-5 space-y-4">
+          <div class="flex items-center justify-between flex-wrap gap-2">
+            <div>
+              <h3 class="text-sm font-bold text-white flex items-center gap-2">
+                <i data-lucide="database" class="w-4 h-4 text-emerald-300"></i>
+                <span data-i18n="storageTitle">مدیریت حافظه و پشتیبان‌گیری</span>
+              </h3>
+              <p data-i18n="storageDesc" class="text-xs text-slate-300 mt-1">تمامی اطلاعات به‌صورت امن روی حافظه دستگاه شما ذخیره می‌شود.</p>
+            </div>
+            <button onclick="requestNotificationPermission()" class="liquid-pill px-3.5 py-2 rounded-xl text-xs font-bold text-amber-300 flex items-center gap-1.5">
+              <i data-lucide="bell" class="w-4 h-4"></i>
+              <span data-i18n="btnEnableBrowserNotif">فعال‌سازی مجوز نوتیفیکیشن مرورگر</span>
+            </button>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <button onclick="exportDataJson()" class="liquid-pill p-3.5 rounded-2xl text-xs font-bold text-emerald-200 flex items-center justify-center gap-2">
+              <i data-lucide="download" class="w-4 h-4 text-emerald-300"></i>
+              <span data-i18n="btnExportJson">دانلود فایل پشتیبان (JSON)</span>
+            </button>
+
+            <label class="liquid-pill p-3.5 rounded-2xl text-xs font-bold text-sky-200 flex items-center justify-center gap-2 cursor-pointer">
+              <i data-lucide="upload" class="w-4 h-4 text-sky-300"></i>
+              <span data-i18n="btnImportJson">بازیابی از فایل پشتیبان</span>
+              <input type="file" accept=".json" class="hidden" onchange="importDataJson(event)" />
+            </label>
+
+            <button onclick="clearAllDataToZero()" class="liquid-pill p-3.5 rounded-2xl text-xs font-bold text-rose-300 border-rose-500/30 flex items-center justify-center gap-2">
+              <i data-lucide="trash-2" class="w-4 h-4 text-rose-400"></i>
+              <span data-i18n="btnResetZero">پاکسازی کامل و شروع از صفر</span>
+            </button>
+          </div>
+        </div>
+
+      </section>
+
+    </main>
+  </div>
 
   <!-- ========================================================= -->
-  <!-- داک شناور شیشه‌ای پایین با دکمه + در مرکز                  -->
+  <!-- داک شناور شیشه‌ای پایین (مخصوص موبایل و تبلت کوچک)        -->
   <!-- ========================================================= -->
-  <nav class="fixed bottom-3 inset-x-3 z-40 max-w-md mx-auto" style="padding-bottom: env(safe-area-inset-bottom, 0px);">
+  <nav class="lg:hidden fixed bottom-3 inset-x-3 z-40 max-w-md mx-auto" style="padding-bottom: env(safe-area-inset-bottom, 0px);">
     <div class="liquid-dock rounded-[28px] px-2 py-2 grid grid-cols-5 items-center relative">
       
       <button onclick="switchView('dashboard')" id="nav-dashboard" class="nav-btn active flex flex-col items-center justify-center py-1 gap-1 text-slate-400 transition">
         <div class="nav-icon-box w-10 h-8 rounded-2xl flex items-center justify-center transition">
           <i data-lucide="layout-grid" class="w-5 h-5"></i>
         </div>
-        <span class="text-[10px] font-bold">داشبورد</span>
+        <span data-i18n="navDashboard" class="text-[10px] font-bold">داشبورد</span>
       </button>
 
       <button onclick="switchView('transactions')" id="nav-transactions" class="nav-btn flex flex-col items-center justify-center py-1 gap-1 text-slate-400 transition">
         <div class="nav-icon-box w-10 h-8 rounded-2xl flex items-center justify-center transition">
           <i data-lucide="arrow-left-right" class="w-5 h-5"></i>
         </div>
-        <span class="text-[10px] font-bold">تراکنش‌ها</span>
+        <span data-i18n="navTransactions" class="text-[10px] font-bold">تراکنش‌ها</span>
       </button>
 
       <div class="flex flex-col items-center justify-center -mt-7">
         <button onclick="openTxModal('expense')" class="center-plus-btn w-14 h-14 rounded-full flex items-center justify-center text-white">
           <i data-lucide="plus" class="w-7 h-7 stroke-[2.6]"></i>
         </button>
-        <span class="text-[10px] font-extrabold text-indigo-200 mt-1">ثبت</span>
+        <span data-i18n="navAdd" class="text-[10px] font-extrabold text-sky-300 mt-1">ثبت</span>
       </div>
 
       <button onclick="switchView('installments')" id="nav-installments" class="nav-btn flex flex-col items-center justify-center py-1 gap-1 text-slate-400 transition relative">
@@ -614,14 +933,14 @@
           <i data-lucide="calendar-clock" class="w-5 h-5"></i>
           <span id="navUnpaidDot" class="hidden absolute top-1 right-1.5 w-2 h-2 rounded-full bg-rose-500 ring-2 ring-slate-950"></span>
         </div>
-        <span class="text-[10px] font-bold">اقساط</span>
+        <span data-i18n="navInstallmentsShort" class="text-[10px] font-bold">اقساط</span>
       </button>
 
       <button onclick="switchView('reports')" id="nav-reports" class="nav-btn flex flex-col items-center justify-center py-1 gap-1 text-slate-400 transition">
         <div class="nav-icon-box w-10 h-8 rounded-2xl flex items-center justify-center transition">
           <i data-lucide="pie-chart" class="w-5 h-5"></i>
         </div>
-        <span class="text-[10px] font-bold">گزارش‌ها</span>
+        <span data-i18n="navReports" class="text-[10px] font-bold">گزارش‌ها</span>
       </button>
 
     </div>
@@ -634,7 +953,7 @@
     <div class="liquid-glass w-full max-w-md rounded-t-[32px] sm:rounded-[32px] p-5 sm:p-6 space-y-4 max-h-[85vh] overflow-y-auto">
       <div class="flex items-center justify-between border-b border-white/10 pb-3">
         <div>
-          <h3 class="text-base font-black text-white">ماشین زمان مالی (آرشیو ماه‌ها)</h3>
+          <h3 data-i18n="timeMachineTitle" class="text-base font-black text-white">ماشین زمان مالی (آرشیو ماه‌ها)</h3>
           <p id="liveTodaySubInSheet" class="text-[11px] text-emerald-300 mt-0.5"></p>
         </div>
         <button onclick="closePeriodSheet()" class="w-8 h-8 rounded-full liquid-pill flex items-center justify-center text-slate-300">
@@ -644,20 +963,20 @@
 
       <button onclick="jumpToTodayPeriod(); closePeriodSheet();" class="w-full py-2.5 px-4 rounded-2xl bg-emerald-500/20 border border-emerald-400/35 text-emerald-200 text-xs font-extrabold flex items-center justify-center gap-2">
         <i data-lucide="locate-fixed" class="w-4 h-4"></i>
-        <span>پرش سریع به ماه جاری (امروز)</span>
+        <span data-i18n="btnJumpToday">پرش سریع به ماه جاری (امروز)</span>
       </button>
 
       <div>
-        <label class="block text-xs font-bold text-indigo-200 mb-2">انتخاب سال:</label>
+        <label data-i18n="selectYearLbl" class="block text-xs font-bold text-sky-300 mb-2">انتخاب سال:</label>
         <div id="yearPickerGrid" class="grid grid-cols-4 gap-2"></div>
       </div>
 
       <div>
-        <label class="block text-xs font-bold text-indigo-200 mb-2">انتخاب ماه:</label>
+        <label data-i18n="selectMonthLbl" class="block text-xs font-bold text-sky-300 mb-2">انتخاب ماه:</label>
         <div id="monthPickerGrid" class="grid grid-cols-3 gap-2"></div>
       </div>
 
-      <button onclick="closePeriodSheet()" class="w-full py-3 rounded-2xl bg-indigo-600 text-white font-bold text-sm shadow-lg">
+      <button onclick="closePeriodSheet()" data-i18n="btnConfirmPeriod" class="w-full py-3 rounded-2xl bg-sky-500 text-slate-950 font-black text-sm shadow-lg">
         نمایش اطلاعات این ماه
       </button>
     </div>
@@ -671,7 +990,7 @@
       <div class="flex items-center justify-between border-b border-white/10 pb-3">
         <h3 class="text-base font-black text-white flex items-center gap-2">
           <i data-lucide="check-circle-2" class="w-5 h-5 text-emerald-400"></i>
-          <span>ثبت پرداخت قسط</span>
+          <span data-i18n="payInstModalTitle">ثبت پرداخت قسط</span>
         </h3>
         <button onclick="closePayInstModal()" class="w-8 h-8 rounded-full liquid-pill flex items-center justify-center text-slate-300">
           <i data-lucide="x" class="w-4 h-4"></i>
@@ -683,31 +1002,29 @@
         <div id="payInstSummaryAmount" class="text-xs font-bold text-amber-300 mt-1"></div>
       </div>
 
-      <p class="text-xs text-slate-300 leading-relaxed">
-        اگر این قسط را در روز یا ماه دیگری (مثلاً ۳۰ مهر) پرداخت کرده‌اید، تاریخ دقیق پرداخت را انتخاب کنید تا از موجودی همان ماه کسر شود:
+      <p data-i18n="payInstModalHint" class="text-xs text-slate-300 leading-relaxed">
+        اگر این قسط را در روز یا ماه دیگری پرداخت کرده‌اید، تاریخ دقیق پرداخت را انتخاب کنید تا از موجودی همان ماه کسر شود:
       </p>
 
       <div class="space-y-3">
-        <!-- انتخاب سال و ماهِ پرداخت -->
         <div class="grid grid-cols-2 gap-2.5">
           <div>
-            <label class="block text-[11px] font-bold text-slate-300 mb-1">ماه پرداخت</label>
+            <label data-i18n="payMonthLbl" class="block text-[11px] font-bold text-slate-300 mb-1">ماه پرداخت</label>
             <div id="payMonthSelector" class="grid grid-cols-3 gap-1 max-h-36 overflow-y-auto p-1.5 rounded-2xl bg-slate-950/60 border border-white/10"></div>
           </div>
           <div>
-            <label class="block text-[11px] font-bold text-slate-300 mb-1">سال پرداخت</label>
+            <label data-i18n="payYearLbl" class="block text-[11px] font-bold text-slate-300 mb-1">سال پرداخت</label>
             <div id="payYearSelector" class="grid grid-cols-2 gap-1 max-h-36 overflow-y-auto p-1.5 rounded-2xl bg-slate-950/60 border border-white/10"></div>
           </div>
         </div>
 
-        <!-- انتخاب روزِ پرداخت -->
         <div>
-          <label class="block text-[11px] font-bold text-slate-300 mb-1">روز پرداخت در ماه</label>
+          <label data-i18n="payDayLbl" class="block text-[11px] font-bold text-slate-300 mb-1">روز پرداخت در ماه</label>
           <div id="payDaySelector" class="grid grid-cols-7 gap-1 p-2 rounded-2xl bg-slate-950/60 border border-white/10"></div>
         </div>
       </div>
 
-      <button onclick="confirmPayInstallment()" class="w-full py-3.5 rounded-2xl bg-gradient-to-l from-emerald-500 to-teal-500 text-slate-950 font-black text-sm shadow-lg">
+      <button onclick="confirmPayInstallment()" data-i18n="btnConfirmPayDate" class="w-full py-3.5 rounded-2xl bg-gradient-to-l from-emerald-500 to-teal-500 text-slate-950 font-black text-sm shadow-lg">
         تایید و ثبت پرداخت در این تاریخ
       </button>
     </div>
@@ -731,43 +1048,43 @@
         <div class="grid grid-cols-2 gap-2 p-1.5 bg-slate-950/60 rounded-2xl border border-white/10">
           <button type="button" id="btnTypeExpense" onclick="setModalTxType('expense')" class="py-2.5 rounded-xl text-xs sm:text-sm font-extrabold flex items-center justify-center gap-1.5 transition bg-rose-500 text-white shadow-lg">
             <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
-            <span>ثبت هزینه</span>
+            <span data-i18n="btnRecordExpense">ثبت هزینه</span>
           </button>
           <button type="button" id="btnTypeIncome" onclick="setModalTxType('income')" class="py-2.5 rounded-xl text-xs sm:text-sm font-extrabold flex items-center justify-center gap-1.5 transition text-slate-300">
             <i data-lucide="arrow-down-left" class="w-4 h-4"></i>
-            <span>ثبت درآمد</span>
+            <span data-i18n="btnRecordIncome">ثبت درآمد</span>
           </button>
         </div>
 
         <div>
-          <label class="block text-xs font-bold text-slate-200 mb-1.5">مبلغ (تومان)</label>
+          <label class="block text-xs font-bold text-slate-200 mb-1.5"><span data-i18n="lblAmount">مبلغ</span> (<span class="currency-label">تومان</span>)</label>
           <div class="relative">
-            <input id="txAmount" type="text" inputmode="numeric" required placeholder="مثلاً: ۴۵۰,۰۰۰" oninput="handleAmountInput(this, 'txAmountWords')" class="w-full liquid-input rounded-2xl px-4 py-3 text-lg font-black ltr-num text-left pl-16" />
-            <span class="absolute left-4 top-1/2 -translate-y-1/2 text-xs text-slate-300 font-bold">تومان</span>
+            <input id="txAmount" type="text" inputmode="numeric" required placeholder="450,000" oninput="handleAmountInput(this, 'txAmountWords')" class="w-full liquid-input rounded-2xl px-4 py-3 text-lg font-black ltr-num text-left pl-16" />
+            <span class="currency-label absolute left-4 top-1/2 -translate-y-1/2 text-xs text-slate-300 font-bold">تومان</span>
           </div>
-          <p id="txAmountWords" class="text-[11px] text-indigo-300 mt-1 min-h-[16px] font-medium"></p>
+          <p id="txAmountWords" class="text-[11px] text-sky-300 mt-1 min-h-[16px] font-medium"></p>
         </div>
 
         <div>
-          <label class="block text-xs font-bold text-slate-200 mb-1.5">عنوان تراکنش</label>
-          <input id="txTitle" type="text" required placeholder="مثلاً: خرید سوپرمارکت یا واریز حقوق" class="w-full liquid-input rounded-2xl px-4 py-3 text-sm" />
+          <label data-i18n="lblTxTitle" class="block text-xs font-bold text-slate-200 mb-1.5">عنوان تراکنش</label>
+          <input id="txTitle" type="text" required placeholder="..." class="w-full liquid-input rounded-2xl px-4 py-3 text-sm" />
         </div>
 
         <div>
-          <label class="block text-xs font-bold text-slate-200 mb-2">انتخاب دسته‌بندی</label>
+          <label data-i18n="lblSelectCategory" class="block text-xs font-bold text-slate-200 mb-2">انتخاب دسته‌بندی</label>
           <div id="modalCategoryGrid" class="grid grid-cols-2 sm:grid-cols-3 gap-2"></div>
         </div>
 
         <div>
-          <label class="block text-xs font-bold text-slate-200 mb-1.5">روز انجام تراکنش</label>
+          <label data-i18n="lblTxDay" class="block text-xs font-bold text-slate-200 mb-1.5">روز انجام تراکنش</label>
           <button type="button" onclick="toggleDayGrid('txDayGridContainer')" class="w-full liquid-input rounded-2xl px-4 py-2.5 flex items-center justify-between text-xs sm:text-sm font-bold">
-            <span id="txSelectedDayLabel">روز ۱۵ ماه</span>
-            <i data-lucide="calendar-days" class="w-4 h-4 text-indigo-300"></i>
+            <span id="txSelectedDayLabel">15</span>
+            <i data-lucide="calendar-days" class="w-4 h-4 text-sky-300"></i>
           </button>
           <div id="txDayGridContainer" class="hidden mt-2 p-2.5 rounded-2xl bg-slate-950/80 border border-white/15 grid grid-cols-7 gap-1.5"></div>
         </div>
 
-        <button type="submit" id="txSubmitBtn" class="w-full py-3.5 rounded-2xl bg-gradient-to-l from-indigo-600 to-purple-600 text-white font-black text-sm shadow-lg">
+        <button type="submit" id="txSubmitBtn" class="w-full py-3.5 rounded-2xl bg-gradient-to-l from-sky-500 to-indigo-600 text-white font-black text-sm shadow-lg">
           ذخیره تراکنش
         </button>
       </form>
@@ -775,7 +1092,7 @@
   </div>
 
   <!-- ========================================================= -->
-  <!-- شیت افزودن / ویرایش وام دوره‌ای یا تک‌قسط (دیجی‌پی/اسنپ‌پی) -->
+  <!-- شیت افزودن / ویرایش وام دوره‌ای یا تک‌قسط (بدون نام برند)   -->
   <!-- ========================================================= -->
   <div id="instSheetModal" class="hidden fixed inset-0 z-50 bg-slate-950/75 backdrop-blur-md flex items-end sm:items-center justify-center p-0 sm:p-4">
     <div class="liquid-glass w-full max-w-lg rounded-t-[32px] sm:rounded-[32px] p-5 sm:p-6 space-y-4 max-h-[92vh] overflow-y-auto">
@@ -789,56 +1106,65 @@
       <form id="instForm" onsubmit="handleInstSubmit(event)" class="space-y-4">
         <input type="hidden" id="instEditId" value="" />
 
-        <!-- سوییچ نوع قسط: وام دوره‌ای یا تک‌قسطی -->
         <div class="grid grid-cols-2 gap-2 p-1.5 bg-slate-950/60 rounded-2xl border border-white/10">
           <button type="button" id="btnInstModeRecurring" onclick="setInstModalMode('recurring')" class="py-2.5 rounded-xl text-xs font-extrabold flex items-center justify-center gap-1.5 transition bg-amber-500 text-slate-950 shadow-lg">
             <i data-lucide="repeat" class="w-4 h-4"></i>
-            <span>وام / قسط ماهانه</span>
+            <span data-i18n="modeRecurring">وام / قسط دوره‌ای</span>
           </button>
           <button type="button" id="btnInstModeSingle" onclick="setInstModalMode('single')" class="py-2.5 rounded-xl text-xs font-extrabold flex items-center justify-center gap-1.5 transition text-slate-300">
             <i data-lucide="zap" class="w-4 h-4"></i>
-            <span>تک‌قسط (دیجی‌پی و...)</span>
+            <span data-i18n="modeSingle">تک‌قسط</span>
           </button>
         </div>
 
         <div>
-          <label class="block text-xs font-bold text-slate-200 mb-1.5">عنوان تعهد مالی</label>
-          <input id="instTitle" type="text" required placeholder="مثلاً: اعتبار دیجی‌پی، اسنپ‌پی، وام مسکن..." class="w-full liquid-input rounded-2xl px-4 py-3 text-sm" />
+          <label data-i18n="lblInstTitle" class="block text-xs font-bold text-slate-200 mb-1.5">عنوان تعهد مالی</label>
+          <input id="instTitle" type="text" required placeholder="مثلاً: وام مسکن، خرید اعتباری ماهانه..." class="w-full liquid-input rounded-2xl px-4 py-3 text-sm" />
         </div>
 
         <div>
-          <label class="block text-xs font-bold text-slate-200 mb-1.5">مبلغ قسط (تومان)</label>
+          <label class="block text-xs font-bold text-slate-200 mb-1.5"><span data-i18n="lblInstAmount">مبلغ قسط</span> (<span class="currency-label">تومان</span>)</label>
           <div class="relative">
-            <input id="instAmount" type="text" inputmode="numeric" required placeholder="مثلاً: ۲,۸۰۰,۰۰۰" oninput="handleAmountInput(this, 'instAmountWords')" class="w-full liquid-input rounded-2xl px-4 py-3 text-lg font-black ltr-num text-left pl-16" />
-            <span class="absolute left-4 top-1/2 -translate-y-1/2 text-xs text-slate-300 font-bold">تومان</span>
+            <input id="instAmount" type="text" inputmode="numeric" required placeholder="2,800,000" oninput="handleAmountInput(this, 'instAmountWords')" class="w-full liquid-input rounded-2xl px-4 py-3 text-lg font-black ltr-num text-left pl-16" />
+            <span class="currency-label absolute left-4 top-1/2 -translate-y-1/2 text-xs text-slate-300 font-bold">تومان</span>
           </div>
           <p id="instAmountWords" class="text-[11px] text-amber-300 mt-1 min-h-[16px] font-medium"></p>
         </div>
 
         <div>
-          <label class="block text-xs font-bold text-slate-200 mb-1.5">روز سررسید پرداخت در ماه</label>
+          <label data-i18n="lblDueDay" class="block text-xs font-bold text-slate-200 mb-1.5">روز سررسید پرداخت در ماه</label>
           <button type="button" onclick="toggleDayGrid('instDayGridContainer')" class="w-full liquid-input rounded-2xl px-4 py-2.5 flex items-center justify-between text-xs sm:text-sm font-bold">
-            <span id="instSelectedDayLabel">روز ۳۰ ماه</span>
+            <span id="instSelectedDayLabel">30</span>
             <i data-lucide="bell-ring" class="w-4 h-4 text-amber-300"></i>
           </button>
           <div id="instDayGridContainer" class="hidden mt-2 p-2.5 rounded-2xl bg-slate-950/80 border border-white/15 grid grid-cols-7 gap-1.5"></div>
         </div>
 
-        <!-- بخش تعداد اقساط (فقط در حالت وام دوره‌ای نمایش داده می‌شود) -->
         <div id="recurringCountsBox" class="grid grid-cols-2 gap-3">
           <div>
-            <label class="block text-xs font-bold text-slate-200 mb-1.5">تعداد کل اقساط</label>
+            <label data-i18n="lblTotalCount" class="block text-xs font-bold text-slate-200 mb-1.5">تعداد کل اقساط</label>
             <input id="instTotalCount" type="number" min="1" max="360" value="12" required class="w-full liquid-input rounded-2xl px-3.5 py-2.5 text-sm font-bold text-center ltr-num" />
           </div>
           <div>
-            <label class="block text-xs font-bold text-slate-200 mb-1.5">اقساط پرداخت‌شده قبلی</label>
+            <label data-i18n="lblInitialPaid" class="block text-xs font-bold text-slate-200 mb-1.5">اقساط پرداخت‌شده قبلی</label>
             <input id="instInitialPaid" type="number" min="0" max="360" value="0" required class="w-full liquid-input rounded-2xl px-3.5 py-2.5 text-sm font-bold text-center ltr-num" />
           </div>
         </div>
 
-        <!-- توضیح حالت تک‌قسطی -->
-        <div id="singleTargetInfoBox" class="hidden liquid-card rounded-2xl p-3 text-xs text-purple-200 leading-relaxed">
-          این مورد به‌عنوان <strong>بدهی تک‌قسطی</strong> برای دوره <strong class="active-period-text underline"></strong> ثبت می‌شود و پس از یک‌بار پرداخت، کامل تسویه می‌گردد.
+        <div id="singleTargetInfoBox" class="hidden liquid-card rounded-2xl p-3 text-xs text-sky-200 leading-relaxed">
+          این مورد به‌عنوان <strong>تک‌قسط</strong> برای دوره فعال ثبت می‌شود و پس از یک‌بار پرداخت، کامل تسویه می‌گردد.
+        </div>
+
+        <!-- سوییچ یادآور نوتیفیکیشن برای این قسط -->
+        <div class="liquid-card rounded-2xl p-3.5 flex items-center justify-between">
+          <div class="flex items-center gap-2.5">
+            <i data-lucide="bell" class="w-4 h-4 text-amber-300"></i>
+            <div>
+              <span data-i18n="lblInstNotify" class="text-xs font-bold text-white block">یادآور نوتیفیکیشن سررسید</span>
+              <span data-i18n="lblInstNotifySub" class="text-[10px] text-slate-400">ارسال هشدار در روز سررسید این قسط</span>
+            </div>
+          </div>
+          <input id="instNotifyToggle" type="checkbox" checked class="w-5 h-5 accent-sky-500 rounded cursor-pointer" />
         </div>
 
         <button type="submit" id="instSubmitBtn" class="w-full py-3.5 rounded-2xl bg-gradient-to-l from-amber-500 to-orange-500 text-slate-950 font-black text-sm shadow-lg">
@@ -858,17 +1184,182 @@
 
   <script>
     // ==========================================
-    // ۱. تشخیص خودکار تاریخ امروز به شمسی از ساعت گوشی
+    // ۱. دیکشنری دوزبانه (FA / EN) و تقویم شمسی و میلادی
     // ==========================================
     const PERSIAN_MONTHS = [
-      { id: '01', name: 'فروردین' }, { id: '02', name: 'اردیبهشت' }, { id: '03', name: 'خرداد' },
-      { id: '04', name: 'تیر' },      { id: '05', name: 'مرداد' },    { id: '06', name: 'شهریور' },
-      { id: '07', name: 'مهر' },      { id: '08', name: 'آبان' },     { id: '09', name: 'آذر' },
-      { id: '10', name: 'دی' },       { id: '11', name: 'بهمن' },     { id: '12', name: 'اسفند' }
+      { id: '01', fa: 'فروردین', en: 'January' },
+      { id: '02', fa: 'اردیبهشت', en: 'February' },
+      { id: '03', fa: 'خرداد', en: 'March' },
+      { id: '04', fa: 'تیر', en: 'April' },
+      { id: '05', fa: 'مرداد', en: 'May' },
+      { id: '06', fa: 'شهریور', en: 'June' },
+      { id: '07', fa: 'مهر', en: 'July' },
+      { id: '08', fa: 'آبان', en: 'August' },
+      { id: '09', fa: 'آذر', en: 'September' },
+      { id: '10', fa: 'دی', en: 'October' },
+      { id: '11', fa: 'بهمن', en: 'November' },
+      { id: '12', fa: 'اسفند', en: 'December' }
     ];
 
     const PERSIAN_YEARS = [];
     for (let y = 1404; y <= 1416; y++) PERSIAN_YEARS.push(String(y));
+
+    const I18N = {
+      fa: {
+        appBrand: 'جیب‌بان',
+        currency: 'تومان',
+        navDashboard: 'داشبورد',
+        navTransactions: 'تراکنش‌ها',
+        navInstallments: 'اقساط و وام‌ها',
+        navInstallmentsShort: 'اقساط',
+        navReports: 'گزارش‌ها',
+        navSettings: 'پروفایل و تنظیمات',
+        navAdd: 'ثبت',
+        btnQuickAdd: 'ثبت تراکنش جدید',
+        availBalanceIn: 'موجودی قابل خرج در',
+        heroSubText: 'مانده خالص پس از کسر هزینه‌های جاری و اقساط پرداخت‌شده در این ماه',
+        savingsRate: 'نرخ پس‌انداز',
+        totalIncome: 'کل درآمد ماه',
+        currentExpenses: 'هزینه‌های جاری',
+        paidInstallments: 'اقساط پرداختی ماه',
+        smartBudgetTitle: 'تراز هوشمند بودجه ماه',
+        lblExpenses: 'هزینه‌ها',
+        lblInstallments: 'اقساط',
+        lblRemaining: 'مانده',
+        installmentsDueBadge: 'سررسید اقساط',
+        btnViewInstallments: 'مشاهده و پرداخت اقساط',
+        txSummaryBadge: 'خلاصه تراکنش‌ها',
+        btnManageTx: 'مدیریت دخل‌وخرج',
+        filterAll: 'همه',
+        filterIncomes: 'درآمدها',
+        filterExpenses: 'هزینه‌ها',
+        sortBy: 'مرتب‌سازی:',
+        sortNewest: 'جدیدترین',
+        sortOldest: 'قدیمی‌ترین',
+        sortHighest: 'بیشترین مبلغ',
+        sortLowest: 'کمترین مبلغ',
+        txListTitle: 'تراکنش‌های',
+        btnAddNew: 'ثبت جدید',
+        totalRemainingDebtTitle: 'کل بدهی باقی‌مانده وام‌ها و تعهدات',
+        btnAddSingleInst: 'ثبت تک‌قسط',
+        btnAddRecurringInst: 'افزودن وام دوره‌ای',
+        instTabAll: 'همه',
+        instTabRecurring: 'وام‌های دوره‌ای',
+        instTabSingle: 'تک‌قسط‌ها',
+        statusLabel: 'وضعیت:',
+        statusUnpaid: 'پرداخت‌نشده',
+        statusPaid: 'پرداخت‌شده این ماه',
+        statusSettled: 'تسویه کامل',
+        sortNearestDue: 'نزدیک‌ترین سررسید',
+        sortHighestInst: 'بیشترین قسط',
+        sortHighestDebt: 'بیشترین بدهی مانده',
+        expenseShareIn: 'حلقه توزیع مخارج در',
+        cashflowComparisonTitle: 'کپسول‌های شیشه‌ای جریان نقدینگی',
+        cashflowComparisonSub: 'مقایسه زنده درآمد، هزینه‌های جاری، اقساط و مانده پس‌انداز',
+        catBreakdownTitle: 'موشکافی مخارج به تفکیک دسته‌بندی',
+        lblYourName: 'نام و نام خانوادگی',
+        lblPhoneOrEmail: 'شماره موبایل یا ایمیل',
+        lblAvatar: 'آواتار',
+        btnSaveProfile: 'ثبت پروفایل',
+        subSectionTitle: 'اشتراک ویژه جیب‌بان پلاس (نسخه بتا)',
+        subSectionDesc: 'پلن دلخواه خود را انتخاب کنید؛ در نسخه آزمایشی بدون هدایت به درگاه، آنی فعال می‌شود.',
+        plan1mTitle: 'اشتراک ۱ ماهه',
+        plan1mSub: 'دسترسی کامل به امکانات پایه و ابری',
+        plan3mTitle: 'اشتراک ۳ ماهه',
+        plan3mSub: 'صرفه‌جویی اقتصادی + یادآور هوشمند',
+        plan6mTitle: 'اشتراک ۶ ماهه حرفه‌ای',
+        plan6mSub: '۳۰٪ تخفیف ویژه + تمامی قابلیت‌های VIP',
+        langAndCalTitle: 'زبان برنامه و سیستم تقویم',
+        langAndCalDesc: 'با تغییر زبان به انگلیسی، تاریخ‌ها هم به میلادی تبدیل می‌شوند.',
+        themeTitle: 'حالت نمایش (Dark / Light Glass)',
+        themeDesc: 'انتخاب پوسته شیشه‌ای تاریک یا شیشه‌ای روشن.',
+        themeDark: 'شیشه‌ای تاریک',
+        themeLight: 'شیشه‌ای روشن',
+        storageTitle: 'مدیریت حافظه و پشتیبان‌گیری',
+        storageDesc: 'تمامی اطلاعات به‌صورت امن روی حافظه دستگاه شما ذخیره می‌شود.',
+        btnEnableBrowserNotif: 'فعال‌سازی نوتیفیکیشن مرورگر',
+        btnExportJson: 'دانلود فایل پشتیبان (JSON)',
+        btnImportJson: 'بازیابی از فایل پشتیبان',
+        btnResetZero: 'پاکسازی کامل و شروع از صفر'
+      },
+      en: {
+        appBrand: 'JibBan',
+        currency: 'USD',
+        navDashboard: 'Dashboard',
+        navTransactions: 'Transactions',
+        navInstallments: 'Installments',
+        navInstallmentsShort: 'Loans',
+        navReports: 'Analytics',
+        navSettings: 'Profile & Settings',
+        navAdd: 'Add',
+        btnQuickAdd: 'New Transaction',
+        availBalanceIn: 'Available Balance in',
+        heroSubText: 'Net disposable balance after current expenses and paid installments',
+        savingsRate: 'Savings Rate',
+        totalIncome: 'Total Income',
+        currentExpenses: 'Living Expenses',
+        paidInstallments: 'Paid Installments',
+        smartBudgetTitle: 'Smart Monthly Budget Balance',
+        lblExpenses: 'Expenses',
+        lblInstallments: 'Loans',
+        lblRemaining: 'Saved',
+        installmentsDueBadge: 'Installments Due',
+        btnViewInstallments: 'Manage & Pay Installments',
+        txSummaryBadge: 'Transactions Summary',
+        btnManageTx: 'View All Transactions',
+        filterAll: 'All',
+        filterIncomes: 'Income',
+        filterExpenses: 'Expenses',
+        sortBy: 'Sort by:',
+        sortNewest: 'Newest',
+        sortOldest: 'Oldest',
+        sortHighest: 'Highest Amount',
+        sortLowest: 'Lowest Amount',
+        txListTitle: 'Transactions of',
+        btnAddNew: 'Add New',
+        totalRemainingDebtTitle: 'Total Remaining Loan & Credit Debt',
+        btnAddSingleInst: 'Add Single Credit',
+        btnAddRecurringInst: 'Add Recurring Loan',
+        instTabAll: 'All',
+        instTabRecurring: 'Recurring Loans',
+        instTabSingle: 'Single Credits',
+        statusLabel: 'Status:',
+        statusUnpaid: 'Unpaid',
+        statusPaid: 'Paid This Month',
+        statusSettled: 'Fully Settled',
+        sortNearestDue: 'Nearest Due Date',
+        sortHighestInst: 'Highest Payment',
+        sortHighestDebt: 'Highest Total Debt',
+        expenseShareIn: 'Expense Distribution Ring in',
+        cashflowComparisonTitle: 'Liquid Glass Cashflow Capsules',
+        cashflowComparisonSub: 'Real-time comparison of income, expenses, installments & net savings',
+        catBreakdownTitle: 'Category Expense Breakdown',
+        lblYourName: 'Full Name',
+        lblPhoneOrEmail: 'Phone or Email',
+        lblAvatar: 'Avatar',
+        btnSaveProfile: 'Save Profile',
+        subSectionTitle: 'JibBan Plus Subscription (Beta)',
+        subSectionDesc: 'Select any plan below; in Beta mode it activates instantly on your profile.',
+        plan1mTitle: '1-Month Plan',
+        plan1mSub: 'Full access to core & backup features',
+        plan3mTitle: '3-Month Plan',
+        plan3mSub: '15% savings + Smart Due Reminders',
+        plan6mTitle: '6-Month Pro Plan',
+        plan6mSub: '30% VIP discount + All Pro Analytics',
+        langAndCalTitle: 'App Language & Calendar System',
+        langAndCalDesc: 'Switching to English automatically formats dates in Gregorian.',
+        themeTitle: 'Appearance (Dark / Light Glass)',
+        themeDesc: 'Choose between Dark Liquid Glass or Light Frost Glass.',
+        themeDark: 'Dark Glass',
+        themeLight: 'Light Frost',
+        storageTitle: 'Data Storage & Backup Management',
+        storageDesc: 'All financial records are stored locally on your device.',
+        btnEnableBrowserNotif: 'Enable Browser Notifications',
+        btnExportJson: 'Export Backup (JSON)',
+        btnImportJson: 'Restore from Backup',
+        btnResetZero: 'Wipe All Data & Start Fresh'
+      }
+    };
 
     function faToEnDigits(str) {
       if (!str) return '';
@@ -877,9 +1368,13 @@
         .replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d));
     }
 
-    function getLivePersianToday() {
+    function getLiveTodayInfo() {
+      const now = new Date();
+      const gregYear = now.getFullYear();
+      const gregMonthName = now.toLocaleString('en-US', { month: 'short' });
+      const gregDay = now.getDate();
+
       try {
-        const now = new Date();
         const parts = new Intl.DateTimeFormat('fa-IR-u-ca-persian', {
           year: 'numeric', month: '2-digit', day: '2-digit', weekday: 'long'
         }).formatToParts(now);
@@ -891,46 +1386,63 @@
           if (p.type === 'weekday') weekday = p.value;
         });
         const mObj = PERSIAN_MONTHS.find(m => m.id === month) || PERSIAN_MONTHS[6];
-        return { year, month, day, weekday, monthName: mObj.name, periodKey: `${year}-${month}` };
+        return {
+          year, month, day, weekday,
+          monthNameFa: mObj.fa,
+          gregFormatted: `${gregMonthName} ${gregDay}, ${gregYear}`,
+          periodKey: `${year}-${month}`
+        };
       } catch (e) {
-        return { year: '1405', month: '07', day: 21, weekday: 'سه‌شنبه', monthName: 'مهر', periodKey: '1405-07' };
+        return {
+          year: '1405', month: '07', day: 21, weekday: 'سه‌شنبه',
+          monthNameFa: 'مهر', gregFormatted: `${gregMonthName} ${gregDay}, ${gregYear}`,
+          periodKey: '1405-07'
+        };
       }
     }
 
-    const LIVE_TODAY = getLivePersianToday();
+    const LIVE_TODAY = getLiveTodayInfo();
 
     const CATEGORIES = {
       income: [
-        { id: 'حقوق و دستمزد', icon: 'briefcase' },
-        { id: 'پروژه و فریلنسری', icon: 'laptop' },
-        { id: 'سود سرمایه‌گذاری', icon: 'trending-up' },
-        { id: 'پاداش و هدیه', icon: 'gift' },
-        { id: 'سایر درآمدها', icon: 'plus-circle' }
+        { id: 'حقوق و دستمزد', en: 'Salary & Payroll', icon: 'briefcase' },
+        { id: 'پروژه و فریلنسری', en: 'Freelance & Projects', icon: 'laptop' },
+        { id: 'سود سرمایه‌گذاری', en: 'Investment Return', icon: 'trending-up' },
+        { id: 'پاداش و هدیه', en: 'Bonus & Gift', icon: 'gift' },
+        { id: 'سایر درآمدها', en: 'Other Income', icon: 'plus-circle' }
       ],
       expense: [
-        { id: 'خوراک و سوپرمارکت', icon: 'shopping-bag' },
-        { id: 'مسکن و قبوض', icon: 'home' },
-        { id: 'حمل‌ونقل و خودرو', icon: 'car' },
-        { id: 'خرید و پوشاک', icon: 'shirt' },
-        { id: 'کافه، رستوران و تفریح', icon: 'coffee' },
-        { id: 'سلامت و درمان', icon: 'heart-pulse' },
-        { id: 'اینترنت و اشتراک‌ها', icon: 'wifi' },
-        { id: 'سایر هزینه‌ها', icon: 'more-horizontal' }
+        { id: 'خوراک و سوپرمارکت', en: 'Groceries & Food', icon: 'shopping-bag' },
+        { id: 'مسکن و قبوض', en: 'Housing & Bills', icon: 'home' },
+        { id: 'حمل‌ونقل و خودرو', en: 'Transport & Fuel', icon: 'car' },
+        { id: 'خرید و پوشاک', en: 'Shopping & Apparel', icon: 'shirt' },
+        { id: 'کافه، رستوران و تفریح', en: 'Dining & Leisure', icon: 'coffee' },
+        { id: 'سلامت و درمان', en: 'Health & Medical', icon: 'heart-pulse' },
+        { id: 'اینترنت و اشتراک‌ها', en: 'Subscriptions & Web', icon: 'wifi' },
+        { id: 'سایر هزینه‌ها', en: 'Other Expenses', icon: 'more-horizontal' }
       ]
     };
 
-    const STORAGE_KEY = 'jibban_ios_liquid_v3';
+    const STORAGE_KEY = 'jibban_universal_v4';
 
     function createDefaultData() {
       const pKey = LIVE_TODAY.periodKey;
       return {
+        lang: 'fa',
+        theme: 'dark',
+        profile: {
+          name: 'کاربر جیب‌بان',
+          contact: '',
+          avatar: '😎',
+          subscription: '6m'
+        },
         activeYear: LIVE_TODAY.year,
         activeMonth: LIVE_TODAY.month,
         transactions: [
           { id: 'tx-1', period: pKey, type: 'income', title: 'حقوق ماهیانه', category: 'حقوق و دستمزد', amount: 38000000, day: 1 },
-          { id: 'tx-2', period: pKey, type: 'income', title: 'پروژه ادیت و ترجمه', category: 'پروژه و فریلنسری', amount: 7500000, day: 12 },
+          { id: 'tx-2', period: pKey, type: 'income', title: 'پروژه آزاد', category: 'پروژه و فریلنسری', amount: 7500000, day: 12 },
           { id: 'tx-3', period: pKey, type: 'expense', title: 'خرید هفتگی هایپرمارکت', category: 'خوراک و سوپرمارکت', amount: 4200000, day: 5 },
-          { id: 'tx-4', period: pKey, type: 'expense', title: 'قبض برق، گاز و اینترنت فیبرنوری', category: 'مسکن و قبوض', amount: 950000, day: 9 }
+          { id: 'tx-4', period: pKey, type: 'expense', title: 'قبض برق و اینترنت', category: 'مسکن و قبوض', amount: 950000, day: 9 }
         ],
         installments: [
           {
@@ -941,27 +1453,30 @@
             dueDay: 25,
             totalCount: 24,
             initialPaid: 7,
-            paidRecords: {} // ساختار جدید: { '1405-07': { paidAtPeriod: '1405-07', paidDay: 25 } }
+            notify: true,
+            paidRecords: {}
           },
           {
             id: 'inst-2',
             kind: 'single',
             targetPeriod: pKey,
-            title: 'اعتبار ماهانه دیجی‌پی',
+            title: 'خرید اعتباری ماهانه',
             amount: 2800000,
             dueDay: 30,
             totalCount: 1,
             initialPaid: 0,
+            notify: true,
             paidRecords: {}
           },
           {
             id: 'inst-3',
             kind: 'recurring',
-            title: 'قسط اسنپ‌پی (خرید گجت)',
+            title: 'اقساط خرید تجهیزات',
             amount: 2200000,
             dueDay: 15,
             totalCount: 4,
             initialPaid: 1,
+            notify: true,
             paidRecords: { [pKey]: { paidAtPeriod: pKey, paidDay: 15 } }
           }
         ]
@@ -970,46 +1485,44 @@
 
     let state = loadState();
     let activeView = 'dashboard';
+
+    // فیلترها و سورت تراکنش‌ها
     let txTypeFilter = 'all';
     let txCategoryFilter = 'all';
+    let txSortMode = 'newest'; // newest | oldest | highest | lowest
 
-    // وضعیت فرم تراکنش
+    // فیلترها و سورت اقساط
+    let instKindFilter = 'all'; // all | recurring | single
+    let instStatusFilter = 'all'; // all | unpaid | paid | settled
+    let instSortMode = 'deadline'; // deadline | amount | debt
+
+    // وضعیت فرم‌ها
     let modalTxType = 'expense';
     let modalTxCategory = CATEGORIES.expense[0].id;
     let modalTxDay = LIVE_TODAY.day;
 
-    // وضعیت فرم قسط
-    let modalInstMode = 'recurring'; // 'recurring' | 'single'
+    let modalInstMode = 'recurring';
     let modalInstDay = 30;
 
-    // وضعیت شیت پرداخت قسط با انتخاب تاریخ
     let payingInstId = null;
     let paySheetYear = LIVE_TODAY.year;
     let paySheetMonth = LIVE_TODAY.month;
     let paySheetDay = LIVE_TODAY.day;
 
-    let doughnutChart = null;
-    let barChart = null;
-
     function loadState() {
       try {
-        const raw = localStorage.getItem(STORAGE_KEY);
+        const raw = localStorage.getItem(STORAGE_KEY) || localStorage.getItem('jibban_ios_liquid_v3');
         if (!raw) return createDefaultData();
         const parsed = JSON.parse(raw);
         if (!parsed.transactions || !parsed.installments) return createDefaultData();
-        // مهاجرت داده از نسخه قبلی اگر paidMonths آرایه بود
+        if (!parsed.lang) parsed.lang = 'fa';
+        if (!parsed.theme) parsed.theme = 'dark';
+        if (!parsed.profile) parsed.profile = { name: 'کاربر جیب‌بان', contact: '', avatar: '😎', subscription: '6m' };
         parsed.installments.forEach(inst => {
           if (!inst.kind) inst.kind = inst.totalCount === 1 ? 'single' : 'recurring';
-          if (!inst.paidRecords) {
-            inst.paidRecords = {};
-            if (Array.isArray(inst.paidMonths)) {
-              inst.paidMonths.forEach(pm => {
-                inst.paidRecords[pm] = { paidAtPeriod: pm, paidDay: inst.dueDay || 1 };
-              });
-            }
-          }
+          if (inst.notify === undefined) inst.notify = true;
+          if (!inst.paidRecords) inst.paidRecords = {};
         });
-        // همیشه در شروع، ماه و سال جاریِ واقعی تنظیم شود
         parsed.activeYear = LIVE_TODAY.year;
         parsed.activeMonth = LIVE_TODAY.month;
         return parsed;
@@ -1023,17 +1536,29 @@
     }
 
     // ==========================================
-    // ۲. توابع کمکی تاریخ، اعداد و محاسبه ددلاین
+    // ۲. توابع فرمت اعداد، تاریخ، زبان و تم
     // ==========================================
-    function toFaDigits(val) {
+    function isEn() {
+      return state.lang === 'en';
+    }
+
+    function t(key) {
+      return (I18N[state.lang] && I18N[state.lang][key]) || I18N.fa[key] || key;
+    }
+
+    function formatDigits(val) {
       if (val === null || val === undefined) return '';
-      return String(val).replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[d]);
+      const str = String(val);
+      if (isEn()) return faToEnDigits(str);
+      return str.replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[d]);
     }
 
     function formatMoney(num) {
       const n = Math.round(Number(num) || 0);
       const sign = n < 0 ? '-' : '';
-      return sign + toFaDigits(Math.abs(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '،'));
+      const sep = isEn() ? ',' : '،';
+      const formatted = Math.abs(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, sep);
+      return sign + formatDigits(formatted);
     }
 
     function parseRawNumber(str) {
@@ -1043,26 +1568,29 @@
 
     function amountToFriendlyWords(num) {
       if (!num || num <= 0) return '';
+      if (isEn()) {
+        return `${formatMoney(num)} ${t('currency')}`;
+      }
       if (num >= 1000000000) {
         const b = (num / 1000000000).toFixed(2).replace(/\.00$/, '');
-        return `معادل ${toFaDigits(b)} میلیارد تومان`;
+        return `معادل ${formatDigits(b)} میلیارد تومان`;
       }
       if (num >= 1000000) {
         const m = Math.floor(num / 1000000);
         const r = Math.floor((num % 1000000) / 1000);
         return r > 0
-          ? `معادل ${toFaDigits(m)} میلیون و ${toFaDigits(r)} هزار تومان`
-          : `معادل ${toFaDigits(m)} میلیون تومان`;
+          ? `معادل ${formatDigits(m)} میلیون و ${formatDigits(r)} هزار تومان`
+          : `معادل ${formatDigits(m)} میلیون تومان`;
       }
       if (num >= 1000) {
-        return `معادل ${toFaDigits(Math.floor(num / 1000))} هزار تومان`;
+        return `معادل ${formatDigits(Math.floor(num / 1000))} هزار تومان`;
       }
-      return `${toFaDigits(num)} تومان`;
+      return `${formatDigits(num)} تومان`;
     }
 
     function handleAmountInput(inputEl, wordsElId) {
       const num = parseRawNumber(inputEl.value);
-      inputEl.value = num > 0 ? toFaDigits(num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')) : '';
+      inputEl.value = num > 0 ? formatDigits(num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')) : '';
       const wordsEl = document.getElementById(wordsElId);
       if (wordsEl) wordsEl.textContent = amountToFriendlyWords(num);
     }
@@ -1071,16 +1599,216 @@
       return `${state.activeYear}-${state.activeMonth}`;
     }
 
+    function getDisplayYear(persianYearStr) {
+      const py = parseInt(persianYearStr, 10) || 1405;
+      return isEn() ? String(py + 621) : formatDigits(py);
+    }
+
     function getPeriodName(year, monthId) {
-      const m = PERSIAN_MONTHS.find(x => x.id === monthId);
-      return `${m ? m.name : ''} ${toFaDigits(year)}`;
+      const m = PERSIAN_MONTHS.find(x => x.id === monthId) || PERSIAN_MONTHS[6];
+      if (isEn()) {
+        return `${m.en} ${parseInt(year, 10) + 621}`;
+      }
+      return `${m.fa} ${formatDigits(year)}`;
     }
 
     function getActivePeriodName() {
       return getPeriodName(state.activeYear, state.activeMonth);
     }
 
-    // بررسی اینکه آیا یک قسط در دوره مشخص پرداخت شده است
+    function getCategoryDisplayName(catId) {
+      if (!isEn()) return catId;
+      const all = [...CATEGORIES.income, ...CATEGORIES.expense];
+      const found = all.find(c => c.id === catId);
+      return found ? found.en : catId;
+    }
+
+    function applyThemeAndLang() {
+      const htmlEl = document.documentElement;
+      if (state.theme === 'light') {
+        htmlEl.classList.add('light');
+        htmlEl.classList.remove('dark');
+      } else {
+        htmlEl.classList.add('dark');
+        htmlEl.classList.remove('light');
+      }
+
+      htmlEl.lang = isEn() ? 'en' : 'fa';
+      htmlEl.dir = isEn() ? 'ltr' : 'rtl';
+
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        el.textContent = t(key);
+      });
+
+      document.querySelectorAll('.currency-label').forEach(el => {
+        el.textContent = t('currency');
+      });
+
+      // وضعیت دکمه‌های تنظیمات
+      const lFa = document.getElementById('langBtn-fa');
+      const lEn = document.getElementById('langBtn-en');
+      if (lFa && lEn) {
+        lFa.className = !isEn() ? 'py-2.5 px-3 rounded-2xl text-xs font-extrabold transition bg-sky-500 text-slate-950 shadow' : 'py-2.5 px-3 rounded-2xl text-xs font-extrabold transition liquid-pill text-slate-300';
+        lEn.className = isEn() ? 'py-2.5 px-3 rounded-2xl text-xs font-extrabold transition bg-sky-500 text-slate-950 shadow' : 'py-2.5 px-3 rounded-2xl text-xs font-extrabold transition liquid-pill text-slate-300';
+      }
+
+      const tDark = document.getElementById('themeBtn-dark');
+      const tLight = document.getElementById('themeBtn-light');
+      if (tDark && tLight) {
+        tDark.className = state.theme === 'dark' ? 'py-2.5 px-3 rounded-2xl text-xs font-extrabold flex items-center justify-center gap-1.5 transition bg-sky-500 text-slate-950 shadow' : 'py-2.5 px-3 rounded-2xl text-xs font-extrabold flex items-center justify-center gap-1.5 transition liquid-pill text-slate-300';
+        tLight.className = state.theme === 'light' ? 'py-2.5 px-3 rounded-2xl text-xs font-extrabold flex items-center justify-center gap-1.5 transition bg-sky-500 text-slate-950 shadow' : 'py-2.5 px-3 rounded-2xl text-xs font-extrabold flex items-center justify-center gap-1.5 transition liquid-pill text-slate-300';
+      }
+
+      // قیمت پلن‌ها بر اساس زبان
+      document.getElementById('plan1mPrice').textContent = isEn() ? '$2.99' : '۴۹,۰۰۰';
+      document.getElementById('plan3mPrice').textContent = isEn() ? '$7.49' : '۱۲۵,۰۰۰';
+      document.getElementById('plan6mPrice').textContent = isEn() ? '$12.99' : '۲۱۰,۰۰۰';
+    }
+
+    function setLanguage(lang) {
+      state.lang = lang;
+      saveState();
+      applyThemeAndLang();
+      renderAll();
+      showToast(lang === 'en' ? 'Language switched to English' : 'زبان برنامه به فارسی تغییر کرد');
+    }
+
+    function setTheme(theme) {
+      state.theme = theme;
+      saveState();
+      applyThemeAndLang();
+      renderAll();
+      showToast(theme === 'light' ? (isEn() ? 'Light Frost mode enabled' : 'پوسته روشن فعال شد') : (isEn() ? 'Dark Glass mode enabled' : 'پوسته تاریک فعال شد'));
+    }
+
+    // ==========================================
+    // ۳. پروفایل کاربر و اشتراک بتا
+    // ==========================================
+    function renderProfileAndPlans() {
+      const prof = state.profile || { name: 'کاربر جیب‌بان', contact: '', avatar: '😎', subscription: '6m' };
+      document.getElementById('headerAvatarContent').textContent = prof.avatar || '😎';
+      document.getElementById('settingsAvatarPreview').textContent = prof.avatar || '😎';
+      document.getElementById('headerUserNameSub').textContent = prof.name || (isEn() ? 'User Profile' : 'پروفایل و تنظیمات');
+      document.getElementById('settingsProfileNameDisplay').textContent = prof.name || (isEn() ? 'JibBan User' : 'کاربر جیب‌بان');
+      document.getElementById('settingsProfileContactDisplay').textContent = prof.contact || (isEn() ? 'Local Profile Active' : 'حساب کاربری محلی فعال است');
+
+      const nameInp = document.getElementById('profNameInput');
+      const conInp = document.getElementById('profContactInput');
+      if (nameInp && document.activeElement !== nameInp) nameInp.value = prof.name || '';
+      if (conInp && document.activeElement !== conInp) conInp.value = prof.contact || '';
+
+      const planNames = {
+        '1m': isEn() ? '1-Month Plus (Beta)' : 'اشتراک ۱ ماهه (بتا)',
+        '3m': isEn() ? '3-Month Plus (Beta)' : 'اشتراک ۳ ماهه (بتا)',
+        '6m': isEn() ? '6-Month Pro VIP (Beta)' : 'اشتراک ۶ ماهه VIP (بتا)'
+      };
+      document.getElementById('settingsActiveSubBadge').textContent = planNames[prof.subscription || '6m'];
+
+      ['1m', '3m', '6m'].forEach(p => {
+        const card = document.getElementById(`planCard-${p}`);
+        const btn = document.getElementById(`planBtn-${p}`);
+        const active = (prof.subscription || '6m') === p;
+        if (card && btn) {
+          card.className = `liquid-card rounded-[24px] p-4 cursor-pointer border-2 transition flex flex-col justify-between ${
+            active ? 'border-amber-400 bg-amber-500/10' : 'border-transparent hover:border-white/25'
+          }`;
+          btn.className = `mt-4 py-2 rounded-xl text-center text-xs font-black transition ${
+            active ? 'bg-amber-400 text-slate-950' : 'bg-white/10 text-white'
+          }`;
+          btn.textContent = active ? (isEn() ? 'Active Plan ✓' : 'پلن فعال فعلی ✓') : (isEn() ? 'Activate (Beta)' : 'فعال‌سازی (بتا)');
+        }
+      });
+    }
+
+    function selectAvatarEmoji(emoji) {
+      state.profile.avatar = emoji;
+      saveState();
+      renderProfileAndPlans();
+    }
+
+    function saveUserProfile(e) {
+      e.preventDefault();
+      const name = document.getElementById('profNameInput').value.trim();
+      const contact = document.getElementById('profContactInput').value.trim();
+      if (name) state.profile.name = name;
+      state.profile.contact = contact;
+      saveState();
+      renderProfileAndPlans();
+      showToast(isEn() ? 'Profile updated!' : 'اطلاعات پروفایل ذخیره شد');
+    }
+
+    function selectSubscriptionPlan(planId) {
+      state.profile.subscription = planId;
+      saveState();
+      renderProfileAndPlans();
+      showToast(isEn() ? 'Beta Subscription Plan Activated!' : 'پلن اشتراک در نسخه بتا برای شما فعال شد!');
+    }
+
+    // ==========================================
+    // ۴. سیستم نوتیفیکیشن سررسید اقساط (با کلید روشن/خاموش مجزا)
+    // ==========================================
+    function toggleInstNotification(instId) {
+      const inst = state.installments.find(x => x.id === instId);
+      if (!inst) return;
+      inst.notify = !inst.notify;
+      saveState();
+      renderAll();
+      showToast(inst.notify
+        ? (isEn() ? `Reminder enabled for "${inst.title}"` : `یادآور سررسید برای «${inst.title}» روشن شد 🔔`)
+        : (isEn() ? `Reminder muted for "${inst.title}"` : `یادآور سررسید برای «${inst.title}» خاموش شد 🔕`)
+      );
+    }
+
+    function requestNotificationPermission() {
+      if (!('Notification' in window)) {
+        showToast(isEn() ? 'Notifications not supported in this browser' : 'مرورگر شما از نوتیفیکیشن پشتیبانی نمی‌کند');
+        return;
+      }
+      Notification.requestPermission().then(perm => {
+        if (perm === 'granted') {
+          showToast(isEn() ? 'Browser notifications enabled!' : 'مجوز نوتیفیکیشن مرورگر فعال شد!');
+          checkAndTriggerDueNotifications(true);
+        } else {
+          showToast(isEn() ? 'Notification permission denied' : 'مجوز نوتیفیکیشن داده نشد');
+        }
+      });
+    }
+
+    function checkAndTriggerDueNotifications(forceTest = false) {
+      const pKey = LIVE_TODAY.periodKey;
+      const dueItems = state.installments.filter(inst => {
+        if (!inst.notify) return false;
+        if (isInstPaidInPeriod(inst, pKey)) return false;
+        if (getTotalPaidCount(inst) >= inst.totalCount) return false;
+        const diff = inst.dueDay - LIVE_TODAY.day;
+        return diff <= 2; // ۲ روز مانده یا روز سررسید یا معوقه
+      });
+
+      const banner = document.getElementById('dueNotificationBanner');
+      if (dueItems.length > 0) {
+        const first = dueItems[0];
+        banner.classList.remove('hidden');
+        document.getElementById('dueBannerTitle').textContent = isEn()
+          ? `Payment Reminder: ${first.title}`
+          : `یادآور سررسید قسط: «${first.title}»`;
+        document.getElementById('dueBannerDesc').textContent = isEn()
+          ? `${dueItems.length} installment(s) due soon or overdue (${formatMoney(first.amount)} ${t('currency')})`
+          : `موعد پرداخت روز ${formatDigits(first.dueDay)} ماه به مبلغ ${formatMoney(first.amount)} تومان است.`;
+
+        if (('Notification' in window) && Notification.permission === 'granted' && forceTest) {
+          new Notification(isEn() ? 'JibBan Due Reminder' : 'یادآور سررسید جیب‌بان', {
+            body: `${first.title} - ${formatMoney(first.amount)} ${t('currency')}`
+          });
+        }
+      } else {
+        banner.classList.add('hidden');
+      }
+    }
+
+    // ==========================================
+    // ۵. منطق اقساط و ددلاین‌ها (سبز > ۱۵، زرد ۳ تا ۱۵، قرمز < ۳)
+    // ==========================================
     function isInstPaidInPeriod(inst, periodKey) {
       return Boolean(inst.paidRecords && inst.paidRecords[periodKey]);
     }
@@ -1090,7 +1818,6 @@
       return Math.min(inst.totalCount, (Number(inst.initialPaid) || 0) + recordsCount);
     }
 
-    // محاسبه دقیق روزهای مانده تا سررسید قسط نسبت به تاریخ زنده امروز و رنگ‌بندی (سبز > ۱۵، زرد ۳ تا ۱۵، قرمز < ۳)
     function computeInstallmentDeadline(inst, periodKey) {
       const paidInThisMonth = isInstPaidInPeriod(inst, periodKey);
       const totalPaid = getTotalPaidCount(inst);
@@ -1101,7 +1828,7 @@
         const pName = getPeriodName(rec.paidAtPeriod.split('-')[0], rec.paidAtPeriod.split('-')[1]);
         return {
           status: 'paid',
-          badgeText: `پرداخت‌شده (${toFaDigits(rec.paidDay)} ${pName})`,
+          badgeText: isEn() ? `Paid (${rec.paidDay} ${pName})` : `پرداخت‌شده (${formatDigits(rec.paidDay)} ${pName})`,
           badgeClass: 'bg-emerald-500/20 text-emerald-300 border-emerald-400/35',
           cardBorderClass: 'border-emerald-400/35',
           daysDiff: 999
@@ -1111,14 +1838,13 @@
       if (isFullySettled) {
         return {
           status: 'settled',
-          badgeText: 'تسویه کامل 🎉',
-          badgeClass: 'bg-indigo-500/20 text-indigo-200 border-indigo-400/35',
-          cardBorderClass: 'border-indigo-400/30',
+          badgeText: isEn() ? 'Settled 🎉' : 'تسویه کامل 🎉',
+          badgeClass: 'bg-sky-500/20 text-sky-200 border-sky-400/35',
+          cardBorderClass: 'border-sky-400/30',
           daysDiff: 999
         };
       }
 
-      // مقایسه ماه فعال با ماه جاری واقعی
       const activeIdx = parseInt(state.activeYear, 10) * 12 + parseInt(state.activeMonth, 10);
       const todayIdx = parseInt(LIVE_TODAY.year, 10) * 12 + parseInt(LIVE_TODAY.month, 10);
       const monthDiff = activeIdx - todayIdx;
@@ -1127,7 +1853,7 @@
       if (daysDiff < 0) {
         return {
           status: 'overdue',
-          badgeText: `معوقه (${toFaDigits(Math.abs(daysDiff))} روز گذشته!)`,
+          badgeText: isEn() ? `Overdue (${Math.abs(daysDiff)}d ago)` : `معوقه (${formatDigits(Math.abs(daysDiff))} روز گذشته)`,
           badgeClass: 'bg-rose-500/25 text-rose-200 border-rose-500/50 animate-pulse',
           cardBorderClass: 'border-rose-500/60 bg-rose-950/20',
           daysDiff
@@ -1135,7 +1861,7 @@
       } else if (daysDiff === 0) {
         return {
           status: 'urgent',
-          badgeText: 'سررسید امروز! 🔴',
+          badgeText: isEn() ? 'Due Today! 🔴' : 'سررسید امروز! 🔴',
           badgeClass: 'bg-rose-500/25 text-rose-200 border-rose-500/50 animate-pulse',
           cardBorderClass: 'border-rose-500/60 bg-rose-950/20',
           daysDiff
@@ -1143,7 +1869,7 @@
       } else if (daysDiff < 3) {
         return {
           status: 'urgent',
-          badgeText: `${toFaDigits(daysDiff)} روز مانده 🔴`,
+          badgeText: isEn() ? `${daysDiff} days left 🔴` : `${formatDigits(daysDiff)} روز مانده 🔴`,
           badgeClass: 'bg-rose-500/25 text-rose-200 border-rose-400/50',
           cardBorderClass: 'border-rose-500/55 bg-rose-950/15',
           daysDiff
@@ -1151,7 +1877,7 @@
       } else if (daysDiff <= 15) {
         return {
           status: 'warning',
-          badgeText: `${toFaDigits(daysDiff)} روز مانده 🟡`,
+          badgeText: isEn() ? `${daysDiff} days left 🟡` : `${formatDigits(daysDiff)} روز مانده 🟡`,
           badgeClass: 'bg-amber-500/20 text-amber-200 border-amber-400/45',
           cardBorderClass: 'border-amber-400/45',
           daysDiff
@@ -1159,7 +1885,7 @@
       } else {
         return {
           status: 'safe',
-          badgeText: `${toFaDigits(daysDiff)} روز مانده 🟢`,
+          badgeText: isEn() ? `${daysDiff} days left 🟢` : `${formatDigits(daysDiff)} روز مانده 🟢`,
           badgeClass: 'bg-emerald-500/20 text-emerald-200 border-emerald-400/40',
           cardBorderClass: 'border-emerald-400/35',
           daysDiff
@@ -1179,7 +1905,7 @@
     }
 
     // ==========================================
-    // ۳. ناوبری و ماشین زمان مالی (هدر هوشمند)
+    // ۶. ناوبری و ماشین زمان مالی
     // ==========================================
     function switchView(viewId) {
       activeView = viewId;
@@ -1188,8 +1914,12 @@
       if (target) target.classList.add('active');
 
       document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-      const btn = document.getElementById(`nav-${viewId}`);
-      if (btn) btn.classList.add('active');
+      const mBtn = document.getElementById(`nav-${viewId}`);
+      if (mBtn) mBtn.classList.add('active');
+
+      document.querySelectorAll('.desktop-nav-btn').forEach(b => b.classList.remove('active'));
+      const dBtn = document.getElementById(`dnav-${viewId}`);
+      if (dBtn) dBtn.classList.add('active');
 
       window.scrollTo({ top: 0, behavior: 'smooth' });
       renderAll();
@@ -1202,11 +1932,15 @@
       const returnBtn = document.getElementById('returnTodayBtn');
 
       if (isCurrentRealMonth) {
-        headerText.textContent = `امروز: ${toFaDigits(LIVE_TODAY.day)} ${LIVE_TODAY.monthName} ${toFaDigits(LIVE_TODAY.year)}`;
+        headerText.textContent = isEn()
+          ? `Today: ${LIVE_TODAY.gregFormatted}`
+          : `امروز: ${formatDigits(LIVE_TODAY.day)} ${LIVE_TODAY.monthNameFa} ${formatDigits(LIVE_TODAY.year)}`;
         pulseDot.className = 'w-2 h-2 rounded-full bg-emerald-400 animate-pulse';
         returnBtn.classList.add('hidden');
       } else {
-        headerText.textContent = `آرشیو: ${getActivePeriodName()}`;
+        headerText.textContent = isEn()
+          ? `Archive: ${getActivePeriodName()}`
+          : `آرشیو: ${getActivePeriodName()}`;
         pulseDot.className = 'w-2 h-2 rounded-full bg-amber-400';
         returnBtn.classList.remove('hidden');
       }
@@ -1221,12 +1955,13 @@
       state.activeMonth = LIVE_TODAY.month;
       saveState();
       renderAll();
-      showToast(`بازگشت به تاریخ امروز (${toFaDigits(LIVE_TODAY.day)} ${LIVE_TODAY.monthName})`);
+      showToast(isEn() ? 'Returned to current month' : 'بازگشت به تاریخ امروز');
     }
 
     function openPeriodSheet() {
-      document.getElementById('liveTodaySubInSheet').textContent =
-        `تاریخ زنده امروز: ${LIVE_TODAY.weekday} ${toFaDigits(LIVE_TODAY.day)} ${LIVE_TODAY.monthName} ${toFaDigits(LIVE_TODAY.year)}`;
+      document.getElementById('liveTodaySubInSheet').textContent = isEn()
+        ? `Live Date: ${LIVE_TODAY.gregFormatted}`
+        : `تاریخ زنده امروز: ${LIVE_TODAY.weekday} ${formatDigits(LIVE_TODAY.day)} ${LIVE_TODAY.monthNameFa} ${formatDigits(LIVE_TODAY.year)}`;
       renderPeriodPickers();
       document.getElementById('periodSheetModal').classList.remove('hidden');
       lucide.createIcons();
@@ -1241,16 +1976,16 @@
       yearGrid.innerHTML = PERSIAN_YEARS.map(y => {
         const active = y === state.activeYear;
         return `<button type="button" onclick="selectYear('${y}')" class="py-2 rounded-xl text-xs font-extrabold transition ${
-          active ? 'bg-indigo-600 text-white shadow-lg border border-indigo-400' : 'liquid-pill text-slate-300'
-        }">${toFaDigits(y)}</button>`;
+          active ? 'bg-sky-500 text-slate-950 shadow-lg' : 'liquid-pill text-slate-300'
+        }">${getDisplayYear(y)}</button>`;
       }).join('');
 
       const monthGrid = document.getElementById('monthPickerGrid');
       monthGrid.innerHTML = PERSIAN_MONTHS.map(m => {
         const active = m.id === state.activeMonth;
         return `<button type="button" onclick="selectMonth('${m.id}')" class="py-2.5 rounded-xl text-xs font-extrabold transition ${
-          active ? 'bg-indigo-600 text-white shadow-lg border border-indigo-400' : 'liquid-pill text-slate-300'
-        }">${m.name}</button>`;
+          active ? 'bg-sky-500 text-slate-950 shadow-lg' : 'liquid-pill text-slate-300'
+        }">${isEn() ? m.en : m.fa}</button>`;
       }).join('');
     }
 
@@ -1269,7 +2004,7 @@
     }
 
     // ==========================================
-    // ۴. مدیریت شیت تراکنش‌ها
+    // ۷. ثبت و ویرایش تراکنش‌ها
     // ==========================================
     function openTxModal(defaultType = 'expense', editTxId = null) {
       document.getElementById('txDayGridContainer').classList.add('hidden');
@@ -1277,19 +2012,19 @@
         const tx = state.transactions.find(t => t.id === editTxId);
         if (!tx) return;
         document.getElementById('txEditId').value = tx.id;
-        document.getElementById('txModalTitle').textContent = 'ویرایش تراکنش';
-        document.getElementById('txSubmitBtn').textContent = 'ذخیره تغییرات';
+        document.getElementById('txModalTitle').textContent = isEn() ? 'Edit Transaction' : 'ویرایش تراکنش';
+        document.getElementById('txSubmitBtn').textContent = isEn() ? 'Save Changes' : 'ذخیره تغییرات';
         modalTxType = tx.type;
         modalTxCategory = tx.category;
         modalTxDay = tx.day || LIVE_TODAY.day;
         document.getElementById('txTitle').value = tx.title;
         const amtInput = document.getElementById('txAmount');
-        amtInput.value = toFaDigits(tx.amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+        amtInput.value = formatDigits(tx.amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','));
         document.getElementById('txAmountWords').textContent = amountToFriendlyWords(tx.amount);
       } else {
         document.getElementById('txEditId').value = '';
-        document.getElementById('txModalTitle').textContent = 'ثبت تراکنش جدید';
-        document.getElementById('txSubmitBtn').textContent = 'ذخیره تراکنش';
+        document.getElementById('txModalTitle').textContent = isEn() ? 'New Transaction' : 'ثبت تراکنش جدید';
+        document.getElementById('txSubmitBtn').textContent = isEn() ? 'Save Transaction' : 'ذخیره تراکنش';
         modalTxType = defaultType;
         modalTxCategory = CATEGORIES[defaultType][0].id;
         modalTxDay = LIVE_TODAY.day;
@@ -1299,7 +2034,7 @@
 
       updateModalTxTypeUI();
       renderDayGrid('txDayGridContainer', modalTxDay, 'selectTxDay');
-      document.getElementById('txSelectedDayLabel').textContent = `روز ${toFaDigits(modalTxDay)} ${PERSIAN_MONTHS.find(m=>m.id===state.activeMonth)?.name || 'ماه'}`;
+      document.getElementById('txSelectedDayLabel').textContent = isEn() ? `Day ${modalTxDay}` : `روز ${formatDigits(modalTxDay)} ماه`;
       document.getElementById('txSheetModal').classList.remove('hidden');
       lucide.createIcons();
     }
@@ -1340,7 +2075,7 @@
           active ? activeCls : 'liquid-pill text-slate-300 border-white/10'
         }">
           <i data-lucide="${cat.icon}" class="w-4 h-4 shrink-0"></i>
-          <span class="truncate">${cat.id}</span>
+          <span class="truncate">${isEn() ? cat.en : cat.id}</span>
         </button>`;
       }).join('');
       lucide.createIcons();
@@ -1361,15 +2096,15 @@
       for (let d = 1; d <= 31; d++) {
         const active = d === Number(selectedDay);
         html += `<button type="button" onclick="${fnName}(${d})" class="py-1.5 rounded-xl text-xs font-bold transition ${
-          active ? 'bg-indigo-600 text-white shadow' : 'bg-white/5 text-slate-300 hover:bg-white/15'
-        }">${toFaDigits(d)}</button>`;
+          active ? 'bg-sky-500 text-slate-950 shadow font-black' : 'bg-white/5 text-slate-300 hover:bg-white/15'
+        }">${formatDigits(d)}</button>`;
       }
       container.innerHTML = html;
     }
 
     function selectTxDay(d) {
       modalTxDay = d;
-      document.getElementById('txSelectedDayLabel').textContent = `روز ${toFaDigits(d)} ماه`;
+      document.getElementById('txSelectedDayLabel').textContent = isEn() ? `Day ${d}` : `روز ${formatDigits(d)} ماه`;
       renderDayGrid('txDayGridContainer', d, 'selectTxDay');
       document.getElementById('txDayGridContainer').classList.add('hidden');
     }
@@ -1386,7 +2121,7 @@
         if (idx !== -1) {
           state.transactions[idx] = { ...state.transactions[idx], type: modalTxType, title, category: modalTxCategory, amount, day: modalTxDay };
         }
-        showToast('تراکنش ویرایش شد');
+        showToast(isEn() ? 'Transaction updated' : 'تراکنش ویرایش شد');
       } else {
         state.transactions.unshift({
           id: 'tx-' + Date.now(),
@@ -1397,7 +2132,7 @@
           amount,
           day: modalTxDay
         });
-        showToast('تراکنش جدید ثبت شد');
+        showToast(isEn() ? 'Transaction added' : 'تراکنش جدید ثبت شد');
       }
 
       saveState();
@@ -1406,15 +2141,15 @@
     }
 
     function deleteTransaction(id) {
-      if (!confirm('این تراکنش حذف شود؟')) return;
+      if (!confirm(isEn() ? 'Delete this transaction?' : 'این تراکنش حذف شود؟')) return;
       state.transactions = state.transactions.filter(t => t.id !== id);
       saveState();
       renderAll();
-      showToast('تراکنش حذف شد');
+      showToast(isEn() ? 'Transaction deleted' : 'تراکنش حذف شد');
     }
 
     // ==========================================
-    // ۵. مدیریت وام‌های دوره‌ای، تک‌قسط‌ها، ویرایش و پرداخت تاریخ‌دار
+    // ۸. ثبت، ویرایش و پرداخت اقساط (بدون نام برند)
     // ==========================================
     function setInstModalMode(mode) {
       modalInstMode = mode;
@@ -1429,7 +2164,7 @@
         recBox.classList.remove('hidden');
         sinInfo.classList.add('hidden');
       } else {
-        btnSin.className = 'py-2.5 rounded-xl text-xs font-extrabold flex items-center justify-center gap-1.5 transition bg-purple-500 text-white shadow-lg';
+        btnSin.className = 'py-2.5 rounded-xl text-xs font-extrabold flex items-center justify-center gap-1.5 transition bg-sky-500 text-slate-950 shadow-lg';
         btnRec.className = 'py-2.5 rounded-xl text-xs font-extrabold flex items-center justify-center gap-1.5 transition text-slate-300';
         recBox.classList.add('hidden');
         sinInfo.classList.remove('hidden');
@@ -1443,27 +2178,31 @@
         const inst = state.installments.find(x => x.id === editInstId);
         if (!inst) return;
         document.getElementById('instEditId').value = inst.id;
-        document.getElementById('instModalTitle').textContent = 'ویرایش وام / قسط';
-        document.getElementById('instSubmitBtn').textContent = 'ذخیره تغییرات';
+        document.getElementById('instModalTitle').textContent = isEn() ? 'Edit Installment' : 'ویرایش وام / قسط';
+        document.getElementById('instSubmitBtn').textContent = isEn() ? 'Save Changes' : 'ذخیره تغییرات';
         setInstModalMode(inst.kind || 'recurring');
         document.getElementById('instTitle').value = inst.title;
         const amtInput = document.getElementById('instAmount');
-        amtInput.value = toFaDigits(inst.amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+        amtInput.value = formatDigits(inst.amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','));
         document.getElementById('instAmountWords').textContent = amountToFriendlyWords(inst.amount);
         modalInstDay = inst.dueDay || 1;
         document.getElementById('instTotalCount').value = inst.totalCount || 12;
         document.getElementById('instInitialPaid').value = inst.initialPaid || 0;
+        document.getElementById('instNotifyToggle').checked = inst.notify !== false;
       } else {
         document.getElementById('instEditId').value = '';
-        document.getElementById('instModalTitle').textContent = defaultMode === 'single' ? 'ثبت تک‌قسط جدید' : 'افزودن وام یا قسط جدید';
-        document.getElementById('instSubmitBtn').textContent = 'ذخیره در لیست اقساط';
+        document.getElementById('instModalTitle').textContent = defaultMode === 'single'
+          ? (isEn() ? 'New Single Credit' : 'ثبت تک‌قسط جدید')
+          : (isEn() ? 'New Recurring Loan' : 'افزودن وام دوره‌ای جدید');
+        document.getElementById('instSubmitBtn').textContent = isEn() ? 'Save Installment' : 'ذخیره در لیست اقساط';
         document.getElementById('instForm').reset();
         document.getElementById('instAmountWords').textContent = '';
+        document.getElementById('instNotifyToggle').checked = true;
         setInstModalMode(defaultMode);
         modalInstDay = defaultMode === 'single' ? 30 : 1;
       }
 
-      document.getElementById('instSelectedDayLabel').textContent = `روز ${toFaDigits(modalInstDay)} ماه`;
+      document.getElementById('instSelectedDayLabel').textContent = isEn() ? `Day ${modalInstDay} of month` : `روز ${formatDigits(modalInstDay)} ماه`;
       renderDayGrid('instDayGridContainer', modalInstDay, 'selectInstDay');
       document.getElementById('instSheetModal').classList.remove('hidden');
       lucide.createIcons();
@@ -1475,7 +2214,7 @@
 
     function selectInstDay(d) {
       modalInstDay = d;
-      document.getElementById('instSelectedDayLabel').textContent = `روز ${toFaDigits(d)} ماه`;
+      document.getElementById('instSelectedDayLabel').textContent = isEn() ? `Day ${d} of month` : `روز ${formatDigits(d)} ماه`;
       renderDayGrid('instDayGridContainer', d, 'selectInstDay');
       document.getElementById('instDayGridContainer').classList.add('hidden');
     }
@@ -1487,6 +2226,7 @@
       const amount = parseRawNumber(document.getElementById('instAmount').value);
       const totalCount = modalInstMode === 'single' ? 1 : (parseInt(document.getElementById('instTotalCount').value, 10) || 1);
       const initialPaid = modalInstMode === 'single' ? 0 : Math.min(totalCount, parseInt(document.getElementById('instInitialPaid').value, 10) || 0);
+      const notify = document.getElementById('instNotifyToggle').checked;
 
       if (!title || amount <= 0) return;
 
@@ -1500,10 +2240,11 @@
             amount,
             dueDay: modalInstDay,
             totalCount,
-            initialPaid
+            initialPaid,
+            notify
           };
         }
-        showToast('اطلاعات قسط ویرایش شد');
+        showToast(isEn() ? 'Installment updated' : 'اطلاعات قسط ویرایش شد');
       } else {
         state.installments.push({
           id: 'inst-' + Date.now(),
@@ -1514,9 +2255,10 @@
           dueDay: modalInstDay,
           totalCount,
           initialPaid,
+          notify,
           paidRecords: {}
         });
-        showToast(modalInstMode === 'single' ? 'تک‌قسط جدید اضافه شد' : 'وام جدید اضافه شد');
+        showToast(isEn() ? 'Installment saved' : 'مورد جدید اضافه شد');
       }
 
       saveState();
@@ -1524,19 +2266,17 @@
       renderAll();
     }
 
-    // باز کردن شیت پرداخت قسط با انتخاب تاریخ (مثلاً ۳۰ مهر)
     function openPayInstModal(instId) {
       const inst = state.installments.find(x => x.id === instId);
       if (!inst) return;
       const pKey = getActivePeriodKey();
 
-      // اگر قبلاً در این ماه پرداخت شده، با تایید کاربر لغو پرداخت شود
       if (isInstPaidInPeriod(inst, pKey)) {
-        if (confirm('این قسط به‌عنوان پرداخت‌شده ثبت شده است. آیا می‌خواهید وضعیت پرداخت آن را لغو کنید؟')) {
+        if (confirm(isEn() ? 'Cancel payment record for this month?' : 'این قسط پرداخت‌شده ثبت شده است. وضعیت پرداخت لغو شود؟')) {
           delete inst.paidRecords[pKey];
           saveState();
           renderAll();
-          showToast('پرداخت قسط لغو شد');
+          showToast(isEn() ? 'Payment undone' : 'پرداخت قسط لغو شد');
         }
         return;
       }
@@ -1547,7 +2287,7 @@
       paySheetDay = (state.activeYear === LIVE_TODAY.year && state.activeMonth === LIVE_TODAY.month) ? LIVE_TODAY.day : inst.dueDay;
 
       document.getElementById('payInstSummaryTitle').textContent = inst.title;
-      document.getElementById('payInstSummaryAmount').textContent = `مبلغ: ${formatMoney(inst.amount)} تومان`;
+      document.getElementById('payInstSummaryAmount').textContent = `${formatMoney(inst.amount)} ${t('currency')}`;
 
       renderPaySheetSelectors();
       document.getElementById('payInstSheetModal').classList.remove('hidden');
@@ -1565,7 +2305,7 @@
         const active = m.id === paySheetMonth;
         return `<button type="button" onclick="paySheetMonth='${m.id}'; renderPaySheetSelectors();" class="py-1.5 rounded-xl text-[11px] font-bold transition ${
           active ? 'bg-emerald-500 text-slate-950 font-black' : 'text-slate-300 hover:bg-white/10'
-        }">${m.name}</button>`;
+        }">${isEn() ? m.en.slice(0, 3) : m.fa}</button>`;
       }).join('');
 
       const yBox = document.getElementById('payYearSelector');
@@ -1573,7 +2313,7 @@
         const active = y === paySheetYear;
         return `<button type="button" onclick="paySheetYear='${y}'; renderPaySheetSelectors();" class="py-1.5 rounded-xl text-[11px] font-bold transition ${
           active ? 'bg-emerald-500 text-slate-950 font-black' : 'text-slate-300 hover:bg-white/10'
-        }">${toFaDigits(y)}</button>`;
+        }">${getDisplayYear(y)}</button>`;
       }).join('');
 
       const dBox = document.getElementById('payDaySelector');
@@ -1582,7 +2322,7 @@
         const active = d === Number(paySheetDay);
         dHtml += `<button type="button" onclick="paySheetDay=${d}; renderPaySheetSelectors();" class="py-1 rounded-lg text-[11px] font-bold transition ${
           active ? 'bg-emerald-500 text-slate-950 font-black' : 'text-slate-300 hover:bg-white/10'
-        }">${toFaDigits(d)}</button>`;
+        }">${formatDigits(d)}</button>`;
       }
       dBox.innerHTML = dHtml;
     }
@@ -1600,38 +2340,88 @@
         paidDay: paySheetDay
       };
 
-      const mName = PERSIAN_MONTHS.find(m => m.id === paySheetMonth)?.name || '';
       saveState();
       closePayInstModal();
       renderAll();
-      showToast(`پرداخت قسط در تاریخ ${toFaDigits(paySheetDay)} ${mName} ${toFaDigits(paySheetYear)} ثبت شد`);
+      showToast(isEn() ? 'Payment recorded!' : 'پرداخت قسط با موفقیت ثبت شد');
     }
 
     function deleteInstallment(id) {
-      if (!confirm('این وام/قسط کامل حذف شود؟')) return;
+      if (!confirm(isEn() ? 'Delete this installment?' : 'این وام/قسط کامل حذف شود؟')) return;
       state.installments = state.installments.filter(x => x.id !== id);
       saveState();
       renderAll();
-      showToast('قسط حذف شد');
+      showToast(isEn() ? 'Installment deleted' : 'قسط حذف شد');
     }
 
     // ==========================================
-    // ۶. رندر کامل تمام بخش‌ها
+    // ۹. کنترل فیلترها و سورت‌ها
     // ==========================================
     function setTxTypeFilter(type) {
       txTypeFilter = type;
       txCategoryFilter = 'all';
-      ['all', 'income', 'expense'].forEach(t => {
-        const btn = document.getElementById(`txTab-${t}`);
-        btn.className = t === type
-          ? 'py-2 px-3 rounded-xl text-xs font-bold transition bg-indigo-600 text-white shadow'
+      ['all', 'income', 'expense'].forEach(k => {
+        const btn = document.getElementById(`txTab-${k}`);
+        if (btn) btn.className = k === type
+          ? 'py-2 px-3 rounded-xl text-xs font-bold transition bg-sky-600 text-white shadow'
           : 'py-2 px-3 rounded-xl text-xs font-bold transition text-slate-300';
       });
       renderAll();
     }
 
+    function setTxSort(mode) {
+      txSortMode = mode;
+      ['newest', 'oldest', 'highest', 'lowest'].forEach(k => {
+        const btn = document.getElementById(`txSort-${k}`);
+        if (btn) btn.className = k === mode
+          ? 'px-2.5 py-1 rounded-lg text-[11px] font-bold bg-sky-500/25 text-sky-300 border border-sky-400/30 shrink-0'
+          : 'px-2.5 py-1 rounded-lg text-[11px] font-bold liquid-pill text-slate-300 shrink-0';
+      });
+      renderAll();
+    }
+
+    function setInstKindFilter(kind) {
+      instKindFilter = kind;
+      ['all', 'recurring', 'single'].forEach(k => {
+        const btn = document.getElementById(`instKind-${k}`);
+        if (btn) btn.className = k === kind
+          ? 'py-2 px-3 rounded-xl text-xs font-bold transition bg-amber-500 text-slate-950 shadow'
+          : 'py-2 px-3 rounded-xl text-xs font-bold transition text-slate-300';
+      });
+      renderAll();
+    }
+
+    function setInstStatusFilter(stat) {
+      instStatusFilter = stat;
+      ['all', 'unpaid', 'paid', 'settled'].forEach(k => {
+        const btn = document.getElementById(`instStat-${k}`);
+        if (btn) btn.className = k === stat
+          ? 'px-2.5 py-1 rounded-lg text-[11px] font-bold bg-sky-500/25 text-sky-300 border border-sky-400/30 shrink-0'
+          : 'px-2.5 py-1 rounded-lg text-[11px] font-bold liquid-pill text-slate-300 shrink-0';
+      });
+      renderAll();
+    }
+
+    function setInstSort(mode) {
+      instSortMode = mode;
+      ['deadline', 'amount', 'debt'].forEach(k => {
+        const btn = document.getElementById(`instSort-${k}`);
+        if (btn) btn.className = k === mode
+          ? 'px-2.5 py-1 rounded-lg text-[11px] font-bold bg-amber-500/25 text-amber-300 border border-amber-400/30 shrink-0'
+          : 'px-2.5 py-1 rounded-lg text-[11px] font-bold liquid-pill text-slate-300 shrink-0';
+      });
+      renderAll();
+    }
+
+    // ==========================================
+    // ۱۰. رندر جامع صفحات و ویجت‌های گرافیکی شیشه‌ای
+    // ==========================================
     function renderAll() {
+      applyThemeAndLang();
       updateHeaderDateCapsule();
+      renderProfileAndPlans();
+      checkAndTriggerDueNotifications(false);
+
       const periodKey = getActivePeriodKey();
       const monthTxs = state.transactions.filter(t => t.period === periodKey);
 
@@ -1641,10 +2431,8 @@
       const totalIncome = incomeTxs.reduce((s, t) => s + Number(t.amount), 0);
       const totalExpense = expenseTxs.reduce((s, t) => s + Number(t.amount), 0);
 
-      // فیلتر اقساط مربوط به این ماه (وام‌های دوره‌ای + تک‌قسط‌های همین ماه)
       const visibleInstallments = state.installments.filter(inst => {
         if (inst.kind === 'single' && inst.targetPeriod && inst.targetPeriod !== periodKey) {
-          // اگر تک‌قسط در این ماه پرداخت شده هم نمایش داده شود
           return isInstPaidInPeriod(inst, periodKey);
         }
         return true;
@@ -1660,9 +2448,7 @@
         const totalPaid = getTotalPaidCount(inst);
         const activeThisMonth = paidHere || totalPaid < inst.totalCount;
 
-        if (activeThisMonth) {
-          totalInstallmentsMonthlyQuota += Number(inst.amount);
-        }
+        if (activeThisMonth) totalInstallmentsMonthlyQuota += Number(inst.amount);
         if (paidHere) {
           paidInstallmentsAmount += Number(inst.amount);
           paidInstCount++;
@@ -1674,35 +2460,48 @@
       const netBalance = totalIncome - totalExpense - paidInstallmentsAmount;
       const savingsRate = totalIncome > 0 ? Math.round((netBalance / totalIncome) * 100) : 0;
 
-      // آپدیت داشبورد
       const heroBal = document.getElementById('heroNetBalance');
       heroBal.textContent = formatMoney(netBalance);
       heroBal.className = `text-3xl sm:text-5xl font-black tracking-tight ltr-num ${netBalance < 0 ? 'text-rose-400' : 'text-white'}`;
 
       const heroSav = document.getElementById('heroSavingsRate');
-      heroSav.textContent = `${toFaDigits(Math.max(-99, savingsRate))}٪`;
-      heroSav.className = `text-2xl font-black ltr-num ${savingsRate >= 20 ? 'text-emerald-400' : savingsRate >= 0 ? 'text-amber-300' : 'text-rose-400'}`;
+      heroSav.textContent = `${formatDigits(Math.max(-99, savingsRate))}${isEn() ? '%' : '٪'}`;
 
       document.getElementById('dashIncome').textContent = formatMoney(totalIncome);
-      document.getElementById('dashIncomeCount').textContent = `${toFaDigits(incomeTxs.length)} واریزی ثبت‌شده`;
+      document.getElementById('dashIncomeCount').textContent = isEn()
+        ? `${incomeTxs.length} deposits`
+        : `${formatDigits(incomeTxs.length)} واریزی ثبت‌شده`;
 
       document.getElementById('dashExpense').textContent = formatMoney(totalExpense);
       const expRatio = totalIncome > 0 ? Math.round((totalExpense / totalIncome) * 100) : 0;
-      document.getElementById('dashExpenseRatio').textContent = `${toFaDigits(expRatio)}٪ از درآمد`;
+      document.getElementById('dashExpenseRatio').textContent = isEn()
+        ? `${expRatio}% of income`
+        : `${formatDigits(expRatio)}٪ از درآمد`;
 
       document.getElementById('dashInstallmentsPaid').textContent = formatMoney(paidInstallmentsAmount);
-      document.getElementById('dashInstallmentsTotalSub').textContent = `از ${formatMoney(totalInstallmentsMonthlyQuota)} ت`;
-      document.getElementById('dashInstallmentStatus').textContent = `${toFaDigits(paidInstCount)} پرداخت‌شده | ${toFaDigits(unpaidActiveCount)} مانده`;
+      document.getElementById('dashInstallmentsTotalSub').textContent = isEn()
+        ? `/ ${formatMoney(totalInstallmentsMonthlyQuota)}`
+        : `از ${formatMoney(totalInstallmentsMonthlyQuota)}`;
+      document.getElementById('dashInstallmentStatus').textContent = isEn()
+        ? `${paidInstCount} paid | ${unpaidActiveCount} due`
+        : `${formatDigits(paidInstCount)} پرداخت‌شده | ${formatDigits(unpaidActiveCount)} مانده`;
 
       const navDot = document.getElementById('navUnpaidDot');
-      if (unpaidActiveCount > 0) navDot.classList.remove('hidden');
-      else navDot.classList.add('hidden');
+      const deskBadge = document.getElementById('desktopUnpaidBadge');
+      if (unpaidActiveCount > 0) {
+        navDot.classList.remove('hidden');
+        deskBadge.classList.remove('hidden');
+        deskBadge.textContent = formatDigits(unpaidActiveCount);
+      } else {
+        navDot.classList.add('hidden');
+        deskBadge.classList.add('hidden');
+      }
 
       renderBudgetBar(totalIncome, totalExpense, paidInstallmentsAmount, netBalance);
       renderDashboardSummaries(visibleInstallments, monthTxs, expenseTxs, periodKey);
       renderTransactionsSection(monthTxs);
       renderInstallmentsSection(visibleInstallments, periodKey);
-      renderReportsSection(totalIncome, totalExpense, paidInstallmentsAmount, netBalance, expenseTxs);
+      renderLiquidReportsSection(totalIncome, totalExpense, paidInstallmentsAmount, netBalance, expenseTxs);
 
       lucide.createIcons();
     }
@@ -1713,14 +2512,15 @@
       const barRem = document.getElementById('barRemain');
       const msg = document.getElementById('healthMessage');
       const badge = document.getElementById('healthBadge');
+      const pctSym = isEn() ? '%' : '٪';
 
       if (income <= 0) {
         barExp.style.width = '0%'; barInst.style.width = '0%'; barRem.style.width = '0%';
-        document.getElementById('lblExpensePct').textContent = '۰٪';
-        document.getElementById('lblInstPct').textContent = '۰٪';
-        document.getElementById('lblRemainPct').textContent = '۰٪';
-        msg.textContent = 'برای تحلیل بودجه، ابتدا درآمد ماه را ثبت کنید.';
-        badge.textContent = 'در انتظار داده';
+        document.getElementById('lblExpensePct').textContent = `0${pctSym}`;
+        document.getElementById('lblInstPct').textContent = `0${pctSym}`;
+        document.getElementById('lblRemainPct').textContent = `0${pctSym}`;
+        msg.textContent = isEn() ? 'Record monthly income to see budget analysis.' : 'برای تحلیل بودجه، ابتدا درآمد ماه را ثبت کنید.';
+        badge.textContent = isEn() ? 'No Data' : 'در انتظار داده';
         return;
       }
 
@@ -1732,21 +2532,27 @@
       barInst.style.width = `${instPct}%`;
       barRem.style.width = `${remPct}%`;
 
-      document.getElementById('lblExpensePct').textContent = `${toFaDigits(expPct)}٪`;
-      document.getElementById('lblInstPct').textContent = `${toFaDigits(instPct)}٪`;
-      document.getElementById('lblRemainPct').textContent = `${toFaDigits(remPct)}٪`;
+      document.getElementById('lblExpensePct').textContent = `${formatDigits(expPct)}${pctSym}`;
+      document.getElementById('lblInstPct').textContent = `${formatDigits(instPct)}${pctSym}`;
+      document.getElementById('lblRemainPct').textContent = `${formatDigits(remPct)}${pctSym}`;
 
       if (net < 0) {
-        msg.textContent = `مخارج این ماه ${formatMoney(Math.abs(net))} تومان بیشتر از درآمد بوده است.`;
-        badge.textContent = 'کسری بودجه';
+        msg.textContent = isEn()
+          ? `Deficit of ${formatMoney(Math.abs(net))} ${t('currency')} this month.`
+          : `مخارج این ماه ${formatMoney(Math.abs(net))} تومان بیشتر از درآمد بوده است.`;
+        badge.textContent = isEn() ? 'Over Budget' : 'کسری بودجه';
         badge.className = 'text-[11px] font-bold px-3 py-1 rounded-full bg-rose-500/25 text-rose-200 border border-rose-400/30';
       } else if (remPct >= 20) {
-        msg.textContent = `عالی! ${toFaDigits(remPct)}٪ از درآمد ماه (${formatMoney(net)} تومان) پس‌انداز شده است.`;
-        badge.textContent = 'سلامت مالی عالی';
+        msg.textContent = isEn()
+          ? `Great! ${remPct}% of income (${formatMoney(net)} ${t('currency')}) saved.`
+          : `عالی! ${formatDigits(remPct)}٪ از درآمد ماه (${formatMoney(net)} تومان) پس‌انداز شده است.`;
+        badge.textContent = isEn() ? 'Healthy' : 'سلامت مالی عالی';
         badge.className = 'text-[11px] font-bold px-3 py-1 rounded-full bg-emerald-500/25 text-emerald-200 border border-emerald-400/30';
       } else {
-        msg.textContent = `${toFaDigits(remPct)}٪ از درآمد ماه باقی مانده است.`;
-        badge.textContent = 'تراز متعادل';
+        msg.textContent = isEn()
+          ? `${remPct}% of monthly income remains.`
+          : `${formatDigits(remPct)}٪ از درآمد ماه باقی مانده است.`;
+        badge.textContent = isEn() ? 'Balanced' : 'تراز متعادل';
         badge.className = 'text-[11px] font-bold px-3 py-1 rounded-full bg-amber-500/25 text-amber-200 border border-amber-400/30';
       }
     }
@@ -1755,34 +2561,39 @@
       const instTitle = document.getElementById('dashSummaryInstTitle');
       const instDesc = document.getElementById('dashSummaryInstDesc');
 
-      // پیدا کردن نزدیک‌ترین قسط پرداخت‌نشده بر اساس تاریخ امروز
       const unpaidList = visibleInstallments
         .filter(i => !isInstPaidInPeriod(i, periodKey) && getTotalPaidCount(i) < i.totalCount)
         .map(i => ({ inst: i, meta: computeInstallmentDeadline(i, periodKey) }))
         .sort((a, b) => a.meta.daysDiff - b.meta.daysDiff);
 
       if (unpaidList.length === 0) {
-        instTitle.textContent = 'تمام اقساط این ماه پرداخت شده‌اند 🎉';
-        instDesc.textContent = 'هیچ قسط معوقه یا پرداخت‌نشده‌ای در این ماه ندارید.';
+        instTitle.textContent = isEn() ? 'All installments paid 🎉' : 'تمام اقساط این ماه پرداخت شده‌اند 🎉';
+        instDesc.textContent = isEn() ? 'No pending or overdue installments for this period.' : 'هیچ قسط معوقه یا پرداخت‌نشده‌ای در این ماه ندارید.';
       } else {
         const nearest = unpaidList[0];
         const totalUnpaidSum = unpaidList.reduce((s, x) => s + Number(x.inst.amount), 0);
-        instTitle.textContent = `نزدیک‌ترین: «${nearest.inst.title}» (${nearest.meta.badgeText})`;
-        instDesc.textContent = `مجموعاً ${toFaDigits(unpaidList.length)} قسط به مبلغ ${formatMoney(totalUnpaidSum)} تومان در این ماه باقی مانده است.`;
+        instTitle.textContent = isEn()
+          ? `Next: "${nearest.inst.title}" (${nearest.meta.badgeText})`
+          : `نزدیک‌ترین: «${nearest.inst.title}» (${nearest.meta.badgeText})`;
+        instDesc.textContent = isEn()
+          ? `${unpaidList.length} unpaid installment(s) totaling ${formatMoney(totalUnpaidSum)} ${t('currency')}.`
+          : `مجموعاً ${formatDigits(unpaidList.length)} قسط به مبلغ ${formatMoney(totalUnpaidSum)} تومان باقی مانده است.`;
       }
 
       const txTitle = document.getElementById('dashSummaryTxTitle');
       const txDesc = document.getElementById('dashSummaryTxDesc');
       if (monthTxs.length === 0) {
-        txTitle.textContent = 'هنوز تراکنشی ثبت نشده است';
-        txDesc.textContent = 'از دکمه + پایین صفحه اولین تراکنش را ثبت کنید.';
+        txTitle.textContent = isEn() ? 'No transactions yet' : 'هنوز تراکنشی ثبت نشده است';
+        txDesc.textContent = isEn() ? 'Tap the + button to record income or expenses.' : 'از دکمه + اولین تراکنش ماه را ثبت کنید.';
       } else {
-        txTitle.textContent = `${toFaDigits(monthTxs.length)} تراکنش در این ماه`;
+        txTitle.textContent = isEn() ? `${monthTxs.length} recorded transactions` : `${formatDigits(monthTxs.length)} تراکنش ثبت‌شده در این ماه`;
         if (expenseTxs.length > 0) {
           const biggest = [...expenseTxs].sort((a, b) => b.amount - a.amount)[0];
-          txDesc.textContent = `بیشترین خرج: «${biggest.title}» (${formatMoney(biggest.amount)} تومان).`;
+          txDesc.textContent = isEn()
+            ? `Largest expense: "${biggest.title}" (${formatMoney(biggest.amount)} ${t('currency')}).`
+            : `بیشترین خرج: «${biggest.title}» (${formatMoney(biggest.amount)} تومان).`;
         } else {
-          txDesc.textContent = 'هنوز هزینه‌ای ثبت نشده است.';
+          txDesc.textContent = isEn() ? 'No expenses recorded yet.' : 'هنوز هزینه‌ای ثبت نشده است.';
         }
       }
     }
@@ -1790,40 +2601,45 @@
     function renderTransactionsSection(monthTxs) {
       const pillsBox = document.getElementById('txCategoryPills');
       let cats = [];
-      if (txTypeFilter === 'income') cats = CATEGORIES.income.map(c => c.id);
-      else if (txTypeFilter === 'expense') cats = CATEGORIES.expense.map(c => c.id);
-      else cats = [...CATEGORIES.expense.map(c => c.id), ...CATEGORIES.income.map(c => c.id)];
+      if (txTypeFilter === 'income') cats = CATEGORIES.income;
+      else if (txTypeFilter === 'expense') cats = CATEGORIES.expense;
+      else cats = [...CATEGORIES.expense, ...CATEGORIES.income];
 
       let pillsHtml = `<button onclick="txCategoryFilter='all'; renderAll();" class="px-3 py-1.5 rounded-xl text-xs font-bold shrink-0 transition ${
-        txCategoryFilter === 'all' ? 'bg-indigo-600 text-white shadow' : 'liquid-pill text-slate-300'
-      }">همه دسته‌ها</button>`;
+        txCategoryFilter === 'all' ? 'bg-sky-600 text-white shadow' : 'liquid-pill text-slate-300'
+      }">${isEn() ? 'All Categories' : 'همه دسته‌ها'}</button>`;
 
       cats.forEach(c => {
-        const active = txCategoryFilter === c;
-        pillsHtml += `<button onclick="txCategoryFilter='${c}'; renderAll();" class="px-3 py-1.5 rounded-xl text-xs font-bold shrink-0 transition ${
-          active ? 'bg-indigo-600 text-white shadow' : 'liquid-pill text-slate-300'
-        }">${c}</button>`;
+        const active = txCategoryFilter === c.id;
+        pillsHtml += `<button onclick="txCategoryFilter='${c.id}'; renderAll();" class="px-3 py-1.5 rounded-xl text-xs font-bold shrink-0 transition ${
+          active ? 'bg-sky-600 text-white shadow' : 'liquid-pill text-slate-300'
+        }">${isEn() ? c.en : c.id}</button>`;
       });
       pillsBox.innerHTML = pillsHtml;
 
       const query = (document.getElementById('txSearchInput')?.value || '').trim().toLowerCase();
-      const filtered = monthTxs.filter(t => {
+      let filtered = monthTxs.filter(t => {
         if (txTypeFilter !== 'all' && t.type !== txTypeFilter) return false;
         if (txCategoryFilter !== 'all' && t.category !== txCategoryFilter) return false;
         if (query && !t.title.toLowerCase().includes(query) && !t.category.toLowerCase().includes(query)) return false;
         return true;
-      }).sort((a, b) => (b.day || 1) - (a.day || 1));
+      });
 
-      document.getElementById('txTotalBadge').textContent = `${toFaDigits(filtered.length)} مورد`;
+      if (txSortMode === 'newest') filtered.sort((a, b) => (b.day || 1) - (a.day || 1));
+      else if (txSortMode === 'oldest') filtered.sort((a, b) => (a.day || 1) - (b.day || 1));
+      else if (txSortMode === 'highest') filtered.sort((a, b) => b.amount - a.amount);
+      else if (txSortMode === 'lowest') filtered.sort((a, b) => a.amount - b.amount);
+
+      document.getElementById('txTotalBadge').textContent = isEn() ? `${filtered.length} items` : `${formatDigits(filtered.length)} مورد`;
       const container = document.getElementById('txCardsContainer');
 
       if (filtered.length === 0) {
-        container.innerHTML = `<div class="text-center py-10 text-slate-400 text-xs">تراکنشی یافت نشد.</div>`;
+        container.innerHTML = `<div class="text-center py-10 text-slate-400 text-xs">${isEn() ? 'No matching transactions found.' : 'تراکنشی با این فیلتر یافت نشد.'}</div>`;
         return;
       }
 
-      container.innerHTML = filtered.map(t => {
-        const isInc = t.type === 'income';
+      container.innerHTML = filtered.map(tItem => {
+        const isInc = tItem.type === 'income';
         return `
           <div class="liquid-card rounded-2xl p-3.5 sm:p-4 flex items-center justify-between gap-3">
             <div class="flex items-center gap-3 min-w-0">
@@ -1833,10 +2649,10 @@
                 <i data-lucide="${isInc ? 'arrow-down-left' : 'arrow-up-right'}" class="w-5 h-5"></i>
               </div>
               <div class="min-w-0">
-                <h4 class="text-sm font-extrabold text-white truncate">${t.title}</h4>
+                <h4 class="text-sm font-extrabold text-white truncate">${tItem.title}</h4>
                 <div class="flex items-center gap-2 mt-1 text-[11px] text-slate-300">
-                  <span class="px-2 py-0.5 rounded-lg bg-white/10">${t.category}</span>
-                  <span>روز ${toFaDigits(t.day || 1)}</span>
+                  <span class="px-2 py-0.5 rounded-lg bg-white/10">${getCategoryDisplayName(tItem.category)}</span>
+                  <span>${isEn() ? `Day ${tItem.day || 1}` : `روز ${formatDigits(tItem.day || 1)}`}</span>
                 </div>
               </div>
             </div>
@@ -1844,15 +2660,15 @@
             <div class="flex items-center gap-2 shrink-0">
               <div class="text-left">
                 <div class="text-sm sm:text-base font-black ltr-num ${isInc ? 'text-emerald-300' : 'text-rose-300'}">
-                  ${isInc ? '+' : '-'}${formatMoney(t.amount)}
+                  ${isInc ? '+' : '-'}${formatMoney(tItem.amount)}
                 </div>
-                <span class="text-[10px] text-slate-400 block">تومان</span>
+                <span class="text-[10px] text-slate-400 block">${t('currency')}</span>
               </div>
               <div class="flex flex-col gap-1 border-r border-white/10 pr-2">
-                <button onclick="openTxModal('${t.type}', '${t.id}')" class="p-1.5 rounded-lg hover:bg-white/15 text-slate-300">
+                <button onclick="openTxModal('${tItem.type}', '${tItem.id}')" class="p-1.5 rounded-lg hover:bg-white/15 text-slate-300">
                   <i data-lucide="pencil" class="w-3.5 h-3.5"></i>
                 </button>
-                <button onclick="deleteTransaction('${t.id}')" class="p-1.5 rounded-lg hover:bg-rose-500/20 text-slate-300 hover:text-rose-300">
+                <button onclick="deleteTransaction('${tItem.id}')" class="p-1.5 rounded-lg hover:bg-rose-500/20 text-slate-300 hover:text-rose-300">
                   <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
                 </button>
               </div>
@@ -1877,16 +2693,43 @@
 
       document.getElementById('instTotalRemainingDebt').textContent = formatMoney(totalRemainingDebt);
       const overallPct = sumAllCounts > 0 ? Math.round((sumPaidCounts / sumAllCounts) * 100) : 0;
-      document.getElementById('instOverallProgressSub').textContent =
-        `${toFaDigits(overallPct)}٪ از کل تعهدات تسویه شده (${toFaDigits(sumPaidCounts)} از ${toFaDigits(sumAllCounts)} قسط)`;
+      document.getElementById('instOverallProgressSub').textContent = isEn()
+        ? `${overallPct}% of all installments settled (${sumPaidCounts} of ${sumAllCounts})`
+        : `${formatDigits(overallPct)}٪ از کل تعهدات تسویه شده (${formatDigits(sumPaidCounts)} از ${formatDigits(sumAllCounts)} قسط)`;
+
+      // اعمال فیلتر نوع (همه / وام دوره‌ای / تک‌قسط) و وضعیت
+      let list = visibleInstallments.filter(inst => {
+        if (instKindFilter !== 'all' && inst.kind !== instKindFilter) return false;
+        const paidInThis = isInstPaidInPeriod(inst, periodKey);
+        const totalPaid = getTotalPaidCount(inst);
+        const settled = totalPaid >= inst.totalCount;
+
+        if (instStatusFilter === 'unpaid') return !paidInThis && !settled;
+        if (instStatusFilter === 'paid') return paidInThis;
+        if (instStatusFilter === 'settled') return settled;
+        return true;
+      });
+
+      // اعمال سورت اقساط
+      list.sort((a, b) => {
+        if (instSortMode === 'amount') return b.amount - a.amount;
+        if (instSortMode === 'debt') {
+          const remA = Math.max(0, a.totalCount - getTotalPaidCount(a)) * a.amount;
+          const remB = Math.max(0, b.totalCount - getTotalPaidCount(b)) * b.amount;
+          return remB - remA;
+        }
+        const metaA = computeInstallmentDeadline(a, periodKey);
+        const metaB = computeInstallmentDeadline(b, periodKey);
+        return metaA.daysDiff - metaB.daysDiff;
+      });
 
       const grid = document.getElementById('instCardsGrid');
-      if (visibleInstallments.length === 0) {
-        grid.innerHTML = `<div class="col-span-full liquid-glass rounded-[26px] p-10 text-center text-slate-400 text-xs">هیچ قسط یا وامی برای این ماه ثبت نشده است.</div>`;
+      if (list.length === 0) {
+        grid.innerHTML = `<div class="col-span-full liquid-glass rounded-[26px] p-10 text-center text-slate-400 text-xs">${isEn() ? 'No installments match the selected filters.' : 'هیچ قسط یا وامی با این فیلتر یافت نشد.'}</div>`;
         return;
       }
 
-      grid.innerHTML = visibleInstallments.map(inst => {
+      grid.innerHTML = list.map(inst => {
         const paidInThisMonth = isInstPaidInPeriod(inst, periodKey);
         const totalPaid = getTotalPaidCount(inst);
         const remainCount = Math.max(0, inst.totalCount - totalPaid);
@@ -1901,23 +2744,26 @@
               <div class="flex items-start justify-between gap-2 mb-3">
                 <div class="min-w-0">
                   <div class="flex items-center gap-1.5 flex-wrap mb-1">
-                    <span class="text-[10px] font-bold px-2 py-0.5 rounded-lg ${isSingle ? 'bg-purple-500/25 text-purple-200 border border-purple-400/30' : 'bg-white/10 text-slate-300'}">
-                      ${isSingle ? '⚡ تک‌قسط' : '🔄 وام دوره‌ای'}
+                    <span class="text-[10px] font-bold px-2 py-0.5 rounded-lg ${isSingle ? 'bg-sky-500/20 text-sky-200 border border-sky-400/30' : 'bg-white/10 text-slate-300'}">
+                      ${isSingle ? (isEn() ? '⚡ Single Credit' : '⚡ تک‌قسط') : (isEn() ? '🔄 Recurring Loan' : '🔄 وام دوره‌ای')}
                     </span>
                     <span class="text-[11px] font-extrabold px-2.5 py-0.5 rounded-full border ${deadline.badgeClass}">
                       ${deadline.badgeText}
                     </span>
                   </div>
                   <h4 class="text-base font-black text-white truncate mt-1">${inst.title}</h4>
-                  <p class="text-xs text-slate-300 mt-0.5">سررسید: روز ${toFaDigits(inst.dueDay)} ماه</p>
+                  <p class="text-xs text-slate-300 mt-0.5">${isEn() ? `Due: Day ${inst.dueDay} of month` : `سررسید: روز ${formatDigits(inst.dueDay)} ماه`}</p>
                 </div>
 
-                <!-- دکمه‌های ویرایش و حذف قسط -->
+                <!-- دکمه‌های نوتیفیکیشن مجزا، ویرایش و حذف قسط -->
                 <div class="flex items-center gap-1 shrink-0">
-                  <button onclick="openInstModal('${inst.kind}', '${inst.id}')" class="p-2 rounded-xl liquid-pill text-slate-300 hover:text-white" title="ویرایش قسط">
+                  <button onclick="toggleInstNotification('${inst.id}')" class="p-2 rounded-xl liquid-pill ${inst.notify ? 'text-amber-300 border-amber-400/35' : 'text-slate-500'}" title="نوتیفیکیشن سررسید">
+                    <i data-lucide="${inst.notify ? 'bell-ring' : 'bell-off'}" class="w-4 h-4"></i>
+                  </button>
+                  <button onclick="openInstModal('${inst.kind}', '${inst.id}')" class="p-2 rounded-xl liquid-pill text-slate-300 hover:text-white" title="ویرایش">
                     <i data-lucide="pencil" class="w-4 h-4"></i>
                   </button>
-                  <button onclick="deleteInstallment('${inst.id}')" class="p-2 rounded-xl liquid-pill text-slate-300 hover:text-rose-300" title="حذف قسط">
+                  <button onclick="deleteInstallment('${inst.id}')" class="p-2 rounded-xl liquid-pill text-slate-300 hover:text-rose-300" title="حذف">
                     <i data-lucide="trash-2" class="w-4 h-4"></i>
                   </button>
                 </div>
@@ -1925,21 +2771,21 @@
 
               <div class="liquid-glass rounded-2xl p-3.5 mb-4 grid grid-cols-2 gap-2">
                 <div>
-                  <span class="text-[11px] text-slate-300 block">مبلغ قسط</span>
+                  <span class="text-[11px] text-slate-300 block">${isEn() ? 'Monthly Payment' : 'مبلغ قسط'}</span>
                   <span class="text-sm sm:text-base font-black text-white ltr-num">${formatMoney(inst.amount)}</span>
-                  <span class="text-[10px] text-slate-400">تومان</span>
+                  <span class="text-[10px] text-slate-400">${t('currency')}</span>
                 </div>
                 <div class="border-r border-white/10 pr-3">
-                  <span class="text-[11px] text-slate-300 block">مانده کل این بدهی</span>
+                  <span class="text-[11px] text-slate-300 block">${isEn() ? 'Remaining Debt' : 'مانده کل بدهی'}</span>
                   <span class="text-sm sm:text-base font-black text-amber-300 ltr-num">${formatMoney(remainDebt)}</span>
-                  <span class="text-[10px] text-slate-400">تومان</span>
+                  <span class="text-[10px] text-slate-400">${t('currency')}</span>
                 </div>
               </div>
 
               <div class="space-y-1.5 mb-4">
                 <div class="flex items-center justify-between text-xs">
-                  <span class="text-slate-300">${toFaDigits(totalPaid)} از ${toFaDigits(inst.totalCount)} قسط پرداخت شده</span>
-                  <span class="font-bold text-white">${toFaDigits(remainCount)} قسط مانده (${toFaDigits(pct)}٪)</span>
+                  <span class="text-slate-300">${isEn() ? `${totalPaid} of${inst.totalCount} paid` : `${formatDigits(totalPaid)} از ${formatDigits(inst.totalCount)} قسط پرداخت شده`}</span>
+                  <span class="font-bold text-white">${isEn() ? `${remainCount} left (${pct}%)` : `${formatDigits(remainCount)} مانده (${formatDigits(pct)}٪)`}</span>
                 </div>
                 <div class="h-2.5 w-full bg-slate-950/60 rounded-full overflow-hidden p-0.5 border border-white/10">
                   <div class="h-full bg-gradient-to-l from-amber-400 to-emerald-400 rounded-full transition-all duration-500" style="width: ${pct}%"></div>
@@ -1953,100 +2799,139 @@
                 : 'bg-gradient-to-l from-amber-500 to-orange-500 text-slate-950 shadow-lg'
             }">
               <i data-lucide="${paidInThisMonth ? 'rotate-ccw' : 'calendar-check'}" class="w-4 h-4"></i>
-              <span>${paidInThisMonth ? 'پرداخت ثبت شده (لمس برای لغو)' : 'ثبت پرداخت قسط (با انتخاب تاریخ)'}</span>
+              <span>${paidInThisMonth
+                ? (isEn() ? 'Paid (Tap to Undo)' : 'پرداخت ثبت شده (لمس برای لغو)')
+                : (isEn() ? 'Record Payment (Select Date)' : 'ثبت پرداخت قسط (با انتخاب تاریخ)')
+              }</span>
             </button>
           </div>
         `;
       }).join('');
     }
 
-    function renderReportsSection(income, expense, instPaid, net, expenseTxs) {
+    // ویجت‌های شیشه‌ای اختصاصی به جای نمودارهای خشک Chart.js
+    function renderLiquidReportsSection(income, expense, instPaid, net, expenseTxs) {
       const catTotals = {};
-      expenseTxs.forEach(t => {
-        catTotals[t.category] = (catTotals[t.category] || 0) + Number(t.amount);
+      expenseTxs.forEach(tItem => {
+        const disp = getCategoryDisplayName(tItem.category);
+        catTotals[disp] = (catTotals[disp] || 0) + Number(tItem.amount);
       });
-      if (instPaid > 0) catTotals['اقساط پرداخت‌شده'] = instPaid;
+      if (instPaid > 0) {
+        catTotals[isEn() ? 'Paid Installments' : 'اقساط پرداخت‌شده'] = instPaid;
+      }
 
       const labels = Object.keys(catTotals);
       const values = Object.values(catTotals);
       const totalOut = expense + instPaid;
+      const palette = ['#38bdf8', '#10b981', '#f59e0b', '#f43f5e', '#818cf8', '#06b6d4', '#ec4899'];
 
+      // ۱. رندر حلقه نئونی SVG (Neon Multi-Segment Ring)
+      const ringBox = document.getElementById('neonRingContainer');
+      if (totalOut <= 0) {
+        ringBox.innerHTML = `
+          <div class="py-12 text-center text-slate-400 text-xs flex flex-col items-center gap-2">
+            <i data-lucide="inbox" class="w-8 h-8 opacity-40"></i>
+            <span>${isEn() ? 'No expenses recorded in this period' : 'خرجی در این ماه ثبت نشده است'}</span>
+          </div>
+        `;
+      } else {
+        const radius = 72;
+        const circumference = 2 * Math.PI * radius;
+        let offset = 0;
+
+        const circlesSvg = values.map((val, idx) => {
+          const ratio = val / totalOut;
+          const strokeLen = Math.max(2, ratio * circumference - 4);
+          const dashArray = `${strokeLen} ${circumference}`;
+          const dashOffset = -offset;
+          offset += ratio * circumference;
+          const color = palette[idx % palette.length];
+          return `<circle cx="95" cy="95" r="${radius}" fill="transparent" stroke="${color}" stroke-width="16" stroke-linecap="round" stroke-dasharray="${dashArray}" stroke-dashoffset="${dashOffset}" style="filter: drop-shadow(0 0 6px ${color}66); transition: all 0.6s ease;" />`;
+        }).join('');
+
+        const legendPills = labels.map((lbl, idx) => {
+          const pct = Math.round((values[idx] / totalOut) * 100);
+          const color = palette[idx % palette.length];
+          return `
+            <div class="liquid-pill px-2.5 py-1 rounded-xl flex items-center gap-1.5 text-[11px] font-bold">
+              <span class="w-2.5 h-2.5 rounded-full" style="background:${color}; box-shadow: 0 0 8px ${color}"></span>
+              <span class="text-slate-300 truncate max-w-[100px]">${lbl}</span>
+              <span class="text-white font-black">${formatDigits(pct)}${isEn() ? '%' : '٪'}</span>
+            </div>
+          `;
+        }).join('');
+
+        ringBox.innerHTML = `
+          <div class="relative w-[190px] h-[190px] flex items-center justify-center">
+            <svg class="w-full h-full -rotate-90" viewBox="0 0 190 190">
+              <circle cx="95" cy="95" r="${radius}" fill="transparent" stroke="rgba(255,255,255,0.06)" stroke-width="16" />
+              ${circlesSvg}
+            </svg>
+            <div class="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
+              <span class="text-[10px] text-slate-400 font-bold">${isEn() ? 'Total Outflow' : 'کل خروجی ماه'}</span>
+              <span class="text-base font-black text-white ltr-num mt-0.5">${formatMoney(totalOut)}</span>
+              <span class="text-[10px] text-sky-300">${t('currency')}</span>
+            </div>
+          </div>
+          <div class="flex flex-wrap items-center justify-center gap-1.5 mt-4">
+            ${legendPills}
+          </div>
+        `;
+      }
+
+      // ۲. رندر کپسول‌های مایع شیشه‌ای جریان نقدینگی (Liquid Cashflow Capsules)
+      const maxVal = Math.max(income, expense, instPaid, Math.max(0, net), 1);
+      const barsData = [
+        { label: isEn() ? 'Total Income' : 'کل درآمد ماه', val: income, grad: 'from-emerald-400 to-teal-500', textCls: 'text-emerald-300' },
+        { label: isEn() ? 'Living Expenses' : 'هزینه‌های جاری', val: expense, grad: 'from-rose-500 to-pink-500', textCls: 'text-rose-300' },
+        { label: isEn() ? 'Paid Installments' : 'اقساط پرداختی', val: instPaid, grad: 'from-amber-400 to-orange-500', textCls: 'text-amber-300' },
+        { label: isEn() ? 'Net Savings' : 'پس‌انداز خالص', val: Math.max(0, net), grad: 'from-sky-400 to-indigo-500', textCls: 'text-sky-300' }
+      ];
+
+      document.getElementById('liquidCashflowBars').innerHTML = barsData.map(b => {
+        const wPct = Math.max(4, Math.round((b.val / maxVal) * 100));
+        return `
+          <div class="liquid-card rounded-2xl p-3.5 space-y-2">
+            <div class="flex items-center justify-between text-xs">
+              <span class="font-bold text-slate-300">${b.label}</span>
+              <span class="font-black ${b.textCls} ltr-num">${formatMoney(b.val)} <small class="text-[10px] text-slate-400">${t('currency')}</small></span>
+            </div>
+            <div class="h-4 w-full bg-slate-950/60 rounded-full p-0.5 border border-white/10 overflow-hidden">
+              <div class="h-full bg-gradient-to-l ${b.grad} rounded-full transition-all duration-700 shadow-lg" style="width: ${b.val > 0 ? wPct : 0}%"></div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      // ۳. لیست موشکافی دسته‌بندی‌ها
       const listEl = document.getElementById('categoryBreakdownList');
       if (labels.length === 0) {
-        listEl.innerHTML = `<p class="text-xs text-slate-400 text-center py-6">هنوز هزینه‌ای ثبت نشده است.</p>`;
+        listEl.innerHTML = `<p class="text-xs text-slate-400 text-center py-6">${isEn() ? 'No expenses recorded yet.' : 'هنوز هزینه‌ای ثبت نشده است.'}</p>`;
       } else {
         listEl.innerHTML = labels.map((label, i) => {
           const val = values[i];
           const pct = totalOut > 0 ? Math.round((val / totalOut) * 100) : 0;
+          const color = palette[i % palette.length];
           return `
             <div class="liquid-card rounded-2xl p-3.5 space-y-2">
               <div class="flex items-center justify-between text-xs">
-                <span class="font-bold text-white">${label}</span>
-                <span class="font-black text-slate-200 ltr-num">${formatMoney(val)} تومان (${toFaDigits(pct)}٪)</span>
+                <span class="font-bold text-white flex items-center gap-2">
+                  <span class="w-2.5 h-2.5 rounded-full" style="background:${color}"></span>
+                  ${label}
+                </span>
+                <span class="font-black text-slate-200 ltr-num">${formatMoney(val)} ${t('currency')} (${formatDigits(pct)}${isEn() ? '%' : '٪'})</span>
               </div>
               <div class="h-2 w-full bg-slate-950/60 rounded-full overflow-hidden">
-                <div class="h-full bg-gradient-to-l from-indigo-500 to-purple-400 rounded-full" style="width: ${pct}%"></div>
+                <div class="h-full rounded-full transition-all duration-500" style="width: ${pct}%; background: ${color}"></div>
               </div>
             </div>
           `;
         }).join('');
       }
-
-      const dCanvas = document.getElementById('expenseDoughnutChart');
-      const dEmpty = document.getElementById('doughnutEmptyState');
-      if (doughnutChart) doughnutChart.destroy();
-
-      if (values.length === 0) {
-        dEmpty.classList.remove('hidden');
-      } else {
-        dEmpty.classList.add('hidden');
-        doughnutChart = new Chart(dCanvas, {
-          type: 'doughnut',
-          data: {
-            labels,
-            datasets: [{
-              data: values,
-              backgroundColor: ['#6366f1', '#ec4899', '#f59e0b', '#10b981', '#06b6d4', '#a855f7', '#f43f5e'],
-              borderWidth: 0
-            }]
-          },
-          options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            cutout: '66%',
-            plugins: {
-              legend: { position: 'bottom', labels: { color: '#e2e8f0', font: { family: 'Vazirmatn', size: 11 } } }
-            }
-          }
-        });
-      }
-
-      const bCanvas = document.getElementById('cashflowBarChart');
-      if (barChart) barChart.destroy();
-      barChart = new Chart(bCanvas, {
-        type: 'bar',
-        data: {
-          labels: ['کل درآمد', 'هزینه‌ها', 'اقساط', 'مانده خالص'],
-          datasets: [{
-            data: [income, expense, instPaid, Math.max(0, net)],
-            backgroundColor: ['#10b981', '#f43f5e', '#f59e0b', '#6366f1'],
-            borderRadius: 10
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: { legend: { display: false } },
-          scales: {
-            x: { ticks: { color: '#cbd5e1', font: { family: 'Vazirmatn', size: 11 } }, grid: { display: false } },
-            y: { ticks: { color: '#94a3b8', font: { family: 'Vazirmatn', size: 10 } }, grid: { color: 'rgba(255,255,255,0.06)' } }
-          }
-        }
-      });
     }
 
     // ==========================================
-    // ۷. پشتیبان‌گیری و پاکسازی
+    // ۱۱. پشتیبان‌گیری و پاکسازی حافظه
     // ==========================================
     function exportDataJson() {
       const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(state, null, 2));
@@ -2056,7 +2941,7 @@
       document.body.appendChild(a);
       a.click();
       a.remove();
-      showToast('فایل پشتیبان دانلود شد');
+      showToast(isEn() ? 'Backup file downloaded' : 'فایل پشتیبان دانلود شد');
     }
 
     function importDataJson(event) {
@@ -2070,22 +2955,22 @@
             state = imported;
             saveState();
             renderAll();
-            showToast('اطلاعات بازیابی شد');
+            showToast(isEn() ? 'Backup restored successfully!' : 'اطلاعات با موفقیت بازیابی شد');
           }
         } catch (err) {
-          alert('فایل نامعتبر است.');
+          alert(isEn() ? 'Invalid backup file.' : 'فایل پشتیبان نامعتبر است.');
         }
       };
       reader.readAsText(file);
     }
 
     function clearAllDataToZero() {
-      if (!confirm('آیا مطمئن هستید که می‌خواهید تمام داده‌ها پاک شوند و از صفر شروع کنید؟')) return;
+      if (!confirm(isEn() ? 'Are you sure you want to wipe all data and start from zero?' : 'آیا مطمئن هستید که می‌خواهید تمام داده‌ها پاک شوند و از صفر شروع کنید؟')) return;
       state.transactions = [];
       state.installments = [];
       saveState();
       renderAll();
-      showToast('اپلیکیشن صفر شد');
+      showToast(isEn() ? 'All data wiped!' : 'اپلیکیشن کامل صفر شد');
     }
 
     window.addEventListener('DOMContentLoaded', () => {
