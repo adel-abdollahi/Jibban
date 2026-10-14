@@ -116,6 +116,9 @@
       --input-bg: rgba(15, 23, 42, 0.65);
       --dock-bg: linear-gradient(180deg, rgba(15, 23, 42, 0.88) 0%, rgba(9, 13, 26, 0.96) 100%);
       --popover-bg: rgba(12, 18, 34, 0.94);
+      --tooltip-bg: rgba(15, 23, 42, 0.92);
+      --tooltip-border: rgba(56, 189, 248, 0.4);
+      --tooltip-text: #f8fafc;
     }
 
     html.light {
@@ -131,9 +134,12 @@
       --input-bg: rgba(255, 255, 255, 0.88);
       --dock-bg: linear-gradient(180deg, rgba(255, 255, 255, 0.9) 0%, rgba(241, 245, 249, 0.96) 100%);
       --popover-bg: rgba(255, 255, 255, 0.96);
+      --tooltip-bg: rgba(15, 23, 42, 0.92);
+      --tooltip-border: rgba(56, 189, 248, 0.45);
+      --tooltip-text: #ffffff;
     }
 
-    /* حذف کامل تمام نوارهای اسکرول زشت پیش‌فرض ویندوز و مرورگرها */
+    /* حذف کامل تمام نوارهای اسکرول زشت ویندوز و مرورگرها */
     * {
       font-family: 'Vazirmatn', 'Inter', system-ui, -apple-system, sans-serif;
       -webkit-tap-highlight-color: transparent;
@@ -208,7 +214,13 @@
       -webkit-backdrop-filter: blur(22px) saturate(175%);
       border: 1px solid var(--card-border);
       box-shadow: 0 8px 24px -8px rgba(0, 0, 0, 0.22);
-      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @media (hover: hover) {
+      .liquid-card:hover {
+        border-color: rgba(56, 189, 248, 0.28);
+        box-shadow: 0 14px 32px -10px rgba(0, 0, 0, 0.35);
+      }
     }
 
     .liquid-pill {
@@ -216,9 +228,101 @@
       backdrop-filter: blur(20px) saturate(180%);
       -webkit-backdrop-filter: blur(20px) saturate(180%);
       border: 1px solid var(--card-border);
-      transition: all 0.2s ease;
+      transition: all 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
-    .liquid-pill:active { transform: scale(0.97); }
+    @media (hover: hover) {
+      .liquid-pill:hover {
+        transform: translateY(-2px);
+        border-color: rgba(56, 189, 248, 0.4);
+        box-shadow: 0 8px 18px -6px rgba(14, 165, 233, 0.25);
+      }
+    }
+    .liquid-pill:active { transform: scale(0.95); }
+
+    /* ===================================================== */
+    /* دکمه‌های اکشن تعاملی (حذف، ویرایش، نوتیفیکیشن)        */
+    /* ===================================================== */
+    .action-btn {
+      background: var(--pill-bg);
+      border: 1px solid var(--card-border);
+      transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .action-btn:active {
+      transform: scale(0.90) !important;
+    }
+
+    /* افکت ویژه دکمه حذف (قرمز یاقوتی + لرزش ظریف) */
+    @media (hover: hover) {
+      .action-btn-delete:hover {
+        background: rgba(244, 63, 94, 0.22) !important;
+        border-color: rgba(244, 63, 94, 0.6) !important;
+        color: #fb7185 !important;
+        transform: translateY(-3px) scale(1.1);
+        box-shadow: 0 8px 20px -4px rgba(244, 63, 94, 0.45);
+      }
+      .action-btn-delete:hover svg {
+        animation: trashShake 0.4s ease-in-out;
+      }
+
+      /* افکت ویژه دکمه ویرایش (آبی فیروزه‌ای + زاویه نوشتن) */
+      .action-btn-edit:hover {
+        background: rgba(56, 189, 248, 0.22) !important;
+        border-color: rgba(56, 189, 248, 0.6) !important;
+        color: #38bdf8 !important;
+        transform: translateY(-3px) scale(1.1);
+        box-shadow: 0 8px 20px -4px rgba(56, 189, 248, 0.45);
+      }
+      .action-btn-edit:hover svg {
+        transform: rotate(-14deg) scale(1.08);
+        transition: transform 0.25s ease;
+      }
+
+      /* افکت ویژه دکمه زنگوله نوتیفیکیشن (طلایی + تاب خوردن زنگ) */
+      .action-btn-bell:hover {
+        background: rgba(245, 158, 11, 0.24) !important;
+        border-color: rgba(245, 158, 11, 0.65) !important;
+        color: #fbbf24 !important;
+        transform: translateY(-3px) scale(1.1);
+        box-shadow: 0 8px 20px -4px rgba(245, 158, 11, 0.45);
+      }
+      .action-btn-bell:hover svg {
+        animation: bellSwing 0.5s ease-in-out;
+      }
+    }
+
+    @keyframes trashShake {
+      0%, 100% { transform: rotate(0deg); }
+      25% { transform: rotate(-12deg); }
+      75% { transform: rotate(12deg); }
+    }
+    @keyframes bellSwing {
+      0%, 100% { transform: rotate(0deg); }
+      20% { transform: rotate(18deg); }
+      40% { transform: rotate(-16deg); }
+      60% { transform: rotate(10deg); }
+      80% { transform: rotate(-8deg); }
+    }
+
+    /* ===================================================== */
+    /* حلقه نئونی تعاملی در بخش گزارش‌ها                     */
+    /* ===================================================== */
+    .ring-segment {
+      cursor: pointer;
+      transition: stroke-width 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.25s ease, filter 0.3s ease;
+    }
+    .ring-legend-pill {
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    @media (hover: hover) {
+      .ring-legend-pill:hover {
+        transform: translateY(-2px) scale(1.04);
+      }
+    }
 
     .liquid-popover {
       background: var(--popover-bg);
@@ -266,7 +370,10 @@
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
-      transition: transform 0.2s ease;
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    @media (hover: hover) {
+      .profile-avatar-btn:hover { transform: scale(1.07); }
     }
     .profile-avatar-btn:active { transform: scale(0.93); }
 
@@ -274,6 +381,12 @@
       background: linear-gradient(135deg, #0ea5e9 0%, #6366f1 100%);
       box-shadow: 0 10px 26px -4px rgba(14, 165, 233, 0.65), inset 0 2px 4px rgba(255, 255, 255, 0.4);
       transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    @media (hover: hover) {
+      .center-plus-btn:hover {
+        transform: translateY(-3px) scale(1.04);
+        box-shadow: 0 14px 30px -4px rgba(14, 165, 233, 0.8), inset 0 2px 4px rgba(255, 255, 255, 0.5);
+      }
     }
     .center-plus-btn:active { transform: scale(0.92); }
 
@@ -285,6 +398,17 @@
       color: #38bdf8;
     }
 
+    .desktop-nav-btn {
+      transition: all 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    @media (hover: hover) {
+      .desktop-nav-btn:hover {
+        transform: translateX(-3px);
+      }
+      html[dir="ltr"] .desktop-nav-btn:hover {
+        transform: translateX(3px);
+      }
+    }
     .desktop-nav-btn.active {
       background: linear-gradient(135deg, rgba(56, 189, 248, 0.22) 0%, rgba(99, 102, 241, 0.16) 100%);
       border-color: rgba(56, 189, 248, 0.45);
@@ -300,6 +424,33 @@
     @keyframes viewFade {
       from { opacity: 0; transform: translateY(6px); }
       to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ===================================================== */
+    /* تولتیپ شیشه‌ای اختصاصی (جایگزین باکس سیاه ویندوز)      */
+    /* ===================================================== */
+    #customGlassTooltip {
+      position: fixed;
+      z-index: 9999;
+      pointer-events: none;
+      background: var(--tooltip-bg);
+      color: var(--tooltip-text);
+      backdrop-filter: blur(20px) saturate(190%);
+      -webkit-backdrop-filter: blur(20px) saturate(190%);
+      border: 1px solid var(--tooltip-border);
+      box-shadow: 0 12px 28px -6px rgba(0, 0, 0, 0.6), 0 0 15px rgba(56, 189, 248, 0.2);
+      padding: 6px 12px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 800;
+      white-space: nowrap;
+      opacity: 0;
+      transform: translate(-50%, 6px) scale(0.92);
+      transition: opacity 0.16s ease, transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    #customGlassTooltip.show {
+      opacity: 1;
+      transform: translate(-50%, 0) scale(1);
     }
 
     .ltr-num {
@@ -325,6 +476,9 @@
   <div class="orb orb-2"></div>
   <div class="orb orb-3"></div>
 
+  <!-- المان تولتیپ شیشه‌ای اختصاصی (بدون باکس پیش‌فرض ویندوز) -->
+  <div id="customGlassTooltip"></div>
+
   <!-- بنر یادآور نوتیفیکیشن سررسید -->
   <div id="dueNotificationBanner" class="hidden max-w-7xl mx-auto px-3 sm:px-6 pt-3">
     <div class="liquid-glass rounded-2xl p-3.5 border border-amber-400/50 bg-amber-500/10 flex items-center justify-between gap-3">
@@ -337,20 +491,19 @@
           <p id="dueBannerDesc" class="text-[11px] text-slate-300 truncate"></p>
         </div>
       </div>
-      <button onclick="document.getElementById('dueNotificationBanner').classList.add('hidden')" class="p-1.5 rounded-lg liquid-pill text-slate-300">
+      <button onclick="document.getElementById('dueNotificationBanner').classList.add('hidden')" data-tooltip="بستن یادآور" class="action-btn p-1.5 rounded-xl text-slate-300">
         <i data-lucide="x" class="w-4 h-4"></i>
       </button>
     </div>
   </div>
 
   <!-- ========================================================= -->
-  <!-- هدر مخصوص موبایل و تبلت (در دسکتاپ مخفی می‌شود تا با سایدبار تداخل نکند) -->
+  <!-- هدر مخصوص موبایل و تبلت                                    -->
   <!-- ========================================================= -->
   <header class="lg:hidden sticky top-0 z-30 px-3 sm:px-6 pt-3 pb-2">
     <div class="max-w-4xl mx-auto liquid-glass rounded-full px-3.5 py-2 flex items-center justify-between gap-2">
       
-      <!-- دایره پروفایل کاربر (ورود به تنظیمات در موبایل) -->
-      <button onclick="switchView('settings')" class="flex items-center gap-2.5 shrink-0 text-right group">
+      <button onclick="switchView('settings')" data-tooltip="پروفایل و تنظیمات" class="flex items-center gap-2.5 shrink-0 text-right group">
         <div class="profile-avatar-btn">
           <span id="mobileHeaderAvatar" class="text-lg">😎</span>
           <span class="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-amber-400 text-slate-950 flex items-center justify-center text-[9px] font-black shadow">★</span>
@@ -363,13 +516,12 @@
         </div>
       </button>
 
-      <!-- کپسول تاریخ زنده امروز در موبایل -->
       <div class="flex items-center gap-1.5 shrink-0">
-        <button id="mobileReturnTodayBtn" onclick="jumpToTodayPeriod()" class="hidden w-8 h-8 rounded-full bg-amber-500/20 border border-amber-400/40 text-amber-300 flex items-center justify-center shadow">
+        <button id="mobileReturnTodayBtn" onclick="jumpToTodayPeriod()" data-tooltip="بازگشت به تاریخ امروز" class="hidden w-8 h-8 rounded-full bg-amber-500/20 border border-amber-400/40 text-amber-300 flex items-center justify-center shadow">
           <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
         </button>
 
-        <button onclick="openPeriodSheet()" class="liquid-pill px-3.5 py-2 rounded-full flex items-center gap-1.5 text-xs font-extrabold text-white">
+        <button onclick="openPeriodSheet()" data-tooltip="تغییر ماه و سال مالی" class="liquid-pill px-3.5 py-2 rounded-full flex items-center gap-1.5 text-xs font-extrabold text-white">
           <span id="mobilePulseDot" class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
           <span class="header-date-text">...</span>
           <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-slate-300"></i>
@@ -384,12 +536,10 @@
   <!-- ========================================================= -->
   <div class="max-w-7xl mx-auto px-3 sm:px-6 pt-3 lg:pt-6 lg:grid lg:grid-cols-12 lg:gap-6 items-start">
 
-    <!-- سایدبار مدرن و یکپارچه دسکتاپ (لوگو بالا + منوها وسط + کارت پروفایل پایین) -->
+    <!-- سایدبار مدرن دسکتاپ -->
     <aside class="hidden lg:flex lg:col-span-3 xl:col-span-3 flex-col justify-between liquid-glass rounded-[32px] p-5 sticky top-6 min-h-[calc(100vh-3rem)]">
       
-      <!-- بخش بالایی سایدبار: برند + دکمه ثبت سریع + ۴ منوی اصلی -->
       <div class="space-y-6">
-        <!-- لوگو و برند در دسکتاپ -->
         <div class="flex items-center justify-between px-1">
           <div class="flex items-center gap-3">
             <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-sky-400 to-indigo-600 flex items-center justify-center text-white shadow-lg shadow-sky-500/30">
@@ -403,13 +553,11 @@
           <span class="text-[10px] font-black px-2 py-0.5 rounded-full bg-sky-500/20 text-sky-300 border border-sky-400/30">BETA</span>
         </div>
 
-        <!-- دکمه ثبت تراکنش جدید -->
-        <button onclick="openTxModal('expense')" class="w-full py-3.5 px-4 rounded-2xl center-plus-btn text-white font-black text-sm flex items-center justify-center gap-2 shadow-lg">
+        <button onclick="openTxModal('expense')" data-tooltip="ثبت سریع درآمد یا هزینه" class="w-full py-3.5 px-4 rounded-2xl center-plus-btn text-white font-black text-sm flex items-center justify-center gap-2 shadow-lg">
           <i data-lucide="plus" class="w-5 h-5 stroke-[2.5]"></i>
           <span data-i18n="btnQuickAdd">ثبت تراکنش جدید</span>
         </button>
 
-        <!-- ۴ منوی اصلی (بدون گزینه تکراری تنظیمات) -->
         <nav class="space-y-1.5">
           <button onclick="switchView('dashboard')" id="dnav-dashboard" class="desktop-nav-btn active w-full p-3.5 rounded-2xl border border-transparent flex items-center gap-3 text-sm font-extrabold text-slate-300 hover:bg-white/5 transition">
             <i data-lucide="layout-grid" class="w-5 h-5"></i>
@@ -436,9 +584,9 @@
         </nav>
       </div>
 
-      <!-- بخش پایینی سایدبار دسکتاپ: کارت پروفایل کاربر (تنها نقطه ورود شیک به پروفایل و تنظیمات) -->
+      <!-- کارت پروفایل کاربر در پایین سایدبار دسکتاپ -->
       <div class="pt-4 border-t border-white/10">
-        <button onclick="switchView('settings')" id="dnav-settings" class="desktop-nav-btn w-full liquid-card hover:bg-white/10 rounded-2xl p-3 flex items-center justify-between gap-2.5 border border-white/10 transition group text-right">
+        <button onclick="switchView('settings')" id="dnav-settings" data-tooltip="مدیریت پروفایل، اشتراک و تنظیمات" class="desktop-nav-btn w-full liquid-card hover:bg-white/10 rounded-2xl p-3 flex items-center justify-between gap-2.5 border border-white/10 transition group text-right">
           <div class="flex items-center gap-3 min-w-0">
             <div class="profile-avatar-btn w-11 h-11">
               <span id="desktopSidebarAvatar" class="text-lg">😎</span>
@@ -460,20 +608,20 @@
     <!-- ستون محتوای اصلی -->
     <main class="lg:col-span-9 xl:col-span-9 space-y-4">
 
-      <!-- نوار ابزار بالای دسکتاپ (نمایش عنوان بخش فعال + کپسول تاریخ زنده امروز) -->
+      <!-- نوار ابزار بالای دسکتاپ -->
       <div class="hidden lg:flex liquid-glass rounded-[26px] px-6 py-3.5 items-center justify-between">
         <div>
           <h2 id="desktopPageHeading" class="text-lg font-black text-white">داشبورد هوشمند</h2>
-          <p data-i18n="desktopSubHeading" class="text-xs text-slate-400">نمای کلی تراز مالی و تعهدات ماه</p>
+          <p data-i18n="desktopSubHeading" class="text-xs text-slate-400">مدیریت هوشمند دخل‌وخرج، تعهدات و تراز ماهانه</p>
         </div>
 
         <div class="flex items-center gap-2">
-          <button id="desktopReturnTodayBtn" onclick="jumpToTodayPeriod()" class="hidden px-3 py-2 rounded-full bg-amber-500/20 border border-amber-400/40 text-amber-300 text-xs font-bold flex items-center gap-1.5 shadow">
+          <button id="desktopReturnTodayBtn" onclick="jumpToTodayPeriod()" data-tooltip="پرش به ماه جاری" class="hidden liquid-pill px-3 py-2 rounded-full bg-amber-500/20 border border-amber-400/40 text-amber-300 text-xs font-bold flex items-center gap-1.5 shadow">
             <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
             <span data-i18n="btnReturnTodayShort">بازگشت به امروز</span>
           </button>
 
-          <button onclick="openPeriodSheet()" class="liquid-pill px-4 py-2.5 rounded-full flex items-center gap-2 text-xs font-extrabold text-white hover:bg-white/15">
+          <button onclick="openPeriodSheet()" data-tooltip="ماشین زمان مالی (تغییر ماه و سال)" class="liquid-pill px-4 py-2.5 rounded-full flex items-center gap-2 text-xs font-extrabold text-white hover:bg-white/15">
             <span id="desktopPulseDot" class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
             <span class="header-date-text">...</span>
             <i data-lucide="calendar" class="w-4 h-4 text-sky-300"></i>
@@ -615,12 +763,11 @@
       </section>
 
       <!-- ========================================== -->
-      <!-- منوی ۲: تراکنش‌ها (با منوی کشویی شیشه‌ای و بدون اسکرول افقی) -->
+      <!-- منوی ۲: تراکنش‌ها                          -->
       <!-- ========================================== -->
       <section id="view-transactions" class="view-section space-y-4">
         
         <div class="liquid-glass rounded-[24px] p-4 space-y-3 relative z-20">
-          <!-- ردیف اول: تب نوع تراکنش + جستجو -->
           <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5">
             <div class="grid grid-cols-3 gap-1.5 bg-slate-950/50 p-1 rounded-2xl border border-white/10">
               <button onclick="setTxTypeFilter('all')" id="txTab-all" data-i18n="filterAll" class="py-2 px-3 rounded-xl text-xs font-bold transition bg-sky-600 text-white shadow">همه</button>
@@ -634,10 +781,7 @@
             </div>
           </div>
 
-          <!-- ردیف دوم: ۲ منوی کشویی شیشه‌ای (فیلتر دسته‌بندی + مرتب‌سازی) بدون هیچ اسکرول افقی -->
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
-            
-            <!-- دراپ‌داون شیشه‌ای انتخاب دسته‌بندی -->
             <div class="relative dropdown-wrapper">
               <button type="button" onclick="toggleDropdown('txCatDropdownMenu', event)" class="w-full liquid-pill px-3.5 py-2.5 rounded-2xl flex items-center justify-between text-xs font-bold text-white">
                 <div class="flex items-center gap-2 truncate">
@@ -650,7 +794,6 @@
               <div id="txCatDropdownMenu" class="hidden absolute left-0 right-0 mt-2 liquid-popover rounded-2xl p-2 z-40 space-y-1 max-h-60 overflow-y-auto"></div>
             </div>
 
-            <!-- دراپ‌داون شیشه‌ای مرتب‌سازی تراکنش‌ها -->
             <div class="relative dropdown-wrapper">
               <button type="button" onclick="toggleDropdown('txSortDropdownMenu', event)" class="w-full liquid-pill px-3.5 py-2.5 rounded-2xl flex items-center justify-between text-xs font-bold text-white">
                 <div class="flex items-center gap-2 truncate">
@@ -662,7 +805,6 @@
               </button>
               <div id="txSortDropdownMenu" class="hidden absolute left-0 right-0 mt-2 liquid-popover rounded-2xl p-2 z-40 space-y-1"></div>
             </div>
-
           </div>
         </div>
 
@@ -672,7 +814,7 @@
               <h3 class="text-sm sm:text-base font-extrabold text-white"><span data-i18n="txListTitle">تراکنش‌های</span> <span class="active-period-text text-sky-300"></span></h3>
               <span id="txTotalBadge" class="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-white/10 text-slate-200">0</span>
             </div>
-            <button onclick="openTxModal('expense')" class="liquid-pill px-3 py-1.5 rounded-xl text-xs font-bold text-sky-200 flex items-center gap-1">
+            <button onclick="openTxModal('expense')" data-tooltip="ثبت تراکنش جدید" class="liquid-pill px-3 py-1.5 rounded-xl text-xs font-bold text-sky-200 flex items-center gap-1">
               <i data-lucide="plus" class="w-3.5 h-3.5"></i>
               <span data-i18n="btnAddNew">ثبت جدید</span>
             </button>
@@ -684,7 +826,7 @@
       </section>
 
       <!-- ========================================== -->
-      <!-- منوی ۳: مدیریت اقساط و وام‌ها (با منوی کشویی شیشه‌ای) -->
+      <!-- منوی ۳: مدیریت اقساط و وام‌ها              -->
       <!-- ========================================== -->
       <section id="view-installments" class="view-section space-y-4">
         
@@ -702,30 +844,25 @@
           </div>
 
           <div class="flex flex-wrap items-center gap-2 shrink-0">
-            <button onclick="openInstModal('single')" class="liquid-pill px-3.5 py-2.5 rounded-2xl text-xs font-bold text-sky-200 border-sky-400/30 flex items-center gap-1.5 hover:bg-white/15">
+            <button onclick="openInstModal('single')" data-tooltip="افزودن بدهی یا تعهد تک‌قسطی" class="liquid-pill px-3.5 py-2.5 rounded-2xl text-xs font-bold text-sky-200 border-sky-400/30 flex items-center gap-1.5">
               <i data-lucide="zap" class="w-4 h-4 text-sky-300"></i>
               <span data-i18n="btnAddSingleInst">ثبت تک‌قسط</span>
             </button>
-            <button onclick="openInstModal('recurring')" class="liquid-pill px-3.5 py-2.5 rounded-2xl text-xs font-bold text-amber-200 border-amber-400/30 flex items-center gap-1.5 hover:bg-white/15">
+            <button onclick="openInstModal('recurring')" data-tooltip="افزودن وام یا قسط چندماهه" class="liquid-pill px-3.5 py-2.5 rounded-2xl text-xs font-bold text-amber-200 border-amber-400/30 flex items-center gap-1.5">
               <i data-lucide="plus-circle" class="w-4 h-4 text-amber-300"></i>
               <span data-i18n="btnAddRecurringInst">افزودن وام دوره‌ای</span>
             </button>
           </div>
         </div>
 
-        <!-- تب‌بندی نوع قسط + ۲ منوی کشویی شیشه‌ای (وضعیت + چیدمان) -->
         <div class="liquid-glass rounded-[24px] p-4 space-y-3 relative z-20">
-          <!-- ۳ تب اصلی نمایش دسته‌بندی اقساط -->
           <div class="grid grid-cols-3 gap-1.5 bg-slate-950/50 p-1 rounded-2xl border border-white/10">
             <button onclick="setInstKindFilter('all')" id="instKind-all" data-i18n="instTabAll" class="py-2 px-3 rounded-xl text-xs font-bold transition bg-amber-500 text-slate-950 shadow">همه</button>
             <button onclick="setInstKindFilter('recurring')" id="instKind-recurring" data-i18n="instTabRecurring" class="py-2 px-3 rounded-xl text-xs font-bold transition text-slate-300">وام‌های دوره‌ای</button>
             <button onclick="setInstKindFilter('single')" id="instKind-single" data-i18n="instTabSingle" class="py-2 px-3 rounded-xl text-xs font-bold transition text-slate-300">تک‌قسط‌ها</button>
           </div>
 
-          <!-- ۲ دراپ‌داون شیشه‌ای بدون اسکرول افقی -->
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
-            
-            <!-- دراپ‌داون وضعیت پرداخت -->
             <div class="relative dropdown-wrapper">
               <button type="button" onclick="toggleDropdown('instStatusDropdownMenu', event)" class="w-full liquid-pill px-3.5 py-2.5 rounded-2xl flex items-center justify-between text-xs font-bold text-white">
                 <div class="flex items-center gap-2 truncate">
@@ -738,7 +875,6 @@
               <div id="instStatusDropdownMenu" class="hidden absolute left-0 right-0 mt-2 liquid-popover rounded-2xl p-2 z-40 space-y-1"></div>
             </div>
 
-            <!-- دراپ‌داون مرتب‌سازی اقساط -->
             <div class="relative dropdown-wrapper">
               <button type="button" onclick="toggleDropdown('instSortDropdownMenu', event)" class="w-full liquid-pill px-3.5 py-2.5 rounded-2xl flex items-center justify-between text-xs font-bold text-white">
                 <div class="flex items-center gap-2 truncate">
@@ -750,7 +886,6 @@
               </button>
               <div id="instSortDropdownMenu" class="hidden absolute left-0 right-0 mt-2 liquid-popover rounded-2xl p-2 z-40 space-y-1"></div>
             </div>
-
           </div>
         </div>
 
@@ -759,7 +894,7 @@
       </section>
 
       <!-- ========================================== -->
-      <!-- منوی ۴: گزارش‌ها با ویجت‌های شیشه‌ای        -->
+      <!-- منوی ۴: گزارش‌ها با حلقه نئونی کاملاً تعاملی -->
       <!-- ========================================== -->
       <section id="view-reports" class="view-section space-y-4">
         
@@ -770,6 +905,7 @@
                 <i data-lucide="donut" class="w-4 h-4 text-sky-300"></i>
                 <span><span data-i18n="expenseShareIn">حلقه توزیع مخارج در</span> <span class="active-period-text text-sky-300"></span></span>
               </h3>
+              <p data-i18n="ringHoverHint" class="text-[11px] text-slate-400 mt-0.5">نشانگر را روی هر رنگ ببرید تا جزئیات آن برجسته شود</p>
             </div>
             <div id="neonRingContainer" class="my-4 flex flex-col items-center justify-center"></div>
           </div>
@@ -829,10 +965,10 @@
             <div class="sm:col-span-2">
               <label data-i18n="lblAvatar" class="block text-xs font-bold text-slate-300 mb-1.5">آواتار</label>
               <div class="flex items-center justify-between bg-slate-950/50 p-1.5 rounded-2xl border border-white/10">
-                <button type="button" onclick="selectAvatarEmoji('😎')" class="w-7 h-7 rounded-lg hover:bg-white/10 text-base">😎</button>
-                <button type="button" onclick="selectAvatarEmoji('🚀')" class="w-7 h-7 rounded-lg hover:bg-white/10 text-base">🚀</button>
-                <button type="button" onclick="selectAvatarEmoji('👑')" class="w-7 h-7 rounded-lg hover:bg-white/10 text-base">👑</button>
-                <button type="button" onclick="selectAvatarEmoji('💎')" class="w-7 h-7 rounded-lg hover:bg-white/10 text-base">💎</button>
+                <button type="button" onclick="selectAvatarEmoji('😎')" data-tooltip="آواتار ۱" class="w-7 h-7 rounded-lg hover:bg-white/10 text-base transition transform hover:scale-125">😎</button>
+                <button type="button" onclick="selectAvatarEmoji('🚀')" data-tooltip="آواتار ۲" class="w-7 h-7 rounded-lg hover:bg-white/10 text-base transition transform hover:scale-125">🚀</button>
+                <button type="button" onclick="selectAvatarEmoji('👑')" data-tooltip="آواتار ۳" class="w-7 h-7 rounded-lg hover:bg-white/10 text-base transition transform hover:scale-125">👑</button>
+                <button type="button" onclick="selectAvatarEmoji('💎')" data-tooltip="آواتار ۴" class="w-7 h-7 rounded-lg hover:bg-white/10 text-base transition transform hover:scale-125">💎</button>
               </div>
             </div>
             <div class="sm:col-span-2">
@@ -963,7 +1099,7 @@
               <input type="file" accept=".json" class="hidden" onchange="importDataJson(event)" />
             </label>
 
-            <button onclick="clearAllDataToZero()" class="liquid-pill p-3.5 rounded-2xl text-xs font-bold text-rose-300 border-rose-500/30 flex items-center justify-center gap-2">
+            <button onclick="clearAllDataToZero()" class="action-btn action-btn-delete p-3.5 rounded-2xl text-xs font-bold text-rose-300 border-rose-500/30 flex items-center justify-center gap-2">
               <i data-lucide="trash-2" class="w-4 h-4 text-rose-400"></i>
               <span data-i18n="btnResetZero">پاکسازی کامل و شروع از صفر</span>
             </button>
@@ -1021,7 +1157,7 @@
   </nav>
 
   <!-- ========================================================= -->
-  <!-- شیت بازطراحی شده ماشین زمان مالی (بدون اسکرول و با استپر سال) -->
+  <!-- شیت ماشین زمان مالی (با استپر سال و بدون اسکرول)          -->
   <!-- ========================================================= -->
   <div id="periodSheetModal" class="hidden fixed inset-0 z-50 bg-slate-950/75 backdrop-blur-md flex items-end sm:items-center justify-center p-0 sm:p-4">
     <div class="liquid-glass w-full max-w-md rounded-t-[32px] sm:rounded-[32px] p-5 sm:p-6 space-y-4">
@@ -1031,32 +1167,29 @@
           <h3 data-i18n="timeMachineTitle" class="text-base font-black text-white">ماشین زمان مالی (آرشیو ماه‌ها)</h3>
           <p id="liveTodaySubInSheet" class="text-[11px] text-emerald-300 mt-0.5"></p>
         </div>
-        <button onclick="closePeriodSheet()" class="w-8 h-8 rounded-full liquid-pill flex items-center justify-center text-slate-300">
+        <button onclick="closePeriodSheet()" data-tooltip="بستن" class="action-btn w-8 h-8 rounded-full text-slate-300">
           <i data-lucide="x" class="w-4 h-4"></i>
         </button>
       </div>
 
-      <!-- دکمه پرش به امروز -->
       <button onclick="jumpToTodayPeriod(); closePeriodSheet();" class="w-full py-2.5 px-4 rounded-2xl bg-emerald-500/20 border border-emerald-400/35 text-emerald-200 text-xs font-extrabold flex items-center justify-center gap-2 hover:bg-emerald-500/30 transition">
         <i data-lucide="locate-fixed" class="w-4 h-4"></i>
         <span data-i18n="btnJumpToday">پرش سریع به ماه جاری (امروز)</span>
       </button>
 
-      <!-- استپر شیشه‌ای و مدرن انتخاب سال (بدون اشغال فضا و بدون نیاز به اسکرول) -->
       <div class="liquid-card rounded-2xl p-3 flex items-center justify-between">
         <span data-i18n="selectYearLbl" class="text-xs font-bold text-slate-300 px-2">سال مالی:</span>
         <div class="flex items-center gap-2">
-          <button type="button" onclick="stepYear(-1)" class="w-9 h-9 rounded-xl liquid-pill flex items-center justify-center text-slate-200 hover:bg-white/15">
+          <button type="button" onclick="stepYear(-1)" data-tooltip="سال قبل" class="w-9 h-9 rounded-xl liquid-pill flex items-center justify-center text-slate-200">
             <i data-lucide="chevron-right" class="w-4 h-4"></i>
           </button>
           <span id="stepperYearDisplay" class="text-base font-black text-sky-300 min-w-[64px] text-center ltr-num">۱۴۰۵</span>
-          <button type="button" onclick="stepYear(1)" class="w-9 h-9 rounded-xl liquid-pill flex items-center justify-center text-slate-200 hover:bg-white/15">
+          <button type="button" onclick="stepYear(1)" data-tooltip="سال بعد" class="w-9 h-9 rounded-xl liquid-pill flex items-center justify-center text-slate-200">
             <i data-lucide="chevron-left" class="w-4 h-4"></i>
           </button>
         </div>
       </div>
 
-      <!-- گرید ۴×۳ انتخاب ماه -->
       <div>
         <label data-i18n="selectMonthLbl" class="block text-xs font-bold text-slate-300 mb-2">انتخاب ماه:</label>
         <div id="monthPickerGrid" class="grid grid-cols-3 gap-2"></div>
@@ -1078,7 +1211,7 @@
           <i data-lucide="check-circle-2" class="w-5 h-5 text-emerald-400"></i>
           <span data-i18n="payInstModalTitle">ثبت پرداخت قسط</span>
         </h3>
-        <button onclick="closePayInstModal()" class="w-8 h-8 rounded-full liquid-pill flex items-center justify-center text-slate-300">
+        <button onclick="closePayInstModal()" data-tooltip="بستن" class="action-btn w-8 h-8 rounded-full text-slate-300">
           <i data-lucide="x" class="w-4 h-4"></i>
         </button>
       </div>
@@ -1093,7 +1226,6 @@
       </p>
 
       <div class="space-y-3">
-        <!-- انتخاب سال پرداخت با استپر و ماه پرداخت -->
         <div class="liquid-card rounded-2xl p-2.5 flex items-center justify-between">
           <span data-i18n="payYearLbl" class="text-xs font-bold text-slate-300 px-1">سال پرداخت:</span>
           <div class="flex items-center gap-2">
@@ -1131,7 +1263,7 @@
     <div class="liquid-glass w-full max-w-lg rounded-t-[32px] sm:rounded-[32px] p-5 sm:p-6 space-y-4 max-h-[92vh] overflow-y-auto">
       <div class="flex items-center justify-between border-b border-white/10 pb-3">
         <h3 id="txModalTitle" class="text-base font-black text-white">ثبت تراکنش جدید</h3>
-        <button onclick="closeTxModal()" class="w-8 h-8 rounded-full liquid-pill flex items-center justify-center text-slate-300">
+        <button onclick="closeTxModal()" data-tooltip="بستن" class="action-btn w-8 h-8 rounded-full text-slate-300">
           <i data-lucide="x" class="w-4 h-4"></i>
         </button>
       </div>
@@ -1192,7 +1324,7 @@
     <div class="liquid-glass w-full max-w-lg rounded-t-[32px] sm:rounded-[32px] p-5 sm:p-6 space-y-4 max-h-[92vh] overflow-y-auto">
       <div class="flex items-center justify-between border-b border-white/10 pb-3">
         <h3 id="instModalTitle" class="text-base font-black text-white">تعریف وام یا قسط</h3>
-        <button onclick="closeInstModal()" class="w-8 h-8 rounded-full liquid-pill flex items-center justify-center text-slate-300">
+        <button onclick="closeInstModal()" data-tooltip="بستن" class="action-btn w-8 h-8 rounded-full text-slate-300">
           <i data-lucide="x" class="w-4 h-4"></i>
         </button>
       </div>
@@ -1277,7 +1409,55 @@
 
   <script>
     // ==========================================
-    // ۱. دیکشنری ۱۰۰٪ کامل دوزبانه (بدون هیچ کلید جاافتاده)
+    // ۱. سیستم تولتیپ شیشه‌ای سفارشی (جایگزین باکس سیاه ویندوز)
+    // ==========================================
+    (function initCustomGlassTooltip() {
+      const tooltipEl = document.getElementById('customGlassTooltip');
+      let activeTarget = null;
+
+      // فقط در دستگاه‌های دارای نشانگر موس فعال شود
+      const hasHover = window.matchMedia('(hover: hover)').matches;
+      if (!hasHover) return;
+
+      document.addEventListener('mouseover', e => {
+        const el = e.target.closest('[data-tooltip]');
+        if (!el) return;
+        const text = el.getAttribute('data-tooltip');
+        if (!text) return;
+
+        activeTarget = el;
+        tooltipEl.textContent = text;
+        positionTooltip(el);
+        tooltipEl.classList.add('show');
+      });
+
+      document.addEventListener('mouseout', e => {
+        if (!activeTarget) return;
+        const related = e.relatedTarget;
+        if (related && activeTarget.contains(related)) return;
+        hideTooltip();
+      });
+
+      document.addEventListener('mousedown', () => hideTooltip());
+      window.addEventListener('scroll', () => hideTooltip(), true);
+
+      function positionTooltip(el) {
+        const rect = el.getBoundingClientRect();
+        const top = rect.top - 38;
+        const left = rect.left + rect.width / 2;
+
+        tooltipEl.style.top = `${top < 10 ? rect.bottom + 10 : top}px`;
+        tooltipEl.style.left = `${Math.min(window.innerWidth - 70, Math.max(70, left))}px`;
+      }
+
+      function hideTooltip() {
+        activeTarget = null;
+        tooltipEl.classList.remove('show');
+      }
+    })();
+
+    // ==========================================
+    // ۲. دیکشنری دوزبانه (FA / EN) و تقویم
     // ==========================================
     const PERSIAN_MONTHS = [
       { id: '01', fa: 'فروردین', en: 'January' },
@@ -1293,9 +1473,6 @@
       { id: '11', fa: 'بهمن', en: 'November' },
       { id: '12', fa: 'اسفند', en: 'December' }
     ];
-
-    const PERSIAN_YEARS = [];
-    for (let y = 1404; y <= 1416; y++) PERSIAN_YEARS.push(String(y));
 
     const I18N = {
       fa: {
@@ -1350,6 +1527,7 @@
         sortHighestInst: 'بیشترین مبلغ قسط',
         sortHighestDebt: 'بیشترین بدهی کل',
         expenseShareIn: 'حلقه توزیع مخارج در',
+        ringHoverHint: 'نشانگر را روی هر رنگ ببرید تا جزئیات آن برجسته شود',
         cashflowComparisonTitle: 'کپسول‌های شیشه‌ای جریان نقدینگی',
         cashflowComparisonSub: 'مقایسه زنده درآمد، هزینه‌های جاری، اقساط و مانده پس‌انداز',
         catBreakdownTitle: 'موشکافی مخارج به تفکیک دسته‌بندی',
@@ -1457,6 +1635,7 @@
         sortHighestInst: 'Highest Payment',
         sortHighestDebt: 'Highest Total Debt',
         expenseShareIn: 'Expense Distribution Ring in',
+        ringHoverHint: 'Hover over any segment or tag to spotlight details',
         cashflowComparisonTitle: 'Liquid Glass Cashflow Capsules',
         cashflowComparisonSub: 'Real-time comparison of income, expenses, installments & net savings',
         catBreakdownTitle: 'Category Expense Breakdown',
@@ -1576,7 +1755,7 @@
       ]
     };
 
-    const STORAGE_KEY = 'jibban_universal_v5';
+    const STORAGE_KEY = 'jibban_universal_v6';
 
     function createDefaultData() {
       const pKey = LIVE_TODAY.periodKey;
@@ -1659,9 +1838,12 @@
     let paySheetMonth = LIVE_TODAY.month;
     let paySheetDay = LIVE_TODAY.day;
 
+    // ذخیره اطلاعات حلقه نئونی برای هاور زنده
+    let currentRingState = { totalOut: 0, items: [] };
+
     function loadState() {
       try {
-        const raw = localStorage.getItem(STORAGE_KEY) || localStorage.getItem('jibban_universal_v4') || localStorage.getItem('jibban_ios_liquid_v3');
+        const raw = localStorage.getItem(STORAGE_KEY) || localStorage.getItem('jibban_universal_v5') || localStorage.getItem('jibban_universal_v4');
         if (!raw) return createDefaultData();
         const parsed = JSON.parse(raw);
         if (!parsed.transactions || !parsed.installments) return createDefaultData();
@@ -1686,7 +1868,7 @@
     }
 
     // ==========================================
-    // ۲. توابع فرمت اعداد، تاریخ، زبان و دراپ‌داون‌های شیشه‌ای
+    // ۳. توابع فرمت اعداد، تاریخ، زبان و دراپ‌داون‌ها
     // ==========================================
     function isEn() {
       return state.lang === 'en';
@@ -1771,7 +1953,6 @@
       return found ? found.en : catId;
     }
 
-    // کنترل باز و بسته شدن منوهای کشویی شیشه‌ای
     function toggleDropdown(menuId, event) {
       if (event) event.stopPropagation();
       const target = document.getElementById(menuId);
@@ -1781,7 +1962,7 @@
       if (isHidden) target.classList.remove('hidden');
     }
 
-    function closeAllDropdowns(event) {
+    function closeAllDropdowns() {
       document.querySelectorAll('.liquid-popover').forEach(el => {
         el.classList.add('hidden');
       });
@@ -1800,7 +1981,6 @@
       htmlEl.lang = isEn() ? 'en' : 'fa';
       htmlEl.dir = isEn() ? 'ltr' : 'rtl';
 
-      // ترجمه ایمن (هرگز کلید خام انگلیسی را جایگزین متن فارسی نمی‌کند)
       document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
         const translated = t(key);
@@ -1861,7 +2041,7 @@
     }
 
     // ==========================================
-    // ۳. پروفایل کاربر و اشتراک در موبایل و دسکتاپ
+    // ۴. پروفایل کاربر و اشتراک
     // ==========================================
     function renderProfileAndPlans() {
       const prof = state.profile || { name: 'کاربر جیب‌بان', contact: '', avatar: '😎', subscription: '6m' };
@@ -1932,7 +2112,7 @@
     }
 
     // ==========================================
-    // ۴. سیستم نوتیفیکیشن سررسید اقساط
+    // ۵. سیستم نوتیفیکیشن سررسید اقساط
     // ==========================================
     function toggleInstNotification(instId) {
       const inst = state.installments.find(x => x.id === instId);
@@ -1993,7 +2173,7 @@
     }
 
     // ==========================================
-    // ۵. منطق اقساط و ددلاین‌ها
+    // ۶. منطق اقساط و ددلاین‌ها
     // ==========================================
     function isInstPaidInPeriod(inst, periodKey) {
       return Boolean(inst.paidRecords && inst.paidRecords[periodKey]);
@@ -2091,7 +2271,7 @@
     }
 
     // ==========================================
-    // ۶. ناوبری و ماشین زمان مالی (با استپر سال)
+    // ۷. ناوبری و ماشین زمان مالی
     // ==========================================
     function switchView(viewId) {
       activeView = viewId;
@@ -2194,7 +2374,7 @@
     }
 
     // ==========================================
-    // ۷. ثبت و ویرایش تراکنش‌ها
+    // ۸. ثبت و ویرایش تراکنش‌ها
     // ==========================================
     function openTxModal(defaultType = 'expense', editTxId = null) {
       document.getElementById('txDayGridContainer').classList.add('hidden');
@@ -2339,7 +2519,7 @@
     }
 
     // ==========================================
-    // ۸. ثبت، ویرایش و پرداخت اقساط
+    // ۹. ثبت، ویرایش و پرداخت اقساط
     // ==========================================
     function setInstModalMode(mode) {
       modalInstMode = mode;
@@ -2547,7 +2727,7 @@
     }
 
     // ==========================================
-    // ۹. کنترل فیلترها و منوهای کشویی شیشه‌ای (بدون اسکرول افقی)
+    // ۱۰. کنترل فیلترها و منوهای کشویی شیشه‌ای
     // ==========================================
     function setTxTypeFilter(type) {
       txTypeFilter = type;
@@ -2591,7 +2771,6 @@
     }
 
     function renderCustomGlassDropdowns() {
-      // ۱. منوی کشویی دسته‌بندی تراکنش‌ها
       let cats = [];
       if (txTypeFilter === 'income') cats = CATEGORIES.income;
       else if (txTypeFilter === 'expense') cats = CATEGORIES.expense;
@@ -2622,7 +2801,6 @@
       });
       document.getElementById('txCatDropdownMenu').innerHTML = catMenuHtml;
 
-      // ۲. منوی کشویی مرتب‌سازی تراکنش‌ها
       const txSortOptions = [
         { id: 'newest', label: t('sortNewest') },
         { id: 'oldest', label: t('sortOldest') },
@@ -2643,7 +2821,6 @@
         `;
       }).join('');
 
-      // ۳. منوی کشویی وضعیت اقساط
       const instStatOptions = [
         { id: 'all', label: t('filterAll') },
         { id: 'unpaid', label: t('statusUnpaid') },
@@ -2664,7 +2841,6 @@
         `;
       }).join('');
 
-      // ۴. منوی کشویی مرتب‌سازی اقساط
       const instSortOptions = [
         { id: 'deadline', label: t('sortNearestDue') },
         { id: 'amount', label: t('sortHighestInst') },
@@ -2686,7 +2862,7 @@
     }
 
     // ==========================================
-    // ۱۰. رندر کامل تمام بخش‌ها
+    // ۱۱. رندر کامل تمام بخش‌ها
     // ==========================================
     function renderAll() {
       applyThemeAndLang();
@@ -2893,6 +3069,9 @@
         return;
       }
 
+      const editTip = isEn() ? 'Edit Transaction' : 'ویرایش تراکنش';
+      const delTip = isEn() ? 'Delete Transaction' : 'حذف تراکنش';
+
       container.innerHTML = filtered.map(tItem => {
         const isInc = tItem.type === 'income';
         return `
@@ -2912,18 +3091,18 @@
               </div>
             </div>
 
-            <div class="flex items-center gap-2 shrink-0">
+            <div class="flex items-center gap-2.5 shrink-0">
               <div class="text-left">
                 <div class="text-sm sm:text-base font-black ltr-num ${isInc ? 'text-emerald-300' : 'text-rose-300'}">
                   ${isInc ? '+' : '-'}${formatMoney(tItem.amount)}
                 </div>
                 <span class="text-[10px] text-slate-400 block">${t('currency')}</span>
               </div>
-              <div class="flex flex-col gap-1 border-r border-white/10 pr-2">
-                <button onclick="openTxModal('${tItem.type}', '${tItem.id}')" class="p-1.5 rounded-lg hover:bg-white/15 text-slate-300">
+              <div class="flex items-center gap-1.5 border-r border-white/10 pr-2.5">
+                <button onclick="openTxModal('${tItem.type}', '${tItem.id}')" data-tooltip="${editTip}" class="action-btn action-btn-edit w-8 h-8 rounded-xl text-slate-300">
                   <i data-lucide="pencil" class="w-3.5 h-3.5"></i>
                 </button>
-                <button onclick="deleteTransaction('${tItem.id}')" class="p-1.5 rounded-lg hover:bg-rose-500/20 text-slate-300 hover:text-rose-300">
+                <button onclick="deleteTransaction('${tItem.id}')" data-tooltip="${delTip}" class="action-btn action-btn-delete w-8 h-8 rounded-xl text-slate-300">
                   <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
                 </button>
               </div>
@@ -2982,6 +3161,9 @@
         return;
       }
 
+      const editTip = isEn() ? 'Edit Installment' : 'ویرایش قسط';
+      const delTip = isEn() ? 'Delete Installment' : 'حذف قسط';
+
       grid.innerHTML = list.map(inst => {
         const paidInThisMonth = isInstPaidInPeriod(inst, periodKey);
         const totalPaid = getTotalPaidCount(inst);
@@ -2990,6 +3172,9 @@
         const pct = Math.min(100, Math.round((totalPaid / inst.totalCount) * 100));
         const deadline = computeInstallmentDeadline(inst, periodKey);
         const isSingle = inst.kind === 'single';
+        const bellTip = inst.notify
+          ? (isEn() ? 'Due Reminder: ON (Click to Mute)' : 'یادآور سررسید: روشن (کلیک برای خاموش کردن)')
+          : (isEn() ? 'Due Reminder: OFF (Click to Enable)' : 'یادآور سررسید: خاموش (کلیک برای روشن کردن)');
 
         return `
           <div class="liquid-card rounded-[26px] p-5 flex flex-col justify-between border ${deadline.cardBorderClass}">
@@ -3008,14 +3193,15 @@
                   <p class="text-xs text-slate-300 mt-0.5">${isEn() ? `Due: Day ${inst.dueDay} of month` : `سررسید: روز ${formatDigits(inst.dueDay)} ماه`}</p>
                 </div>
 
-                <div class="flex items-center gap-1 shrink-0">
-                  <button onclick="toggleInstNotification('${inst.id}')" class="p-2 rounded-xl liquid-pill ${inst.notify ? 'text-amber-300 border-amber-400/35' : 'text-slate-500'}" title="نوتیفیکیشن سررسید">
+                <!-- دکمه‌های تعاملی با تولتیپ شیشه‌ای و انیمیشن اختصاصی -->
+                <div class="flex items-center gap-1.5 shrink-0">
+                  <button onclick="toggleInstNotification('${inst.id}')" data-tooltip="${bellTip}" class="action-btn action-btn-bell w-9 h-9 rounded-xl ${inst.notify ? 'text-amber-300 border-amber-400/35' : 'text-slate-500'}">
                     <i data-lucide="${inst.notify ? 'bell-ring' : 'bell-off'}" class="w-4 h-4"></i>
                   </button>
-                  <button onclick="openInstModal('${inst.kind}', '${inst.id}')" class="p-2 rounded-xl liquid-pill text-slate-300 hover:text-white" title="ویرایش">
+                  <button onclick="openInstModal('${inst.kind}', '${inst.id}')" data-tooltip="${editTip}" class="action-btn action-btn-edit w-9 h-9 rounded-xl text-slate-300">
                     <i data-lucide="pencil" class="w-4 h-4"></i>
                   </button>
-                  <button onclick="deleteInstallment('${inst.id}')" class="p-2 rounded-xl liquid-pill text-slate-300 hover:text-rose-300" title="حذف">
+                  <button onclick="deleteInstallment('${inst.id}')" data-tooltip="${delTip}" class="action-btn action-btn-delete w-9 h-9 rounded-xl text-slate-300">
                     <i data-lucide="trash-2" class="w-4 h-4"></i>
                   </button>
                 </div>
@@ -3036,7 +3222,7 @@
 
               <div class="space-y-1.5 mb-4">
                 <div class="flex items-center justify-between text-xs">
-                  <span class="text-slate-300">${isEn() ? `${totalPaid} of${inst.totalCount} paid` : `${formatDigits(totalPaid)} از ${formatDigits(inst.totalCount)} قسط پرداخت شده`}</span>
+                  <span class="text-slate-300">${isEn() ? `${totalPaid} of ${inst.totalCount} paid` : `${formatDigits(totalPaid)} از ${formatDigits(inst.totalCount)} قسط پرداخت شده`}</span>
                   <span class="font-bold text-white">${isEn() ? `${remainCount} left (${pct}%)` : `${formatDigits(remainCount)} مانده (${formatDigits(pct)}٪)`}</span>
                 </div>
                 <div class="h-2.5 w-full bg-slate-950/60 rounded-full overflow-hidden p-0.5 border border-white/10">
@@ -3045,10 +3231,10 @@
               </div>
             </div>
 
-            <button onclick="openPayInstModal('${inst.id}')" class="w-full py-3 px-4 rounded-2xl text-xs font-extrabold flex items-center justify-center gap-2 transition ${
+            <button onclick="openPayInstModal('${inst.id}')" class="w-full py-3 px-4 rounded-2xl text-xs font-extrabold flex items-center justify-center gap-2 transition transform active:scale-95 ${
               paidInThisMonth
-                ? 'bg-emerald-500/25 text-emerald-200 border border-emerald-400/40'
-                : 'bg-gradient-to-l from-amber-500 to-orange-500 text-slate-950 shadow-lg'
+                ? 'bg-emerald-500/25 text-emerald-200 border border-emerald-400/40 hover:bg-emerald-500/35'
+                : 'bg-gradient-to-l from-amber-500 to-orange-500 text-slate-950 shadow-lg hover:brightness-110'
             }">
               <i data-lucide="${paidInThisMonth ? 'rotate-ccw' : 'calendar-check'}" class="w-4 h-4"></i>
               <span>${paidInThisMonth
@@ -3059,6 +3245,69 @@
           </div>
         `;
       }).join('');
+    }
+
+    // ==========================================
+    // ۱۲. حلقه نئونی کاملاً تعاملی (Hover Spotlight)
+    // ==========================================
+    function highlightRingSegment(idx) {
+      const item = currentRingState.items[idx];
+      if (!item) return;
+
+      document.querySelectorAll('.ring-segment').forEach((circle, i) => {
+        if (i === idx) {
+          circle.setAttribute('stroke-width', '22');
+          circle.style.opacity = '1';
+          circle.style.filter = `drop-shadow(0 0 14px ${item.color})`;
+        } else {
+          circle.setAttribute('stroke-width', '14');
+          circle.style.opacity = '0.28';
+        }
+      });
+
+      document.querySelectorAll('.ring-legend-pill').forEach((pill, i) => {
+        if (i === idx) {
+          pill.style.borderColor = item.color;
+          pill.style.transform = 'translateY(-2px) scale(1.06)';
+        } else {
+          pill.style.opacity = '0.45';
+        }
+      });
+
+      const lblEl = document.getElementById('ringCenterTitle');
+      const valEl = document.getElementById('ringCenterValue');
+      const subEl = document.getElementById('ringCenterSub');
+      if (lblEl && valEl && subEl) {
+        lblEl.textContent = item.label;
+        lblEl.style.color = item.color;
+        valEl.textContent = formatMoney(item.val);
+        subEl.textContent = `${formatDigits(item.pct)}${isEn() ? '% of total' : '٪ از کل خروجی'}`;
+      }
+    }
+
+    function resetRingSegment() {
+      document.querySelectorAll('.ring-segment').forEach((circle, i) => {
+        const item = currentRingState.items[i];
+        circle.setAttribute('stroke-width', '16');
+        circle.style.opacity = '1';
+        if (item) circle.style.filter = `drop-shadow(0 0 6px ${item.color}66)`;
+      });
+
+      document.querySelectorAll('.ring-legend-pill').forEach(pill => {
+        pill.style.borderColor = '';
+        pill.style.transform = '';
+        pill.style.opacity = '1';
+      });
+
+      const lblEl = document.getElementById('ringCenterTitle');
+      const valEl = document.getElementById('ringCenterValue');
+      const subEl = document.getElementById('ringCenterSub');
+      if (lblEl && valEl && subEl) {
+        lblEl.textContent = isEn() ? 'Total Outflow' : 'کل خروجی ماه';
+        lblEl.style.color = '';
+        valEl.textContent = formatMoney(currentRingState.totalOut);
+        subEl.textContent = t('currency');
+      }
     }
 
     function renderLiquidReportsSection(income, expense, instPaid, net, expenseTxs) {
@@ -3076,6 +3325,16 @@
       const totalOut = expense + instPaid;
       const palette = ['#38bdf8', '#10b981', '#f59e0b', '#f43f5e', '#818cf8', '#06b6d4', '#ec4899'];
 
+      currentRingState = {
+        totalOut,
+        items: labels.map((lbl, idx) => ({
+          label: lbl,
+          val: values[idx],
+          pct: totalOut > 0 ? Math.round((values[idx] / totalOut) * 100) : 0,
+          color: palette[idx % palette.length]
+        }))
+      };
+
       const ringBox = document.getElementById('neonRingContainer');
       if (totalOut <= 0) {
         ringBox.innerHTML = `
@@ -3089,38 +3348,53 @@
         const circumference = 2 * Math.PI * radius;
         let offset = 0;
 
-        const circlesSvg = values.map((val, idx) => {
-          const ratio = val / totalOut;
-          const strokeLen = Math.max(2, ratio * circumference - 4);
+        const circlesSvg = currentRingState.items.map((item, idx) => {
+          const ratio = item.val / totalOut;
+          const strokeLen = Math.max(3, ratio * circumference - 5);
           const dashArray = `${strokeLen} ${circumference}`;
           const dashOffset = -offset;
           offset += ratio * circumference;
-          const color = palette[idx % palette.length];
-          return `<circle cx="95" cy="95" r="${radius}" fill="transparent" stroke="${color}" stroke-width="16" stroke-linecap="round" stroke-dasharray="${dashArray}" stroke-dashoffset="${dashOffset}" style="filter: drop-shadow(0 0 6px ${color}66); transition: all 0.6s ease;" />`;
+          return `<circle
+            class="ring-segment"
+            cx="100" cy="100" r="${radius}"
+            fill="transparent"
+            stroke="${item.color}"
+            stroke-width="16"
+            stroke-linecap="round"
+            stroke-dasharray="${dashArray}"
+            stroke-dashoffset="${dashOffset}"
+            onmouseenter="highlightRingSegment(${idx})"
+            onmouseleave="resetRingSegment()"
+            onclick="highlightRingSegment(${idx})"
+            style="filter: drop-shadow(0 0 6px ${item.color}66);"
+          />`;
         }).join('');
 
-        const legendPills = labels.map((lbl, idx) => {
-          const pct = Math.round((values[idx] / totalOut) * 100);
-          const color = palette[idx % palette.length];
+        const legendPills = currentRingState.items.map((item, idx) => {
           return `
-            <div class="liquid-pill px-2.5 py-1 rounded-xl flex items-center gap-1.5 text-[11px] font-bold">
-              <span class="w-2.5 h-2.5 rounded-full" style="background:${color}; box-shadow: 0 0 8px ${color}"></span>
-              <span class="text-slate-300 truncate max-w-[100px]">${lbl}</span>
-              <span class="text-white font-black">${formatDigits(pct)}${isEn() ? '%' : '٪'}</span>
+            <div
+              onmouseenter="highlightRingSegment(${idx})"
+              onmouseleave="resetRingSegment()"
+              onclick="highlightRingSegment(${idx})"
+              class="ring-legend-pill liquid-pill px-2.5 py-1 rounded-xl flex items-center gap-1.5 text-[11px] font-bold"
+            >
+              <span class="w-2.5 h-2.5 rounded-full" style="background:${item.color}; box-shadow: 0 0 8px ${item.color}"></span>
+              <span class="text-slate-300 truncate max-w-[105px]">${item.label}</span>
+              <span class="text-white font-black">${formatDigits(item.pct)}${isEn() ? '%' : '٪'}</span>
             </div>
           `;
         }).join('');
 
         ringBox.innerHTML = `
-          <div class="relative w-[190px] h-[190px] flex items-center justify-center">
-            <svg class="w-full h-full -rotate-90" viewBox="0 0 190 190">
-              <circle cx="95" cy="95" r="${radius}" fill="transparent" stroke="rgba(255,255,255,0.06)" stroke-width="16" />
+          <div class="relative w-[205px] h-[205px] flex items-center justify-center">
+            <svg class="w-full h-full -rotate-90 overflow-visible" viewBox="0 0 200 200">
+              <circle cx="100" cy="100" r="${radius}" fill="transparent" stroke="rgba(255,255,255,0.06)" stroke-width="16" />
               ${circlesSvg}
             </svg>
-            <div class="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
-              <span class="text-[10px] text-slate-400 font-bold">${isEn() ? 'Total Outflow' : 'کل خروجی ماه'}</span>
-              <span class="text-base font-black text-white ltr-num mt-0.5">${formatMoney(totalOut)}</span>
-              <span class="text-[10px] text-sky-300">${t('currency')}</span>
+            <div class="absolute inset-0 flex flex-col items-center justify-center text-center px-5 pointer-events-none">
+              <span id="ringCenterTitle" class="text-[11px] text-slate-400 font-extrabold truncate max-w-[125px] transition-colors duration-200">${isEn() ? 'Total Outflow' : 'کل خروجی ماه'}</span>
+              <span id="ringCenterValue" class="text-base sm:text-lg font-black text-white ltr-num mt-0.5 transition-all duration-200">${formatMoney(totalOut)}</span>
+              <span id="ringCenterSub" class="text-[10px] text-sky-300 font-bold mt-0.5">${t('currency')}</span>
             </div>
           </div>
           <div class="flex flex-wrap items-center justify-center gap-1.5 mt-4">
@@ -3156,21 +3430,22 @@
       if (labels.length === 0) {
         listEl.innerHTML = `<p class="text-xs text-slate-400 text-center py-6">${isEn() ? 'No expenses recorded yet.' : 'هنوز هزینه‌ای ثبت نشده است.'}</p>`;
       } else {
-        listEl.innerHTML = labels.map((label, i) => {
-          const val = values[i];
-          const pct = totalOut > 0 ? Math.round((val / totalOut) * 100) : 0;
-          const color = palette[i % palette.length];
+        listEl.innerHTML = currentRingState.items.map((item, i) => {
           return `
-            <div class="liquid-card rounded-2xl p-3.5 space-y-2">
+            <div
+              onmouseenter="highlightRingSegment(${i})"
+              onmouseleave="resetRingSegment()"
+              class="liquid-card rounded-2xl p-3.5 space-y-2 cursor-pointer"
+            >
               <div class="flex items-center justify-between text-xs">
                 <span class="font-bold text-white flex items-center gap-2">
-                  <span class="w-2.5 h-2.5 rounded-full" style="background:${color}"></span>
-                  ${label}
+                  <span class="w-2.5 h-2.5 rounded-full" style="background:${item.color}"></span>
+                  ${item.label}
                 </span>
-                <span class="font-black text-slate-200 ltr-num">${formatMoney(val)} ${t('currency')} (${formatDigits(pct)}${isEn() ? '%' : '٪'})</span>
+                <span class="font-black text-slate-200 ltr-num">${formatMoney(item.val)} ${t('currency')} (${formatDigits(item.pct)}${isEn() ? '%' : '٪'})</span>
               </div>
               <div class="h-2 w-full bg-slate-950/60 rounded-full overflow-hidden">
-                <div class="h-full rounded-full transition-all duration-500" style="width: ${pct}%; background: ${color}"></div>
+                <div class="h-full rounded-full transition-all duration-500" style="width: ${item.pct}%; background: ${item.color}"></div>
               </div>
             </div>
           `;
@@ -3179,7 +3454,7 @@
     }
 
     // ==========================================
-    // ۱۱. پشتیبان‌گیری و پاکسازی حافظه
+    // ۱۳. پشتیبان‌گیری و پاکسازی حافظه
     // ==========================================
     function exportDataJson() {
       const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(state, null, 2));
